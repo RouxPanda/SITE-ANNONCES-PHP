@@ -1,22 +1,22 @@
 <?php namespace App\Controllers;
 
-class Home extends BaseController
+class Admin extends BaseController
 {
 	
 	private $smarty;
 	
-
-	public function view($page = 'home')
+	public function admin()
 	{
-		if ( ! is_file(APPPATH.'/Views/pages/home/'.$page.'.tpl'))
+		$page = "admin";
+		
+		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.tpl'))
 		{
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
 
 		$this->smarty = service('SmartyEngine');
 		$this->smarty->assign("title", ucfirst($page));
-		
-		
-		return $this->smarty->view('pages/home/'.$page.'.tpl'); 
+
+		return $this->smarty->view('pages/'.$page.'.tpl');  
     }
 }
