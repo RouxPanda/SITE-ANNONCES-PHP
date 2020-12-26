@@ -1,6 +1,13 @@
 {include file='templates/header.tpl'}
 
-    <div style="background: #da7373">
+    <div style="background: #ffffff">
+        <div class="row">
+            <div class="col">
+                <p style="text-align: center; font-size: 13px; color: rgb(65, 76, 88)">
+                    Le site des petites annonces le plus compétents depuis aujourd'hui
+                </p>
+            </div>
+        </div>
         <div class="row" style="background: #ff792e">
             <div class="col">
                 <p style="text-align: center; padding-top: 0px; border-style: none">
@@ -12,9 +19,9 @@
     </div>
     <section>
         <div class="row" style="text-align: left">
-            <div class="col" style="padding: 0; padding-right: -4px">
-                <div class="card" style="border-style: none">
-                    <div class="card-body" style="width: 368px">
+            <div class="col" id=cartes>
+                <div class="card">
+                    <div class="card-body">
                         <h4 class="card-title">Title</h4>
                         <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
                         <p class="card-text">
@@ -26,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col" id=cartes>
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Title</h4>

@@ -26,8 +26,8 @@ CREATE TABLE T_utilisateur (
     U_mail   VARCHAR PRIMARY KEY,
     U_mdp    VARCHAR,
     U_pseudo VARCHAR,
-    U_nom,
-    U_prenom
+    U_nom    VARCHAR,
+    U_prenom VARCHAR
 );
 
 CREATE TABLE T_message (

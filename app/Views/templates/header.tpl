@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <title>{$title}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="{base_url()}/assets/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bungee" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" />
-    <link rel="stylesheet" href="{base_url()}assets/css/Footer-with-social-media-icons.css" />
-    <link rel="stylesheet" href="{base_url()}assets/css/styles.css" />
+    <link rel="stylesheet" href="{base_url()}/assets/css/Footer-with-social-media-icons.css" />
+    <link rel="stylesheet" href="{base_url()}/assets/css/styles.css" />
 </head>
 
 <body>
@@ -18,7 +18,7 @@
             <div class="container-fluid">
                 <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1" style="width: 0px">
                     <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><img
-                    src="{base_url()}img/lemauvais.png" style="width: 270px" />
+                    src="{base_url()}/assets/img/lemauvais.png" style="width: 270px" />
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav">
                         <li class="nav-item">
@@ -39,11 +39,5 @@
                 </div>
             </div>
         </nav>
-        <div class="row">
-            <div class="col">
-                <p style="text-align: center; font-size: 13px; color: rgb(65, 76, 88)">
-                    Le site des petites annonces le plus compétents depuis aujourd'hui
-                </p>
-            </div>
-        </div>
+        <hr style="height: 2px; color: #ff763b; background-color: #ff763b; width: 50%; border: none;">
     </div>
