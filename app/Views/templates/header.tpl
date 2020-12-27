@@ -17,8 +17,8 @@
         <nav class="navbar navbar-light navbar-expand-md">
             <div class="container-fluid">
                 <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1" style="width: 0px">
-                    <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><img
-                    src="{base_url()}/assets/img/lemauvais.png" style="width: 270px" />
+                    <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <a href="/Home/view/home"><img src="{base_url()}/assets/img/lemauvais.png" style="width: 270px" /></a>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav">
                         <li class="nav-item">
@@ -30,10 +30,10 @@
                     </ul>
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Inscription</a>
+                            <a class="nav-link active" href="/Account/register">Inscription</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Connexion</a>
+                            <a class="nav-link" href="/Account/login">Connexion</a>
                         </li>
                     </ul>
                 </div>

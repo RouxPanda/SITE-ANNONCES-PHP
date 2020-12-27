@@ -102,6 +102,10 @@
   outline: none;
 }
 
+.pas-inscrit-decal{
+  margin-left: 80%;
+}
+
 .register-form .custom-form .pas-inscrit {
   border-radius: 2px;
   background: #ff763b;
@@ -111,7 +115,6 @@
   padding: 10px 18px;
   border: 0;
   margin: 20px;
-  margin-left: 80%;
   outline: none;
 }
 

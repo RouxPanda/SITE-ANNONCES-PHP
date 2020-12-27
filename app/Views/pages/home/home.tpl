@@ -29,6 +29,7 @@
                             justo odio, dapibus ac facilisis in, egestas eget quam. Donec id
                             elit non mi porta gravida at eget metus.
                         </p>
+                        <P style="text-align:center"><img class="card-image" src="{base_url()}/assets/img/maison2.jpg" style="height: 300px" /></P>
                         <a class="card-link" href="#">Link</a><a class="card-link" href="#">Link</a>
                     </div>
                 </div>
@@ -43,7 +44,8 @@
                             justo odio, dapibus ac facilisis in, egestas eget quam. Donec id
                             elit non mi porta gravida at eget metus.
                         </p>
-                        <a class="card-link" href="#">Link</a><a class="card-link" href="#">Link</a>
+                        <P style="text-align:center"><img class="card-image" src="{base_url()}/assets/img/maison1.jpg" style="height: 300px" /></P>
+                        <a class="card-link" href="#">Link</a>
                     </div>
                 </div>
             </div>

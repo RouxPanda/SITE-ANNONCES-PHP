@@ -3,7 +3,7 @@
             <div class="row">
                 <div class="col-md-6 col-lg-8 mx-auto">
                     <p class="copyright text-muted text-center" style="color: #fffdfd; font-size: 18px">
-                        Copyright © Your Company 2020 | Web Design by Designer
+                        Copyright © LeMauvaisCoin 2020
                     </p>
                 </div>
             </div>

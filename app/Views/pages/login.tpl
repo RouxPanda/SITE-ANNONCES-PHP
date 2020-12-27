@@ -15,7 +15,7 @@
                     </div>
                     <button class="btn btn-light submit-button" type="button">Valider</button>
                     <div class="form-group form-row ">
-                        <button class="btn btn-light float-right pas-inscrit" type="button">Pas inscrit ?</button>
+                        <a class="pas-inscrit-decal" href="/Account/register"><button class="btn btn-light float-right pas-inscrit" type="button">Pas inscrit ?</button></a>
                     </div>
                 </form>
             </div>
