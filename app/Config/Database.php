@@ -31,10 +31,10 @@ class Database extends \CodeIgniter\Database\Config
 	 */
 	public $default = [
 		'DSN'      => '',
-		'hostname' => 'localhost',
-		'username' => '',
-		'password' => '',
-		'database' => '',
+		'hostname' => 'mysql.pedaweb.univ-amu.fr',
+		'username' => 'g19000840',
+		'password' => 'YlcQh0fmWN0xYoa',
+		'database' => 'g19000840',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,
