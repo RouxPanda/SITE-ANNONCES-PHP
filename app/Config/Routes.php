@@ -15,7 +15,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
  * Router Setup
  * --------------------------------------------------------------------
  */
-$routes->match(['get', 'post'], 'register', 'Account::register');
+
 $routes->setDefaultNamespace('App\Controllers');
 $routes->setDefaultController('Home');
 $routes->setDefaultMethod('view');
@@ -33,7 +33,7 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::view');
-
+$routes->match(['get', 'post'], 'register', 'Account::register');
 /**
  * --------------------------------------------------------------------
  * Additional Routing

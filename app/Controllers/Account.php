@@ -10,13 +10,34 @@ class Account extends BaseController
 	public function login()
 	{
 		$page = "login";
-		
+		$this->smarty = service('SmartyEngine');
 		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.tpl'))
 		{
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
 
-		$this->smarty = service('SmartyEngine');
+		if ($this->request->getMethod() == 'post') {
+			$session = session();
+			$donnee = array(
+				'mail' => $this->request->getVar('mail'),
+				'mdp' => $this->request->getVar('mdp')
+			);
+			//$cookie = model('ModelUtilisateur')->Authentification($donnee);
+			//Parce que j'ai pas pu tester j'ai créer mon cookie
+			$cookie = array(
+				'pseudo' => 'moi',
+				'nom' => 'pas',
+				'prenom' => 'grand',
+				'mail' => 'a@a.a',
+				'mdp' => '1234'			
+			);
+			$session->set($cookie);
+			echo $session->get('pseudo');
+			$this->smarty->assign('pseudo', $session->get('pseudo'));
+			return redirect()->to('./Home/view'); 
+		}
+
+		
 		$this->smarty->assign("title", ucfirst($page));
 
 		return $this->smarty->view('pages/'.$page.'.tpl'); 
@@ -58,8 +79,10 @@ class Account extends BaseController
 				array_push($erreur, 'mdp pas remplis');
 			}
 			else {*/
-				$modele = new ModelUtilisateur($donnee);
+			model('ModelUtilisateur')->inscriptionBDD($donnee);
 				//print_r($modele->getModel());
+			//$modele->inscriptionBDD($donnee);
+			//echo 'reussie';
 			//}
 		}
 
@@ -68,5 +91,29 @@ class Account extends BaseController
 
 		return $this->smarty->view('pages/'.$page.'.tpl'); 
 		
-    }
+	}
+	
+	public function deconnexion(){
+		$session = session();
+		$session->destroy();
+
+		return redirect()->to('./Home/view'); 
+	}
+
+	public function gestion($page = 'index_gestion'){
+		
+		if ( ! is_file(APPPATH.'/Views/pages/gestion/'.$page.'.tpl'))
+		{
+			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+		}
+
+		$this->smarty = service('SmartyEngine');
+		$this->smarty->assign("title", ucfirst($page));
+		$session = session();
+		$this->smarty->assign('pseudo', $session->get('pseudo'));	
+		$this->smarty->assign('nom', $session->get('nom'));	
+		$this->smarty->assign('prenom', $session->get('prenom'));	
+
+		return $this->smarty->view('pages/gestion/'.$page.'.tpl'); 
+	}
 }
