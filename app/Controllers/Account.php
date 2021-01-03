@@ -66,19 +66,22 @@ class Account extends BaseController
 				'mdp' => $this->request->getVar('mdp')
 			);
 			if(empty($donnee['pseudo'])){
-				array_push($erreur, 'pseudo pas remplis');
+				array_push($erreur, 'Veuillez renseigner un pseudo.');
 			}
 			else if(empty($donnee['prenom'])){
-				array_push($erreur, 'prenom pas remplis');
+				array_push($erreur, 'Veuillez renseigner un prenom.');
 			}
 			else if(empty($donnee['nom'])){
-				array_push($erreur, 'nom pas remplis');
+				array_push($erreur, 'Veuillez renseigner un nom.');
 			}
 			else if(empty($donnee['mail'])){
-				array_push($erreur, 'mail pas remplis');
+				array_push($erreur, 'Veuillez renseigner un email.');
 			}
 			else if(empty($donnee['mdp'])){
-				array_push($erreur, 'mdp pas remplis');
+				array_push($erreur, 'Veuillez renseigner un mot de passe.');
+			}
+			else if(empty($donnee['mdp_confirm'])){
+				array_push($erreur, 'Veuillez renseigner confirmer votre mot de passe.');
 			}
 			else {
 				//$modele = new ModelUtilisateur($donnee);
@@ -92,7 +95,6 @@ class Account extends BaseController
 		
 
 		return $this->smarty->view('pages/'.$page.'.tpl'); 
-		
 	}
 	
 	public function deconnexion(){

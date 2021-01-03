@@ -51,4 +51,7 @@
             </div>
         </nav>
         <hr style="height: 2px; color: #ff763b; background-color: #ff763b; width: 50%; border: none;">
+        {if isset($error) && is_array($error) && !empty($error) }
+            <div class="alert alert-danger text-center" role="alert">{$error[0]}</div>
+        {/if}
     </div>
