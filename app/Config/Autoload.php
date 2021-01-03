@@ -44,6 +44,7 @@ class Autoload extends AutoloadConfig
 		'Config'      => APPPATH . 'Config',
 	];
 
+	
 	/**
 	 * -------------------------------------------------------------------
 	 * Class Map
@@ -63,4 +64,6 @@ class Autoload extends AutoloadConfig
 	 * @var array
 	 */
 	public $classmap = [];
+	
+
 }
