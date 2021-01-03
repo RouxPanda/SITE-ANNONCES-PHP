@@ -28,7 +28,7 @@
                         <li class="nav-item"></li>
                         <li class="nav-item"></li>
                     </ul>
-                    {if isset($smarty.session.pseudo)}
+                    {if isset($smarty.session.mail)}
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item">
                             <a class="nav-link active" href="/Account/gestion">Compte </a>

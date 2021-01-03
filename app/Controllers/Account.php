@@ -9,6 +9,8 @@ class Account extends BaseController
 	
 	public function login()
 	{
+		helper(['form']);
+
 		$page = "login";
 		$this->smarty = service('SmartyEngine');
 
@@ -18,30 +20,44 @@ class Account extends BaseController
 		}
 
 		if ($this->request->getMethod() == 'post') {
+			$erreur = [];
 
-			$donnee = array(
-				'mail' => strip_tags($this->request->getVar('mail')),
-				'mdp' => strip_tags($this->request->getVar('mdp'))
-			);
-			//$cookie = model('ModelUtilisateur')->Authentification($donnee);
-			//Parce que j'ai pas pu tester j'ai créer mon cookie
-			$cookie = array(
-				'pseudo' => 'moi',
-				'nom' => 'pas',
-				'prenom' => 'grand',
-				'mail' => 'a@a.a',
-				'mdp' => '1234'			
-			);
+			$rules = [
+				'mail' => 'required|valid_email',
+				'mdp' => 'required|validateUser[mail,mdp]',
+			];
 
-			///$this->load->library('session');
-			///$this->session->set_userdata($cookie);
-			
-			return redirect()->to('./Home/view'); 
+			$errors = [
+				'mail' => [
+					'required' => 'Veuillez saisir un mail.',
+					'valid_email' => 'Veuillez saisir un mail valide.'
+				],
+				'mdp' => [
+					'required' => 'Veuillez saisir un mot de passe.',
+					'validateUser' => 'Le mail et/ou le mot de passe ne correspond pas.'
+				]
+			];
+
+
+			if (!$this->validate($rules, $errors)) {
+				$erreur = array_values($this->validator->getErrors());
+			}else{
+				$model = new \App\Models\UserModel();
+				$user = $model->where('U_mail', $this->request->getVar('mail'))->first();
+
+				$conn_data = [
+					'mail' => $user['U_mail']
+				];
+
+				session()->set($conn_data);
+
+				return redirect()->to('/Home/view/home');
+			}
+
+			$this->smarty->assign("error", $erreur);
 		}
 
-		
 		$this->smarty->assign("title", ucfirst($page));
-
 		return $this->smarty->view('pages/'.$page.'.tpl'); 
     }
 	
@@ -116,7 +132,7 @@ class Account extends BaseController
 		$session = session();
 		$session->destroy();
 
-		return redirect()->to('./Home/view'); 
+		return redirect()->to('/Home/view/home'); 
 	}
 
 	public function gestion($page = 'index_gestion'){

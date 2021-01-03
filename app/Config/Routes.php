@@ -34,6 +34,8 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::view');
 $routes->match(['get', 'post'], 'register', 'Account::register');
+$routes->match(['get', 'post'], 'login', 'Account::login');
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing
