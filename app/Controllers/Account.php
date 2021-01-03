@@ -58,13 +58,16 @@ class Account extends BaseController
 		$this->smarty = service('SmartyEngine');
 
 		if ($this->request->getMethod() == 'post') {
+
 			$donnee = array(
-				'pseudo' => $this->request->getVar('pseudo'),
-				'nom' => $this->request->getVar('nom'),
-				'prenom' => $this->request->getVar('prenom'),
-				'mail' => $this->request->getVar('mail'),
-				'mdp' => $this->request->getVar('mdp')
+				'pseudo' => strip_tags($this->request->getVar('pseudo')),
+				'nom' => strip_tags($this->request->getVar('nom')),
+				'prenom' => strip_tags($this->request->getVar('prenom')),
+				'mail' => strip_tags($this->request->getVar('mail')),
+				'mdp' => strip_tags($this->request->getVar('mdp')),
+				'mdp_confirm' => strip_tags($this->request->getVar('mdp_confirm'))
 			);
+
 			if(empty($donnee['pseudo'])){
 				array_push($erreur, 'Veuillez renseigner un pseudo.');
 			}
@@ -84,8 +87,19 @@ class Account extends BaseController
 				array_push($erreur, 'Veuillez renseigner confirmer votre mot de passe.');
 			}
 			else {
-				//$modele = new ModelUtilisateur($donnee);
-				//print_r($modele->getModel());
+
+				if($donnee['mdp'] !== $donnee['mdp_confirm']) {
+					array_push($erreur, 'Les mots de passe ne correspondent pas.');
+				}else{
+
+					// Verifier si l'email n'est pas deje enregistré
+
+					// Encryption du mdp
+
+					// Creation du compte
+
+				}
+
 			}
 
 			$this->smarty->assign("error", $erreur);
@@ -93,7 +107,6 @@ class Account extends BaseController
 
 		$this->smarty->assign("title", ucfirst($page));
 		
-
 		return $this->smarty->view('pages/'.$page.'.tpl'); 
 	}
 	
