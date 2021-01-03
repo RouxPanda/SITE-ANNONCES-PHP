@@ -11,16 +11,17 @@ class Account extends BaseController
 	{
 		$page = "login";
 		$this->smarty = service('SmartyEngine');
+
 		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.tpl'))
 		{
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
 
 		if ($this->request->getMethod() == 'post') {
-			$session = session();
+
 			$donnee = array(
-				'mail' => $this->request->getVar('mail'),
-				'mdp' => $this->request->getVar('mdp')
+				'mail' => strip_tags($this->request->getVar('mail')),
+				'mdp' => strip_tags($this->request->getVar('mdp'))
 			);
 			//$cookie = model('ModelUtilisateur')->Authentification($donnee);
 			//Parce que j'ai pas pu tester j'ai créer mon cookie
@@ -31,9 +32,10 @@ class Account extends BaseController
 				'mail' => 'a@a.a',
 				'mdp' => '1234'			
 			);
-			$session->set($cookie);
-			echo $session->get('pseudo');
-			$this->smarty->assign('pseudo', $session->get('pseudo'));
+
+			///$this->load->library('session');
+			///$this->session->set_userdata($cookie);
+			
 			return redirect()->to('./Home/view'); 
 		}
 
