@@ -28,6 +28,16 @@
                         <li class="nav-item"></li>
                         <li class="nav-item"></li>
                     </ul>
+                    {if isset($pseudo)}
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/Account/gestion">Compte </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Account/deconnexion">Déconnexion</a>
+                        </li>
+                    </ul>    
+                    {else}
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item">
                             <a class="nav-link active" href="/Account/register">Inscription</a>
@@ -36,6 +46,7 @@
                             <a class="nav-link" href="/Account/login">Connexion</a>
                         </li>
                     </ul>
+                    {/if}
                 </div>
             </div>
         </nav>

@@ -8,6 +8,8 @@ class Home extends BaseController
 
 	public function view($page = 'home')
 	{
+		$session = session();
+
 		if ( ! is_file(APPPATH.'/Views/pages/home/'.$page.'.tpl'))
 		{
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
