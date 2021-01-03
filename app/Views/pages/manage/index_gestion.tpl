@@ -2,18 +2,9 @@
 
 <section>
     <div class="row register-form" >
-        <div class="col-lg-2" style="height: 700px;width: 366px;">
-            <div class="vertical-nav" style="background: rgb(255,255,255);width: 171px;">
-                <h4 class="text-center"> </h4>
-                <h4 style="color: rgb(116,116,116);">Gestion de Compte</h4>
-                <ul class="vertical-nav-list">
-                    <li class="vnav-li"><a class="active-link vnav-link" href="/Account/gestion/">Son compte</a></li>
-                    <li class="vnav-li"><a class="vnav-link" href="/Account/gestion/ses_annonces">Ses annonces</a></li>
-                    <li class="vnav-li"><a class="vnav-link" href="/Account/gestion/chat">Message</a></li>
-                    <li class="vnav-li"><a class="vnav-link" href="/Account/deconnexion">Déconnexion</a></li>
-                </ul>
-            </div>
-        </div>
+
+        {include file='templates/manage_menu.tpl'}
+
         <div class="col offset-lg-0" style="height: 700px;width: 987px;">
             <div class="bg-gray padding-50" style="height: 700px;">
                 <div class="container" id="system-status">
@@ -85,9 +76,9 @@
                                         <div class="latest-update-timestamp"><span><strong>February 3, 2017 @ 9:35 PM MST</strong></span></div>
                                     </div>
                                 </div>
-                                <a href="/Account/nouvelle_annonce"><button class="btn btn-primary" type="button" style="margin: 0 auto;text-align: center;margin-top: 22px;color: var(--light);background: var(--orange);border-color: var(--orange);">Publier une nouvelle annonce</button></a>
+                                <a href="/Annonce/new"><button class="btn btn-primary" type="button" style="margin: 0 auto;text-align: center;margin-top: 22px;color: var(--light);background: var(--orange);border-color: var(--orange);">Publier une nouvelle annonce</button></a>
                             </div>
-                        </div><a href="/Account/gestion/modif_info"><button class="btn btn-primary" type="button" style="text-align: center;margin-top: 22px;color: var(--light);background: var(--orange);border-color: var(--orange);">Changer son profil</button></a>
+                        </div><a href="/Account/manage/modif_info"><button class="btn btn-primary" type="button" style="text-align: center;margin-top: 22px;color: var(--light);background: var(--orange);border-color: var(--orange);">Changer son profil</button></a>
                     </div>
                 </div>
             </div>

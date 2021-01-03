@@ -31,10 +31,10 @@
                     {if isset($smarty.session.pseudo)}
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Account/gestion">Compte </a>
+                            <a class="nav-link active" href="/Account/manage">Compte </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Account/deconnexion">Déconnexion</a>
+                            <a class="nav-link" href="/Account/logout">Déconnexion</a>
                         </li>
                     </ul>    
                     {else}

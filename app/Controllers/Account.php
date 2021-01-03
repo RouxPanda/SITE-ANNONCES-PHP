@@ -132,17 +132,16 @@ class Account extends BaseController
 		return $this->smarty->view('pages/'.$page.'.tpl'); 
 	}
 	
-	public function deconnexion(){
+	public function logout(){
 		$session = session();
 		$session->destroy();
 
 		return redirect()->to('/Home/view/home'); 
 	}
 
-	public function gestion($page = 'index_gestion'){
+	public function manage($page = 'index_gestion') {
 		
-		if ( ! is_file(APPPATH.'/Views/pages/gestion/'.$page.'.tpl'))
-		{
+		if (!is_file(APPPATH.'/Views/pages/manage/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
 
@@ -153,37 +152,7 @@ class Account extends BaseController
 		$this->smarty->assign('nom', $session->get('nom'));	
 		$this->smarty->assign('prenom', $session->get('prenom'));	
 
-		return $this->smarty->view('pages/gestion/'.$page.'.tpl'); 
+		return $this->smarty->view('pages/manage/'.$page.'.tpl'); 
 	}
 
-	public function nouvelle_annonce(){
-		$page = 'nouvelle_annonce';
-
-		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.tpl'))
-		{
-			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
-		}
-
-		if ($this->request->getMethod() == 'post') {
-			$donnee = array(
-				'titre' => $this->request->getVar('titre'),
-				'desc' => $this->request->getVar('desc'),
-				'loyer' => $this->request->getVar('loyer'),
-				'cout_charge' => $this->request->getVar('cout_charge'),
-				'superficie' => $this->request->getVar('superficie'),
-				'chauffage' => $this->request->getVar('chauffage'),
-				'adresse' => $this->request->getVar('adresse'),
-				'ville' => $this->request->getVar('ville'),
-				'cp' => $this->request->getVar('cp')
-			);
-			
-		}
-
-		$this->smarty = service('SmartyEngine');
-		$this->smarty->assign("title", ucfirst($page));
-		$session = session();
-		$this->smarty->assign('pseudo', $session->get('pseudo'));	
-
-		return $this->smarty->view('pages/'.$page.'.tpl'); 
-	}
 }
