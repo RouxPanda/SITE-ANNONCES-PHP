@@ -85,7 +85,7 @@
                                         <div class="latest-update-timestamp"><span><strong>February 3, 2017 @ 9:35 PM MST</strong></span></div>
                                     </div>
                                 </div>
-                                <a href="/Account/gestion/nouvelle_annonce"><button class="btn btn-primary" type="button" style="margin: 0 auto;text-align: center;margin-top: 22px;color: var(--light);background: var(--orange);border-color: var(--orange);">Publier une nouvelle annonce</button></a>
+                                <a href="/Account/nouvelle_annonce"><button class="btn btn-primary" type="button" style="margin: 0 auto;text-align: center;margin-top: 22px;color: var(--light);background: var(--orange);border-color: var(--orange);">Publier une nouvelle annonce</button></a>
                             </div>
                         </div><a href="/Account/gestion/modif_info"><button class="btn btn-primary" type="button" style="text-align: center;margin-top: 22px;color: var(--light);background: var(--orange);border-color: var(--orange);">Changer son profil</button></a>
                     </div>

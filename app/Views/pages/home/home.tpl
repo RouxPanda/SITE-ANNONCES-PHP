@@ -20,10 +20,10 @@
     <section>
         <div class="row" style="text-align: left">
             {foreach from=$datas item=$annonce}
-            <div class="col" id=cartes>
+            <div class="col" id="cartes">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">{$annonce.A_titre}</h4>
+                        <h4 class="card-title" style="color:black;">{$annonce.A_titre}</h4>
                         <p class="card-text">
                             {$annonce.A_description}
                         </p>
