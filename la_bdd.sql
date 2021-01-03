@@ -12,7 +12,8 @@ CREATE TABLE T_annonce (
     A_CP             VARCHAR(255),
     A_energie        BIGINT UNSIGNED,
     A_type           VARCHAR(255),
-    A_etat           BOOLEAN
+    A_etat           BOOLEAN,
+    A_auteur         VARCHAR(255)          
 )ENGINE=InnoDB;
 
 CREATE TABLE T_typeMaison (
@@ -56,6 +57,7 @@ ALTER TABLE T_message ADD CONSTRAINT FK_T_MESSAGE_MAIL FOREIGN KEY (M_mail) REFE
 
 ALTER TABLE T_annonce ADD CONSTRAINT FK_T_ANNONCE_ENERGIE FOREIGN KEY (A_energie) REFERENCES T_energie(E_id_engie); 
 ALTER TABLE T_annonce ADD CONSTRAINT FK_T_ANNONCE_TYPE FOREIGN KEY (A_type) REFERENCES T_typeMaison(T_type); 
+ALTER TABLE T_annonce ADD CONSTRAINT FK_T_ANNONCE_AUTEUR FOREIGN KEY (A_auteur) REFERENCES T_utilisateur(U_mail); 
 
 ALTER TABLE T_photo ADD CONSTRAINT FK_T_PHOTO_ANNONCE FOREIGN KEY (P_annoce) REFERENCES T_annonce(A_idannonce); 
 
@@ -71,10 +73,10 @@ INSERT INTO T_typeMaison (T_type, T_description) VALUES ('T6', 'Contient 6 piece
 
 INSERT INTO T_utilisateur VALUES ('admin@admin.admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin', 'ad', 'min', TRUE);
 
-INSERT INTO T_annonce VALUES (default, 'Studio Balkany', 350, 30, 'individuel', 25, 'Petit studio trop chere pour ce que c est.', '4 Rue Raoul Fallereau', 'Arles', '13200', null, 'T1', false);
-INSERT INTO T_annonce VALUES (default, 'Appart Sebastien', 500, 120, 'individuel', 90, 'La légende raconte que des sardines danses en faisant tourner des serviettes toute les nuits.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T3', false);
-INSERT INTO T_annonce VALUES (default, 'Maison Wish', 980, 120, 'individuel', 120, 'Une maison construite uniquement avec des matériaux achetés sur Wish.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T5', false);
-INSERT INTO T_annonce VALUES (default, 'Chambre PotDeBeurre', 500, 120, 'individuel', 1, 'Chambre du celebre sorcier Henry Pot de Beurre.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T1', false);
-INSERT INTO T_annonce VALUES (default, 'Le Manoir', 1200, 120, 'individuel', 500, 'Une grande maison pour tous les désirs.', 'Sur la coline', 'Montpellier ', '34000', null, 'T6', false);
-INSERT INTO T_annonce VALUES (default, 'Studio 2', 500, 120, 'individuel', 90, 'La légende raconte que des sardines danses en faisant tourner des serviettes toute les nuits.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T3', false);
-INSERT INTO T_annonce VALUES (default, 'Petite Maison Dans La Prairie', 450, 80, 'individuel', 50, 'Endroit ideal pour se reconnecter avec la nature. N est pas fibré.', 'La prairie', 'Guéret ', '23000', null, 'T2', false);
+INSERT INTO T_annonce VALUES (default, 'Studio Balkany', 350, 30, 'individuel', 25, 'Petit studio trop chere pour ce que c est.', '4 Rue Raoul Fallereau', 'Arles', '13200', null, 'T1', false, 'admin@admin.admin');
+INSERT INTO T_annonce VALUES (default, 'Appart Sebastien', 500, 120, 'individuel', 90, 'La légende raconte que des sardines danses en faisant tourner des serviettes toute les nuits.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T3', false, 'admin@admin.admin');
+INSERT INTO T_annonce VALUES (default, 'Maison Wish', 980, 120, 'individuel', 120, 'Une maison construite uniquement avec des matériaux achetés sur Wish.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T5', false, 'admin@admin.admin');
+INSERT INTO T_annonce VALUES (default, 'Chambre PotDeBeurre', 500, 120, 'individuel', 1, 'Chambre du celebre sorcier Henry Pot de Beurre.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T1', false, 'admin@admin.admin');
+INSERT INTO T_annonce VALUES (default, 'Le Manoir', 1200, 120, 'individuel', 500, 'Une grande maison pour tous les désirs.', 'Sur la coline', 'Montpellier ', '34000', null, 'T6', false, 'admin@admin.admin');
+INSERT INTO T_annonce VALUES (default, 'Studio 2', 500, 120, 'individuel', 90, 'La légende raconte que des sardines danses en faisant tourner des serviettes toute les nuits.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T3', false, 'admin@admin.admin');
+INSERT INTO T_annonce VALUES (default, 'Petite Maison Dans La Prairie', 450, 80, 'individuel', 50, 'Endroit ideal pour se reconnecter avec la nature. N est pas fibré.', 'La prairie', 'Guéret ', '23000', null, 'T2', false, 'admin@admin.admin');
