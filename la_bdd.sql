@@ -70,3 +70,11 @@ INSERT INTO T_typeMaison (T_type, T_description) VALUES ('T6', 'Contient 6 piece
 
 
 INSERT INTO T_utilisateur VALUES ('admin@admin.admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin', 'ad', 'min', TRUE);
+
+INSERT INTO T_annonce VALUES (default, 'Studio Balkany', 350, 30, 'individuel', 25, 'Petit studio trop chere pour ce que c est.', '4 Rue Raoul Fallereau', 'Arles', '13200', null, 'T1', false);
+INSERT INTO T_annonce VALUES (default, 'Appart Sebastien', 500, 120, 'individuel', 90, 'La légende raconte que des sardines danses en faisant tourner des serviettes toute les nuits.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T3', false);
+INSERT INTO T_annonce VALUES (default, 'Maison Wish', 980, 120, 'individuel', 120, 'Une maison construite uniquement avec des matériaux achetés sur Wish.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T5', false);
+INSERT INTO T_annonce VALUES (default, 'Chambre PotDeBeurre', 500, 120, 'individuel', 1, 'Chambre du celebre sorcier Henry Pot de Beurre.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T1', false);
+INSERT INTO T_annonce VALUES (default, 'Le Manoir', 1200, 120, 'individuel', 500, 'Une grande maison pour tous les désirs.', 'Sur la coline', 'Montpellier ', '34000', null, 'T6', false);
+INSERT INTO T_annonce VALUES (default, 'Studio 2', 500, 120, 'individuel', 90, 'La légende raconte que des sardines danses en faisant tourner des serviettes toute les nuits.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T3', false);
+INSERT INTO T_annonce VALUES (default, 'Petite Maison Dans La Prairie', 450, 80, 'individuel', 50, 'Endroit ideal pour se reconnecter avec la nature. N est pas fibré.', 'La prairie', 'Guéret ', '23000', null, 'T2', false);

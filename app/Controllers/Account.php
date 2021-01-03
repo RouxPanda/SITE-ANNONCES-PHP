@@ -34,6 +34,8 @@ class Account extends BaseController
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
 
+		$this->smarty = service('SmartyEngine');
+
 		if ($this->request->getMethod() == 'post') {
 			$donnee = array(
 				'pseudo' => $this->request->getVar('pseudo'),
@@ -42,7 +44,7 @@ class Account extends BaseController
 				'mail' => $this->request->getVar('mail'),
 				'mdp' => $this->request->getVar('mdp')
 			);
-			/*if(empty($donnee['pseudo'])){
+			if(empty($donnee['pseudo'])){
 				array_push($erreur, 'pseudo pas remplis');
 			}
 			else if(empty($donnee['prenom'])){
@@ -57,14 +59,16 @@ class Account extends BaseController
 			else if(empty($donnee['mdp'])){
 				array_push($erreur, 'mdp pas remplis');
 			}
-			else {*/
-				$modele = new ModelUtilisateur($donnee);
+			else {
+				//$modele = new ModelUtilisateur($donnee);
 				//print_r($modele->getModel());
-			//}
+			}
+
+			$this->smarty->assign("error", $erreur);
 		}
 
-		$this->smarty = service('SmartyEngine');
 		$this->smarty->assign("title", ucfirst($page));
+		
 
 		return $this->smarty->view('pages/'.$page.'.tpl'); 
 		

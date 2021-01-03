@@ -16,7 +16,18 @@ class Home extends BaseController
 		$this->smarty = service('SmartyEngine');
 		$this->smarty->assign("title", ucfirst($page));
 		
-		
+		$annonceModel = new \App\Models\AnnonceModel();
+		$datas = array();
+
+		if($page == 'annonces') {
+			$datas = $annonceModel->findAll();
+		}else if($page = 'home') {
+			$datas = $annonceModel->findAll(6, 0);
+		}
+
+		$this->smarty->assign("datas", $datas);
+
 		return $this->smarty->view('pages/home/'.$page.'.tpl'); 
-    }
+	}
+
 }
