@@ -28,7 +28,7 @@
                         <li class="nav-item"></li>
                         <li class="nav-item"></li>
                     </ul>
-                    {if isset($smarty.session.mail)}
+                    {if isset($smarty.session.pseudo)}
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item">
                             <a class="nav-link active" href="/Account/gestion">Compte </a>
@@ -51,6 +51,9 @@
             </div>
         </nav>
         <hr style="height: 2px; color: #ff763b; background-color: #ff763b; width: 50%; border: none;">
+         {if isset($smarty.session.success) && !empty($smarty.session.success) }
+            <div class="alert alert-success text-center" role="alert">{$smarty.session.success}</div>
+        {/if}
         {if isset($error) && is_array($error) && !empty($error) }
             <div class="alert alert-danger text-center" role="alert">{$error[0]}</div>
         {/if}

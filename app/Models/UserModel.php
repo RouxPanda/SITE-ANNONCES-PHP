@@ -10,7 +10,7 @@ class UserModel extends Model {
     //protected $useSoftDeletes = true;
 
     // Ce qui peut etre modif avec insert update 
-    protected $allowedFields = [];
+    protected $allowedFields = ['U_mail', 'U_pseudo', 'U_mdp', 'U_nom', 'U_prenom', 'U_admin'];
 
     protected $useTimestamps = false;
 

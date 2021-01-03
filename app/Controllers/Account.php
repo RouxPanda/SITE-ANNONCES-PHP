@@ -7,15 +7,11 @@ class Account extends BaseController
 	
 	private $smarty;
 	
-	public function login()
-	{
-		helper(['form']);
-
+	public function login()	{
 		$page = "login";
 		$this->smarty = service('SmartyEngine');
 
-		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.tpl'))
-		{
+		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
 
@@ -34,7 +30,7 @@ class Account extends BaseController
 				],
 				'mdp' => [
 					'required' => 'Veuillez saisir un mot de passe.',
-					'validateUser' => 'Le mail et/ou le mot de passe ne correspond pas.'
+					'validateUser' => 'Le mail et/ou le mot de passe ne correspondent pas.'
 				]
 			];
 
@@ -46,6 +42,7 @@ class Account extends BaseController
 				$user = $model->where('U_mail', $this->request->getVar('mail'))->first();
 
 				$conn_data = [
+					'pseudo' => $user['U_pseudo'],
 					'mail' => $user['U_mail']
 				];
 
@@ -61,70 +58,77 @@ class Account extends BaseController
 		return $this->smarty->view('pages/'.$page.'.tpl'); 
     }
 	
-	public function register()
-	{
+	public function register() {
 		$page = "register";
+		$this->smarty = service('SmartyEngine');
 
-		$erreur = [];
-		$donnee = [];
-		
-		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.tpl'))
-		{
+		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
 
-		$this->smarty = service('SmartyEngine');
-
 		if ($this->request->getMethod() == 'post') {
+			$erreur = [];
 
-			$donnee = array(
-				'pseudo' => strip_tags($this->request->getVar('pseudo')),
-				'nom' => strip_tags($this->request->getVar('nom')),
-				'prenom' => strip_tags($this->request->getVar('prenom')),
-				'mail' => strip_tags($this->request->getVar('mail')),
-				'mdp' => strip_tags($this->request->getVar('mdp')),
-				'mdp_confirm' => strip_tags($this->request->getVar('mdp_confirm'))
-			);
+			$rules = [
+				'pseudo' => 'required',
+				'nom' => 'required',
+				'prenom' => 'required',
+				'mail' => 'required|valid_email|is_unique[T_utilisateur.U_mail]',
+				'mdp' => 'required',
+				'mdp_confirm' => 'required|matches[mdp]',
+			];
 
-			if(empty($donnee['pseudo'])){
-				array_push($erreur, 'Veuillez renseigner un pseudo.');
-			}
-			else if(empty($donnee['prenom'])){
-				array_push($erreur, 'Veuillez renseigner un prenom.');
-			}
-			else if(empty($donnee['nom'])){
-				array_push($erreur, 'Veuillez renseigner un nom.');
-			}
-			else if(empty($donnee['mail'])){
-				array_push($erreur, 'Veuillez renseigner un email.');
-			}
-			else if(empty($donnee['mdp'])){
-				array_push($erreur, 'Veuillez renseigner un mot de passe.');
-			}
-			else if(empty($donnee['mdp_confirm'])){
-				array_push($erreur, 'Veuillez renseigner confirmer votre mot de passe.');
-			}
-			else {
+			$errors = [
+				'pseudo' => [
+					'required' => 'Veuillez saisir un pseudo.',
+				],
+				'nom' => [
+					'required' => 'Veuillez saisir votre nom.',
+				],
+				'prenom' => [
+					'required' => 'Veuillez saisir votre prenom.',
+				],
+				'mail' => [
+					'required' => 'Veuillez saisir un mail.',
+					'valid_email' => 'Veuillez saisir un mail valide.',
+					'is_unique' => 'Le mail est déjà utilisé.'
+				],
+				'mdp' => [
+					'required' => 'Veuillez saisir un mot de passe.',
+				],
+				'mdp_confirm' => [
+					'required' => 'Veuillez confirmer votre mot de passe.',
+					'matches' =>  'Les mots de passe ne correspondent pas.'
+				]
+			];
 
-				if($donnee['mdp'] !== $donnee['mdp_confirm']) {
-					array_push($erreur, 'Les mots de passe ne correspondent pas.');
-				}else{
 
-					// Verifier si l'email n'est pas deje enregistré
+			if (!$this->validate($rules, $errors)) {
+				$erreur = array_values($this->validator->getErrors());
+			}else{
+				$model = new \App\Models\UserModel();
 
-					// Encryption du mdp
+				$register_data = [
+					'U_mail' => strip_tags($this->request->getVar('mail')),
+					'U_mdp' => sha1($this->request->getVar('mdp')),
+					'U_pseudo' => strip_tags($this->request->getVar('pseudo')),
+					'U_nom' => strip_tags($this->request->getVar('nom')),
+					'U_prenom' => strip_tags($this->request->getVar('prenom')),
+					'U_admin' => false
+				];
 
-					// Creation du compte
+				$model->insert($register_data);
 
-				}
+				$session = session();
+				$session->setFlashdata('success', 'Votre compte a été créér avec succes.');
 
+				return redirect()->to('/Home/view/home');
 			}
 
 			$this->smarty->assign("error", $erreur);
 		}
 
 		$this->smarty->assign("title", ucfirst($page));
-		
 		return $this->smarty->view('pages/'.$page.'.tpl'); 
 	}
 	
