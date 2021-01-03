@@ -135,4 +135,35 @@ class Account extends BaseController
 
 		return $this->smarty->view('pages/gestion/'.$page.'.tpl'); 
 	}
+
+	public function nouvelle_annonce(){
+		$page = 'nouvelle_annonce';
+
+		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.tpl'))
+		{
+			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+		}
+
+		if ($this->request->getMethod() == 'post') {
+			$donnee = array(
+				'titre' => $this->request->getVar('titre'),
+				'desc' => $this->request->getVar('desc'),
+				'loyer' => $this->request->getVar('loyer'),
+				'cout_charge' => $this->request->getVar('cout_charge'),
+				'superficie' => $this->request->getVar('superficie'),
+				'chauffage' => $this->request->getVar('chauffage'),
+				'adresse' => $this->request->getVar('adresse'),
+				'ville' => $this->request->getVar('ville'),
+				'cp' => $this->request->getVar('cp')
+			);
+			
+		}
+
+		$this->smarty = service('SmartyEngine');
+		$this->smarty->assign("title", ucfirst($page));
+		$session = session();
+		$this->smarty->assign('pseudo', $session->get('pseudo'));	
+
+		return $this->smarty->view('pages/'.$page.'.tpl'); 
+	}
 }
