@@ -16,7 +16,7 @@ class Annonce extends BaseController
         $this->smarty = service('SmartyEngine');
 
         // Si l'utilisateur n'est pas connecter, on le redirige
-        if(!isset($session->pseudo)) return redirect()->to('/Home/view/home');
+        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
 
         if ($this->request->getMethod() == 'post' && isset($session->pseudo)) {
             $erreur = [];
@@ -101,4 +101,119 @@ class Annonce extends BaseController
         $this->smarty->assign("title", ucfirst($page));
 		return $this->smarty->view('pages/annonce/'.$page.'.tpl');  
     }
+
+    public function modify($id = 0) {
+        $page = 'new_annonce';
+        $erreur = [];
+
+        $session = session();
+        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+
+		if (!is_file(APPPATH.'/Views/pages/annonce/'.$page.'.tpl')) {
+			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+        }
+
+        $this->smarty = service('SmartyEngine');
+
+        // Si l'utilisateur n'est pas connecter, on le redirige
+        
+            
+        $model = new \App\Models\AnnonceModel();
+        $annonce = $model->find($id);
+
+        if(!$annonce) {
+            array_push($erreur, "L annonce n existe pas.");
+        }else{
+
+            if($annonce['A_auteur'] != $session->mail) {
+                array_push($erreur, "Vous n etes pas le proprietaire de cette annonce.");
+            }else{
+                
+                if ($this->request->getMethod() == 'post' && isset($session->pseudo)) {
+
+                    $rules = [
+                        'titre' => 'required',
+                        'desc' => 'required',
+                        'loyer' => 'required',
+                        'cout_charge' => 'required',
+                        'superficie' => 'required',
+                        'chauffage' => 'required',
+                        'adresse' => 'required',
+                        'ville' => 'required',
+                        'cp' => 'required',
+                        'type' => 'required|validateType[type]'
+                    ];
+        
+                    $errors = [
+                        'titre' => [
+                            'required' => 'Veuillez saisir un titre.'
+                        ],
+                        'desc' => [
+                            'required' => 'Veuillez saisir une description.'
+                        ],
+                        'loyer' => [
+                            'required' => 'Veuillez renseigner le loyer.'
+                        ],
+                        'cout_charge' => [
+                            'required' => 'Veuillez renseigner les charges.'
+                        ],
+                        'superficie' => [
+                            'required' => 'Veuillez renseigner la superficie.'
+                        ],
+                        'chauffage' => [
+                            'required' => 'Veuillez spécifier le chauffage.'
+                        ],
+                        'adresse' => [
+                            'required' => 'Veuillez renseigner l adresse.'
+                        ],
+                        'ville' => [
+                            'required' => 'Veuillez renseigner la ville.'
+                        ],
+                        'cp' => [
+                            'required' => 'Veuillez renseigner le code postale.'
+                        ],
+                        'type' => [
+                            'required' => 'Veuillez renseigner le type de logement.',
+                            'validateType' => 'Le type de logement est invalide'
+                        ]
+                    ];
+        
+                    if (!$this->validate($rules, $errors)) {
+                        $erreur = array_values($this->validator->getErrors());
+                    }else{
+
+                        $annonce_data = array(
+                            'A_titre' => strip_tags($this->request->getVar('titre')),
+                            'A_cout_loyer' => strip_tags($this->request->getVar('loyer')),
+                            'A_cout_charges' => strip_tags($this->request->getVar('cout_charge')),
+                            'A_type_chauffage' => strip_tags($this->request->getVar('chauffage')),
+                            'A_superfice' => strip_tags($this->request->getVar('superficie')),
+                            'A_description' => strip_tags($this->request->getVar('desc')),
+                            'A_adresse' => strip_tags($this->request->getVar('adresse')),
+                            'A_ville' => strip_tags($this->request->getVar('ville')),
+                            'A_cp' => strip_tags($this->request->getVar('cp')),
+                            'A_energie' => null,
+                            'A_type' => strip_tags($this->request->getVar('type')),
+                            'A_etat' => false
+                        );
+        
+                        $model->update($id, $annonce_data);
+                        $session->setFlashdata('success', 'Votre annonce a bien été modifiée.');
+                        $annonce = $model->find($id);
+                    }
+        
+                    $this->smarty->assign("error", $erreur);
+                }
+             
+                $this->smarty->assign("data", $annonce);
+            }
+
+        }
+
+
+        $this->smarty->assign("title", ucfirst($page));
+        $this->smarty->assign("error", $erreur);
+		return $this->smarty->view('pages/annonce/'.$page.'.tpl'); 
+    }
+
 }

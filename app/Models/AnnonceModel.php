@@ -10,7 +10,7 @@ class AnnonceModel extends Model {
     //protected $useSoftDeletes = true;
 
     // Ce qui peut etre modif avec insert update 
-    protected $allowedFields = ['A_titre', 'A_cout_loyer', 'A_cout_charges', 'A_type_chauffage', 'A_superfice', 'A_description', 'A_adresse', 'A_ville', 'A_cp', 'A_energie', 'A_type', 'A_etat', 'A_auteur'];
+    protected $allowedFields = ['A_titre', 'A_cout_loyer', 'A_cout_charges', 'A_type_chauffage', 'A_superfice', 'A_description', 'A_adresse', 'A_ville', 'A_CP', 'A_energie', 'A_type', 'A_etat', 'A_auteur'];
 
     protected $useTimestamps = false;
 
