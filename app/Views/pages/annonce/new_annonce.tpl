@@ -3,21 +3,27 @@
 <section>
     <div class="row">
         <div class="col">
-            <h1 style="text-align: center;margin-top: 60px;margin-bottom: 42px;">Nouvelle annonce</h1>
+            <h1 style="text-align: center;margin-top: 60px;margin-bottom: 42px;">
+            {if isset($data)}
+                Modifier Annonce
+            {else}
+                Nouvelle Annonce
+            {/if}
+            </h1>
         </div>
     </div>
     <div class="container">
         <div style="box-shadow: 0px 2px 5px 2px rgba(0,0,0,0.4);">
-        <form action="{base_url()}/Annonce/new" method="post">
+        <form action="{base_url()}/Annonce/{if isset($data)}modify/{$data['A_idannonce']}{else}new{/if}" method="post">
 
             <br>
 
             <div class="form-row">
                 <div class="col" style="margin-left: 30px;margin-right: 30px;">
-                    <div class="form-group"><label>Titre</label><input name="titre" id="titre" class="form-control" type="text"></div>
-                    <div class="form-group"><label>Description</label><input name="desc" id="desc" class="form-control" type="text"></div>
-                    <div class="form-group"><label>Loyer</label><input name="loyer" id="loyer" class="form-control" type="number"></div>
-                    <div class="form-group"><label>Coût charges</label><input name="cout_charge" id="cout_charge" class="form-control" type="number"></div>
+                    <div class="form-group"><label>Titre</label><input name="titre" id="titre" class="form-control" type="text" value="{if isset($data)}{$data['A_titre']}{/if}"></div>
+                    <div class="form-group"><label>Description</label><input name="desc" id="desc" class="form-control" type="text" value="{if isset($data)}{$data['A_description']}{/if}"></div>
+                    <div class="form-group"><label>Loyer</label><input name="loyer" id="loyer" class="form-control" type="number" value="{if isset($data)}{$data['A_cout_loyer']}{/if}"></div>
+                    <div class="form-group"><label>Coût charges</label><input name="cout_charge" id="cout_charge" class="form-control" type="number" value="{if isset($data)}{$data['A_cout_charges']}{/if}"></div>
                 </div>
             </div>
 
@@ -36,20 +42,20 @@
                 <div class="col" style="margin-left: 30px;margin-right: 30px;">
                     <div class="form-group"><label>Type</label><select name="type" id="type" class="form-control">
                         <optgroup>
-                            <option value="T1" selected="">T1</option>
-                            <option value="T2">T2</option>
-                            <option value="T3">T3</option>
-                            <option value="T4">T4</option>
-                            <option value="T5">T5</option>
-                            <option value="T6">T6</option>
+                            <option value="T1" {if !isset($data)}selected{/if} {if isset($data) && $data['A_type'] == 'T1'}selected{/if}>T1</option>
+                            <option value="T2" {if isset($data) && $data['A_type'] == 'T2'}selected{/if}>T2</option>
+                            <option value="T3" {if isset($data) && $data['A_type'] == 'T3'}selected{/if}>T3</option>
+                            <option value="T4" {if isset($data) && $data['A_type'] == 'T4'}selected{/if}>T4</option>
+                            <option value="T5" {if isset($data) && $data['A_type'] == 'T5'}selected{/if}>T5</option>
+                            <option value="T6" {if isset($data) && $data['A_type'] == 'T6'}selected{/if}>T6</option>
                         </optgroup>
                     </select>
                     </div>
-                    <div class="form-group"><label>Superficie</label><input name="superficie" id="superficie" class="form-control" type="number" placeholder="m²"></div>
+                    <div class="form-group"><label>Superficie</label><input name="superficie" id="superficie" class="form-control" type="number" placeholder="m²" value="{if isset($data)}{$data['A_superfice']}{/if}"></div>
                     <div class="form-group"><label>Chauffage</label><select name="chauffage" id="chauffage" class="form-control">
                         <optgroup>
-                            <option value="Individuel" selected="">Individuel</option>
-                            <option value="Collectif">Collectif</option>
+                            <option value="individuel" {if !isset($data)}selected{/if} {if isset($data) && $data['A_type_chauffage'] == 'individuel'}selected{/if}>Individuel</option>
+                            <option value="collectif" {if isset($data) && $data['A_type_chauffage'] == 'collectif'}selected{/if}>Collectif</option>
                         </optgroup>
                     </select>
                     </div>
@@ -59,9 +65,9 @@
 
             <div class="form-row">
                 <div class="col" style="margin-left: 30px;margin-right: 30px;">
-                    <div class="form-group"><label>Adresse</label><input name="adresse" id="adresse" class="form-control" type="text"></div>
-                    <div class="form-group"><label>Ville</label><input name="ville" id="ville" class="form-control" type="text"></div>
-                    <div class="form-group"><label>Code postal</label><input name="cp" id="cp" class="form-control" type="number" min="0" max="99999"></div>
+                    <div class="form-group"><label>Adresse</label><input name="adresse" id="adresse" class="form-control" type="text" value="{if isset($data)}{$data['A_adresse']}{/if}"></div>
+                    <div class="form-group"><label>Ville</label><input name="ville" id="ville" class="form-control" type="text" value="{if isset($data)}{$data['A_ville']}{/if}"></div>
+                    <div class="form-group"><label>Code postal</label><input name="cp" id="cp" class="form-control" type="text" value="{if isset($data)}{$data['A_CP']}{/if}"></div>
                 </div>
             </div>
 
