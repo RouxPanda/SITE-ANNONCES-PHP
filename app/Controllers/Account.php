@@ -141,17 +141,25 @@ class Account extends BaseController
 
 	public function manage($page = 'index_gestion') {
 		
+		$session = session();
+        // Si l'utilisateur n'est pas connecter, on le redirige
+        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+
 		if (!is_file(APPPATH.'/Views/pages/manage/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
 
 		$this->smarty = service('SmartyEngine');
 		$this->smarty->assign("title", ucfirst($page));
-		$session = session();
+		
+		if($page == 'profil') {
+			
+		}
+		
+
 		$this->smarty->assign('pseudo', $session->get('pseudo'));	
 		$this->smarty->assign('nom', $session->get('nom'));	
 		$this->smarty->assign('prenom', $session->get('prenom'));	
-
 		return $this->smarty->view('pages/manage/'.$page.'.tpl'); 
 	}
 
