@@ -1,13 +1,15 @@
-<div class="col-lg-2" style="height: 700px;width: 366px;">
-    <div class="vertical-nav" style="background: rgb(255,255,255);width: 171px;">
-        <h4 class="text-center"> </h4>
-        <h4 style="color: rgb(116,116,116);">Gestion de Compte</h4>
-        <ul class="vertical-nav-list">
-            <li class="vnav-li"><a class="active-link vnav-link" href="/Account/manage/">Mon compte</a></li>
-            <li class="vnav-li"><a class="vnav-link" href="/Account/manage/profil">Mon profil</a></li>
-            <li class="vnav-li"><a class="vnav-link" href="/Account/manage/ses_annonces">Mes annonces</a></li>
-            <li class="vnav-li"><a class="vnav-link" href="/Account/manage/chat">Message</a></li>
-            <li class="vnav-li"><a class="vnav-link" href="/Account/logout">Déconnexion</a></li>
-        </ul>
-    </div>
-</div>
+<ul class="nav nav-fill" style="background-color: orange; border-radius: 15px">
+    <li class="nav-item">
+        <a class="nav-link" href="/Account/manage/" style="color:black;">Mon compte</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Account/manage/profil" style="color:black;">Mon profil</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Account/manage/ses_annonces" style="color:black;">Mes annonces</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Account/manage/chat" style="color:black;">Message</a>
+    </li>
+</ul>
+

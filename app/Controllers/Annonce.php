@@ -102,7 +102,7 @@ class Annonce extends BaseController
 		return $this->smarty->view('pages/annonce/'.$page.'.tpl');  
     }
 
-    public function id($id) {
+    public function view($id) {
         $page = 'annonce';
         $session = session();
 

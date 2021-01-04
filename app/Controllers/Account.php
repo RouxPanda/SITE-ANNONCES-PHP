@@ -139,7 +139,7 @@ class Account extends BaseController
 		return redirect()->to('/Home/view/home'); 
 	}
 
-	public function manage($page = 'index_gestion') {
+	public function manage($page = 'index') {
 		
 		$session = session();
         // Si l'utilisateur n'est pas connecter, on le redirige

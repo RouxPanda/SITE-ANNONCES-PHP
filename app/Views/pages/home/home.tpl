@@ -22,7 +22,7 @@
             {foreach from=$datas item=$annonce}
             
             <div class="col" id="cartes">
-                <a style="text-decoration: none;"class="card" href="{base_url()}/Annonce/id/{$annonce.A_idannonce}">
+                <a style="text-decoration: none;"class="card" href="{base_url()}/Annonce/view/{$annonce.A_idannonce}">
                     <div class="card-body">
                         <h4 class="card-title" style="color:black;">{$annonce.A_titre}</h4>
                         <p class="card-text">

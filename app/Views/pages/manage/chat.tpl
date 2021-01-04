@@ -1,9 +1,10 @@
 {include file='templates/header.tpl'}
 
 <section>
-    <div class="row register-form" >
+    <div class="container" >
 
         {include file='templates/manage_menu.tpl'}
+        <br>
         
         <section>
             <div class="col-lg-auto" style="height: 700px;width: 1100px;">
