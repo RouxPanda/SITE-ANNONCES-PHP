@@ -51,7 +51,7 @@
             </div>
         </nav>
         <hr style="height: 2px; color: #ff763b; background-color: #ff763b; width: 50%; border: none;">
-         {if isset($smarty.session.success) && !empty($smarty.session.success) }
+        {if isset($smarty.session.success) && !empty($smarty.session.success) }
             <div class="alert alert-success text-center" role="alert">{$smarty.session.success}</div>
         {/if}
         {if isset($error) && is_array($error) && !empty($error) }

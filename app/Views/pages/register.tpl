@@ -29,9 +29,6 @@
                     <div class="col-sm-4 label-column"><label class="col-form-label" for="mdp_confirm">Confirmer</label></div>
                     <div class="col-sm-6 input-column"><input class="form-control" type="password" name="mdp_confirm" id="mdp_confirm"></div>
                 </div>
-                <!--{if !empty($erreur)}
-                    prout
-                {/if}-->
                 <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Si un jour on veux des conditions d'utilisations</label></div>
                 <input class="btn btn-light submit-button" type="submit" value="Valider" name="enregistrement">
             </form>

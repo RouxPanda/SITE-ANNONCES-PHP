@@ -101,4 +101,29 @@ class Annonce extends BaseController
         $this->smarty->assign("title", ucfirst($page));
 		return $this->smarty->view('pages/annonce/'.$page.'.tpl');  
     }
+
+    public function id($id) {
+        $page = 'annonce';
+        $session = session();
+
+		if ( ! is_file(APPPATH.'/Views/pages/annonce/'.$page.'.tpl'))
+		{
+			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+		}
+
+		$this->smarty = service('SmartyEngine');
+		$this->smarty->assign("title", ucfirst($page));
+		
+		$annonceModel = new \App\Models\AnnonceModel();
+		$datas = array();
+
+        $datas = $annonceModel->find($id);
+        if(!$datas){
+            $this->smarty->assign("error", array("L'annonce n'existe pas"));
+        }
+
+		$this->smarty->assign("datas", $datas);
+
+		return $this->smarty->view('pages/annonce/'.$page.'.tpl'); 
+    }
 }
