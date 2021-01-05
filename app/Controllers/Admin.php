@@ -6,14 +6,18 @@ class Admin extends BaseController
 	private $smarty;
 
 	private function verif_admin() {
-
+		$session = session();
+		if(!isset($session->admin) || $session->admin == 0) {
+			return false;
+		}
+		return true;
 	}
 	
 	public function admin() {
 		$session = session();
 		$page = "admin";
 		
-		$this->verif_admin();
+		if(!$this->verif_admin()) return redirect()->to('/Home');
 
 		if (!is_file(APPPATH.'/Views/pages/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
@@ -29,7 +33,7 @@ class Admin extends BaseController
 		$session = session();
 		$page = "users";
 
-		$this->verif_admin();
+		if(!$this->verif_admin()) return redirect()->to('/Home');
 
 		if (!is_file(APPPATH.'/Views/pages/admin/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
@@ -49,7 +53,7 @@ class Admin extends BaseController
 		$session = session();
 		$page = "uedit";
 
-		$this->verif_admin();
+		if(!$this->verif_admin()) return redirect()->to('/Home');
 
 		if (!is_file(APPPATH.'/Views/pages/admin/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
@@ -150,6 +154,26 @@ class Admin extends BaseController
 		$this->smarty->assign("user", $user);
 
 		return $this->smarty->view('pages/admin/'.$page.'.tpl'); 
+	}
+
+	public function annonces() {
+		$session = session();
+		$page = "annonces";
+
+		if(!$this->verif_admin()) return redirect()->to('/Home');
+		
+		if (!is_file(APPPATH.'/Views/pages/admin/'.$page.'.tpl')) {
+			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+		}
+
+		$this->smarty = service('SmartyEngine');
+		$this->smarty->assign("title", ucfirst($page));
+
+		$model = new \App\Models\AnnonceModel();
+		$datas = $model->findAll();
+		$this->smarty->assign("datas", $datas);
+
+		return $this->smarty->view('pages/admin/'.$page.'.tpl');  
 	}
 
 }

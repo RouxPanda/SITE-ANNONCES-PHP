@@ -150,7 +150,7 @@ class Annonce extends BaseController
             array_push($erreur, "L annonce n existe pas.");
         }else{
 
-            if($annonce['A_auteur'] != $session->mail) {
+            if($annonce['A_auteur'] != $session->mail && !$session->admin) {
                 array_push($erreur, "Vous n etes pas le proprietaire de cette annonce.");
             }else{
                 
