@@ -54,7 +54,7 @@
         {if isset($smarty.session.success) && !empty($smarty.session.success) }
             <div class="alert alert-success text-center" role="alert">{$smarty.session.success}</div>
         {/if}
-        {if isset($error) && is_array($error) && !empty($error) }
-            <div class="alert alert-danger text-center" role="alert">{$error[0]}</div>
+        {if isset($smarty.session.error) && is_array($smarty.session.error) && !empty($smarty.session.error) }
+            <div class="alert alert-danger text-center" role="alert">{$smarty.session.error[0]}</div>
         {/if}
     </div>

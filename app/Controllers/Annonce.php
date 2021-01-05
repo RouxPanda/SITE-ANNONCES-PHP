@@ -95,7 +95,7 @@ class Annonce extends BaseController
                 return redirect()->to('/Account/manage');
 			}
 
-			$this->smarty->assign("error", $erreur);
+			$session->setFlashdata("error", $erreur);
         }
 
         $this->smarty->assign("title", ucfirst($page));
@@ -106,7 +106,7 @@ class Annonce extends BaseController
         $page = 'annonce';
         $session = session();
 
-		if ( ! is_file(APPPATH.'/Views/pages/annonce/'.$page.'.tpl'))
+		if (!is_file(APPPATH.'/Views/pages/annonce/'.$page.'.tpl'))
 		{
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
@@ -119,7 +119,7 @@ class Annonce extends BaseController
 
         $datas = $annonceModel->find($id);
         if(!$datas){
-            $this->smarty->assign("error", array("L'annonce n'existe pas"));
+            $session->setFlashdata("error", array("L'annonce n'existe pas"));
         }
 
 		$this->smarty->assign("datas", $datas);
@@ -227,7 +227,7 @@ class Annonce extends BaseController
                         $annonce = $model->find($id);
                     }
         
-                    $this->smarty->assign("error", $erreur);
+                    $session->setFlashdata("error", $erreur);
                 }
              
                 $this->smarty->assign("data", $annonce);
@@ -237,7 +237,7 @@ class Annonce extends BaseController
 
 
         $this->smarty->assign("title", ucfirst($page));
-        $this->smarty->assign("error", $erreur);
+        $session->setFlashdata("error", $erreur);
 		return $this->smarty->view('pages/annonce/'.$page.'.tpl'); 
     }
 
