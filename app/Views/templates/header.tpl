@@ -28,13 +28,18 @@
                         <li class="nav-item"></li>
                         <li class="nav-item"></li>
                     </ul>
-                    {if isset($smarty.session.pseudo)}
+                    {if isset($smarty.session.mail)}
                     <ul class="nav navbar-nav ml-auto">
+                        {if isset($smarty.session.admin) && $smarty.session.admin}
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Account/manage">Compte </a>
+                            <a class="nav-link active" href="/Admin/admin">Admin</a>
+                        </li>
+                        {/if}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/Account/manage">Compte</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Account/logout">Déconnexion</a>
+                            <a class="nav-link active" href="/Account/logout">Déconnexion</a>
                         </li>
                     </ul>    
                     {else}
@@ -43,7 +48,7 @@
                             <a class="nav-link active" href="/Account/register">Inscription</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Account/login">Connexion</a>
+                            <a class="nav-link active" href="/Account/login">Connexion</a>
                         </li>
                     </ul>
                     {/if}

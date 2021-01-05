@@ -74,7 +74,13 @@
             <hr style="width: 50%;">
 
             <div class="form-row">
-                <div class="col-xl-12" style="margin-bottom: 30px;margin-left: 30px;"><button class="btn btn-primary" type="submit" style="background: #ff763b;font-size: 18px;">Publier</button></div>
+                <div class="col-xl-12" style="margin-bottom: 30px;margin-left: 30px;"><button class="btn btn-primary" type="submit" style="background: #ff763b;font-size: 18px;">
+                {if isset($data)}
+                    Mettre a jour
+                {else}
+                    Publier
+                {/if}
+                </button></div>
             </div>
 
         </form>
