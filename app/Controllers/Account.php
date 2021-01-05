@@ -158,7 +158,13 @@ class Account extends BaseController
 
 		$this->smarty = service('SmartyEngine');
 		$this->smarty->assign("title", ucfirst($page));
-		
+
+		if($page == 'annonces') {
+			$model = new \App\Models\AnnonceModel();
+			$datas = $model->where('A_auteur', $session->mail)->findAll();
+			$this->smarty->assign("datas", $datas);
+		}
+
 		return $this->smarty->view('pages/manage/'.$page.'.tpl'); 
 	}
 

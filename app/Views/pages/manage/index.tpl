@@ -7,7 +7,7 @@
         {include file='templates/manage_menu.tpl'}
         <br>
 
-        <div class="bg-gray padding-50" style="height: 700px;">
+        <div class="bg-gray">
             <div class="container" id="system-status">
                 <h1 class="text-center">{$smarty.session.pseudo}</h1>
                 <hr style="height: 5px; color: #ff763b; background-color: #878787 ; width: 10%; border: none;">
@@ -16,6 +16,8 @@
             </div>
         </div>
     </div>
+
+    <br>
 
 </section>
 
