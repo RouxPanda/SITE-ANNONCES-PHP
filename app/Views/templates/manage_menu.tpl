@@ -6,7 +6,7 @@
         <a class="nav-link" href="/Account/manage/profil" style="color:black;">Mon profil</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/Account/manage/ses_annonces" style="color:black;">Mes annonces</a>
+        <a class="nav-link" href="/Account/manage/annonces" style="color:black;">Mes annonces</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="/Account/manage/chat" style="color:black;">Message</a>

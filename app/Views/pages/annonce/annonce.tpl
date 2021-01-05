@@ -32,7 +32,7 @@
                 <hr style="color: var(--gray);">
                 <div class="row">
                     <div class="col" style="margin: 9px;">
-                        <div style="margin: 5px;"><span>Superficie : {$datas['A_superficie']}</span></div>
+                        <div style="margin: 5px;"><span>Superficie : {$datas['A_superfice']}</span></div>
                         <div style="margin: 5px;"><span>Type : {$datas['A_type']}</span></div>
                     </div>
                     <div class="col" style="margin: 9px;">

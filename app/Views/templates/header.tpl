@@ -29,13 +29,18 @@
                         <li class="nav-item"></li>
                         <li class="nav-item"></li>
                     </ul>
-                    {if isset($smarty.session.pseudo)}
+                    {if isset($smarty.session.mail)}
                     <ul class="nav navbar-nav ml-auto">
+                        {if isset($smarty.session.admin) && $smarty.session.admin}
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Account/manage">Compte </a>
+                            <a class="nav-link active" href="/Admin/admin">Admin</a>
+                        </li>
+                        {/if}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/Account/manage">Compte</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Account/logout">Déconnexion</a>
+                            <a class="nav-link active" href="/Account/logout">Déconnexion</a>
                         </li>
                     </ul>    
                     {else}
@@ -44,7 +49,7 @@
                             <a class="nav-link active" href="/Account/register">Inscription</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Account/login">Connexion</a>
+                            <a class="nav-link active" href="/Account/login">Connexion</a>
                         </li>
                     </ul>
                     {/if}
@@ -55,7 +60,7 @@
         {if isset($smarty.session.success) && !empty($smarty.session.success) }
             <div class="alert alert-success text-center" role="alert">{$smarty.session.success}</div>
         {/if}
-        {if isset($error) && is_array($error) && !empty($error) }
-            <div class="alert alert-danger text-center" role="alert">{$error[0]}</div>
+        {if isset($smarty.session.error) && is_array($smarty.session.error) && !empty($smarty.session.error) }
+            <div class="alert alert-danger text-center" role="alert">{$smarty.session.error[0]}</div>
         {/if}
     </div>
