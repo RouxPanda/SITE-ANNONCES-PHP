@@ -5,7 +5,15 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-xl-7" style="width: 533px;margin-top: 33px;">
-                <h3>{$datas['A_titre']}</h3>
+                <div class="row">
+                    <div class="col"><h3>{$datas['A_titre']}</h3></div>
+                    {if $datas.A_auteur == $smarty.session.mail}
+                    <div class="col" style=" text-align:right;">
+                        <a href="{base_url()}/Annonce/modify/{$datas['A_idannonce']}"><i class="fas fa-edit" style="font-size: 40px; color:#ff941b; padding-right:30px;"></i></a>
+                        <a href="#####"><i class="fas fa-trash-alt" style="font-size: 40px; color:#ff941b; padding-right:10px;""></i></a>
+                    </div>
+                    {/if}
+                </div>
                 <div class="carousel slide" data-ride="carousel" id="carousel-1" style="margin: 0px;margin-top: 33px;margin-bottom: 33px;">
                     <div class="carousel-inner">
                         <div class="carousel-item active"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image"></div>
