@@ -317,3 +317,11 @@ img{ max-width:100%;}*/
 .annonce_proprietaire{
   box-shadow: 0px 0px 8px rgb(0, 102, 255);
 }
+
+.centre_bas_page{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}

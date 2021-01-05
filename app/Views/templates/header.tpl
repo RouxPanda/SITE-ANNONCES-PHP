@@ -23,7 +23,7 @@
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Home/view/annonces">Annonces</a>
+                            <a class="nav-link active" href="/Home/annonces">Annonces</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                         <li class="nav-item"></li>
