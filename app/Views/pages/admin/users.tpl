@@ -20,7 +20,7 @@
                             <a href="{base_url()}/Admin/uedit/{$user['U_mail']}" class="btn btn-primary" type="button"><i class="fas fa-pen"></i></a>
                         </span>
                         <span style="padding-left: 5px; display: table-cell; width: 40px;">
-                            <a class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
+                            <a href="{base_url()}/Admin/udelete/{$user['U_mail']}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
                         </span>
                     </div>
                 </li>

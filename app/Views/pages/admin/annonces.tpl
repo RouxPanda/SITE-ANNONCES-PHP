@@ -17,10 +17,10 @@
                         <i class="fas fa-home mr-3"></i>
                         {$annonce['A_titre']}
                         <span style="display: table-cell; width: 40px;">
-                            <a href="{base_url()}/Annonce/modify/{$annonce['A_idannonce']}" class="btn btn-primary" type="button"><i class="fas fa-pen"></i></a>
+                            <a href="{base_url()}/Annonce/edit/{$annonce['A_idannonce']}" class="btn btn-primary" type="button"><i class="fas fa-pen"></i></a>
                         </span>
                         <span style="padding-left: 5px; display: table-cell; width: 40px;">
-                            <a class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
+                            <a href="{base_url()}/Annonce/delete/{$annonce['A_idannonce']}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
                         </span>
                     </div>
                 </li>

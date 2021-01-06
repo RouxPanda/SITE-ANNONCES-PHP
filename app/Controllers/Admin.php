@@ -156,6 +156,34 @@ class Admin extends BaseController
 		return $this->smarty->view('pages/admin/'.$page.'.tpl'); 
 	}
 
+	public function udelete($mail = null) {
+		$session = session();
+
+		if(!$this->verif_admin()) return redirect()->to('/Home');
+
+		$erreur = [];
+
+		$model = new \App\Models\UserModel();
+		$datas = $model->find($mail);
+
+		if(!$mail) {
+			array_push($erreur, "L'utilisateur n'existe pas.");
+		}else{
+
+			if($session->mail == $mail) {
+				array_push($erreur, "Vous ne pouvez pas vous supprimer.");
+			}else{
+				$model->delete($mail);
+				$session->setFlashdata('success', "L'utilisateur $mail a été supprimé.");
+			}
+
+		}
+
+		$session->setFlashdata('error', $erreur);
+
+		return redirect()->to('/Admin/users');
+	}
+
 	public function annonces() {
 		$session = session();
 		$page = "annonces";

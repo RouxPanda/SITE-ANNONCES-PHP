@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Gerer les utilisateurs</h5>
                                 <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="/Admin/users" class="btn btn-primary">Go</a>
+                        <a href="{base_url()}/Admin/users" class="btn btn-primary">Go</a>
                     </div>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Gerer les annonces</h5>
                                 <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="/Admin/annonces" class="btn btn-primary">Go</a>
+                        <a href="{base_url()}/Admin/annonces" class="btn btn-primary">Go</a>
                     </div>
                 </div>
             </div>

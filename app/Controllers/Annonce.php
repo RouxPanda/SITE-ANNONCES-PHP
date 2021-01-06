@@ -127,7 +127,7 @@ class Annonce extends BaseController
 		return $this->smarty->view('pages/annonce/'.$page.'.tpl'); 
     }
     
-    public function modify($id = 0) {
+    public function edit($id = 0) {
         $page = 'new_annonce';
         $erreur = [];
 
@@ -239,6 +239,30 @@ class Annonce extends BaseController
         $this->smarty->assign("title", ucfirst($page));
         $session->setFlashdata("error", $erreur);
 		return $this->smarty->view('pages/annonce/'.$page.'.tpl'); 
+    }
+
+    public function delete($id = null) {
+        $erreur = [];
+
+        $session = session();
+        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+
+        $model = new \App\Models\AnnonceModel();
+        $annonce = $model->find($id);
+
+        if(!$annonce) {
+            array_push($erreur, "L annonce n existe pas.");
+        }else{
+            if($annonce['A_auteur'] != $session->mail && !$session->admin) {
+                array_push($erreur, "Vous ne pouvez pas supprimer cette annonce.");
+            }else{
+                $model->delete($id);
+                $session->setFlashdata("success", "L'annonce a bien été supprimée.");
+            }
+        }
+
+        $session->setFlashdata("error", $erreur);
+        return redirect()->to('/Home');
     }
 
 }
