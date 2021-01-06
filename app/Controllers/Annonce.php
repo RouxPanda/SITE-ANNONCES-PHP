@@ -149,6 +149,11 @@ class Annonce extends BaseController
 
 		$this->smarty->assign("datas", $datas);
 
+        $img_model = new \App\Models\ImageModel();
+        $images = $img_model->where('P_annonce', $id)->findAll();
+
+        $this->smarty->assign("images", $images);
+
 		return $this->smarty->view('pages/annonce/'.$page.'.tpl'); 
     }
     
