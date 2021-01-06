@@ -23,6 +23,13 @@ class Home extends BaseController
 
 		if($page = 'home') {
 			$datas = $annonceModel->orderBy('A_idannonce', 'desc')->findAll(6, 0);
+			$img_model = new \App\Models\ImageModel();
+			foreach($datas as $key => $ann) {
+				$img = $img_model->where('P_annonce', $ann['A_idannonce'])->findAll();
+				if($img) {
+					$datas[$key]['image'] = $img[0]['P_nom'];
+				}
+			}
 		}
 
 		$this->smarty->assign("datas", $datas);
@@ -50,9 +57,15 @@ class Home extends BaseController
 		
 		$annonceModel = new \App\Models\AnnonceModel();
 		$datas = array();
-
 		$datas = $annonceModel->orderBy('A_idannonce', 'desc')->findAll(16, $numero*16);
-		
+
+		$img_model = new \App\Models\ImageModel();
+		foreach($datas as $key => $ann) {
+			$img = $img_model->where('P_annonce', $ann['A_idannonce'])->findAll();
+			if($img) {
+				$datas[$key]['image'] = $img[0]['P_nom'];
+			}
+		}
 
 		$this->smarty->assign("datas", $datas);
 		$this->smarty->assign("numero", $numero);
