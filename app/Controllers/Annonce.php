@@ -98,6 +98,10 @@ class Annonce extends BaseController
 			$session->setFlashdata("error", $erreur);
         }
 
+        $model = new \App\Models\TypeModel();
+        $types = $model->findAll();
+        $this->smarty->assign("types", $types);
+
         $this->smarty->assign("title", ucfirst($page));
 		return $this->smarty->view('pages/annonce/'.$page.'.tpl');  
     }
@@ -235,6 +239,9 @@ class Annonce extends BaseController
 
         }
 
+        $model = new \App\Models\TypeModel();
+        $types = $model->findAll();
+        $this->smarty->assign("types", $types);
 
         $this->smarty->assign("title", ucfirst($page));
         $session->setFlashdata("error", $erreur);
