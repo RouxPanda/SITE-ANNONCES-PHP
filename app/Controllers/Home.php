@@ -22,7 +22,7 @@ class Home extends BaseController
 		$datas = array();
 
 		if($page = 'home') {
-			$datas = $annonceModel->findAll(6, 0);
+			$datas = $annonceModel->orderBy('A_idannonce', 'desc')->findAll(6, 0);
 		}
 
 		$this->smarty->assign("datas", $datas);
@@ -51,7 +51,7 @@ class Home extends BaseController
 		$annonceModel = new \App\Models\AnnonceModel();
 		$datas = array();
 
-		$datas = $annonceModel->findAll(16, $numero*16);
+		$datas = $annonceModel->orderBy('A_idannonce', 'desc')->findAll(16, $numero*16);
 		
 
 		$this->smarty->assign("datas", $datas);
@@ -77,7 +77,7 @@ class Home extends BaseController
 		$annonceModel = new \App\Models\AnnonceModel();
 
 		$datas = array();
-		$datas = $annonceModel->where("A_titre LIKE '%$recherche%'")->findAll();
+		$datas = $annonceModel->where("A_titre LIKE '%$recherche%'")->orderBy('A_idannonce', 'desc')->findAll();
 
 		if(empty($datas)){
 			$session->setFlashdata("error", array('Aucunes annonce trouvé'));
