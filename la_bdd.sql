@@ -44,7 +44,7 @@ CREATE TABLE T_message (
 
 CREATE TABLE T_photo (
     P_idphoto SERIAL PRIMARY KEY,
-    P_annoce  BIGINT UNSIGNED,
+    P_annonce  BIGINT UNSIGNED,
     P_titre   VARCHAR(255),
     P_nom     VARCHAR(255)
 )ENGINE=InnoDB;
@@ -67,7 +67,13 @@ CREATE TRIGGER before_delete_user BEFORE DELETE ON T_utilisateur FOR EACH ROW
 BEGIN
 	DELETE FROM T_annonce WHERE A_auteur=OLD.U_mail;
 END; //
-DELIMITER;
+
+DELIMITER //
+CREATE TRIGGER before_delete_annonce BEFORE DELETE ON T_annonce FOR EACH ROW 
+BEGIN
+	DELETE FROM T_photo WHERE P_annonce=OLD.A_idannonce;
+END; //
+
 
 -- DONNEES DE BASE
 INSERT INTO T_typeMaison (T_type, T_description) VALUES ('T1', 'Une maison a une piece (un studio quoi)');

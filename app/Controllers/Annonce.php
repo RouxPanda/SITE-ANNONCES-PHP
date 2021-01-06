@@ -31,7 +31,7 @@ class Annonce extends BaseController
                 'adresse' => 'required',
                 'ville' => 'required',
                 'cp' => 'required',
-                'type' => 'required|validateType[type]'
+                'type' => 'required|validateType[type]',
 			];
 
 			$errors = [
@@ -88,8 +88,29 @@ class Annonce extends BaseController
                     'A_etat' => false,
                     'A_auteur' => $session->mail
                 );
-
                 $model->insert($annonce_data);
+
+
+                // Gestion des images
+                $img_model = new \App\Models\ImageModel();
+                
+                // TODO => VERIFIER SI QUE 5 images max
+
+                if($this->validate(['images' => 'uploaded[images.0]|is_image[images]'])) {
+                    $files = $this->request->getFiles();
+                    foreach($files['images'] as $file) {
+                        if($file->isValid() && !$file->hasMoved()) {
+                            $fname = $file->getRandomName();
+                            $file->move('./uploads/annonces', $fname);
+                            $img_data = [
+                                'P_annonce' => $model->getInsertID(),
+                                'P_titre' => "Photo",
+                                'P_nom' => $fname
+                            ];
+                            $img_model->insert($img_data);
+                        }
+                    }
+                }
 
                 $session->setFlashdata('success', 'Votre annonce a bien été publiée.');
                 return redirect()->to('/Account/manage');
@@ -234,6 +255,7 @@ class Annonce extends BaseController
                     $session->setFlashdata("error", $erreur);
                 }
              
+                $this->smarty->assign("images", $this->get_all_images($id));
                 $this->smarty->assign("data", $annonce);
             }
 
@@ -263,6 +285,10 @@ class Annonce extends BaseController
             if($annonce['A_auteur'] != $session->mail && !$session->admin) {
                 array_push($erreur, "Vous ne pouvez pas supprimer cette annonce.");
             }else{
+                // Suppression des images
+                $this->remove_images($id);
+
+                // Suppression de l'annonce
                 $model->delete($id);
                 $session->setFlashdata("success", "L'annonce a bien été supprimée.");
             }
@@ -270,6 +296,22 @@ class Annonce extends BaseController
 
         $session->setFlashdata("error", $erreur);
         return redirect()->to('/Home');
+    }
+
+    private function remove_images($id) {
+        $img_model = new \App\Models\ImageModel();
+        $images = $img_model->where('P_annonce', $id)->findAll();
+
+        foreach($images as $img) {
+            if(file_exists("./uploads/annonces/".$img['P_nom'])) unlink("./uploads/annonces/".$img['P_nom']);
+            $img_model->delete($img['P_idphoto']);
+        }
+    }
+
+    private function get_all_images($id) {
+        $img_model = new \App\Models\ImageModel();
+        $images = $img_model->where('P_annonce', $id)->findAll();
+        return $images;
     }
 
 }

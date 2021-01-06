@@ -14,7 +14,7 @@
     </div>
     <div class="container">
         <div style="box-shadow: 0px 2px 5px 2px rgba(0,0,0,0.4);">
-        <form action="{base_url()}/Annonce/{if isset($data)}edit/{$data['A_idannonce']}{else}new{/if}" method="post">
+        <form action="{base_url()}/Annonce/{if isset($data)}edit/{$data['A_idannonce']}{else}new{/if}" method="post"  enctype="multipart/form-data">
 
             <br>
 
@@ -32,7 +32,18 @@
             <div class="form-row">
                 <div class="col" style="margin-left: 30px;margin-right: 30px;">
                     <div class="form-group"><label class="col-form-label">Photos</label></div>
-                    <div class="form-group"><input type="file" style="margin: 10px;"><input type="file" style="margin: 10px;"><input type="file" style="margin: 10px;"></div>
+                    <div class="form-group">
+                        <input type="file" name="images[]" id="images" accept="image/*" multiple onchange="checkFiles(this.files)"/>
+                    </div>
+                    <div class="row">
+                        <div id="images-preview" class="images-preview text-center col">
+                            {if isset($images) && is_array($images) && !empty($images)}
+                            {foreach from=$images item=$img}
+                                <img height="100px" style="margin: 5px;" src="{base_url()}/uploads/annonces/{$img['P_nom']}" />
+                            {/foreach}
+                            {/if}
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -87,5 +98,28 @@
     </div>
     <br>
 </section>
+
+<script>
+function checkFiles(files) {
+    document.getElementById("images-preview").innerHTML = '';
+
+    let max = 5;  
+    if(files.length>max) {
+        alert("Vous ne pouvez choisir que " + max + " images !");
+        let list = new DataTransfer;
+        document.getElementById('images').files = list.files
+    }else{
+        let filesAmount = files.length;
+        for (i = 0; i < filesAmount; i++) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                $($.parseHTML('<img>')).attr('src', event.target.result).attr('height', '100px').attr('style', 'margin: 5px;').appendTo('div.images-preview');
+            }
+
+            reader.readAsDataURL(files[i]);
+        }
+    }       
+}
+</script>
 
 {include file='templates/footer.tpl'}
