@@ -30,7 +30,7 @@
             {/foreach}
         </div>
         <div class="row centre_bas_page" style="margin-top:30px; margin-bottom:60px;">
-            {if $numero>0}
+            {if isset($numero) && $numero>0}
             <a href="{base_url()}/Home/annonces/{$numero-1}">
                 <button class="btn btn-primary" style="font-size: 20px; border:none; background:orange;" type="button"><i class="fas fa-chevron-left"></i></button>
             </a>
@@ -38,7 +38,7 @@
             <a style="margin-left:15px; margin-right:15px;">
                 <button class="btn btn-primary" style="font-size: 20px; border:none; background:orange;" type="button">{$numero}</button>
             </a>
-            {if $numero*16 <= $total}
+            {if isset($numero) && $numero*16 <= $total}
             <a href="{base_url()}/Home/annonces/{$numero+1}">
                 <button class="btn btn-primary" style="font-size: 20px; border:none; background:orange;" type="button"><i class="fas fa-chevron-right"></i></button>
             </a>

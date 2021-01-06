@@ -7,7 +7,7 @@
             <div class="col-xl-7" style="width: 533px;margin-top: 33px;">
                 <div class="row">
                     <div class="col"><h3>{$datas['A_titre']}</h3></div>
-                    {if $datas.A_auteur == $smarty.session.mail}
+                    {if isset($smarty.session.mail) && $datas.A_auteur == $smarty.session.mail}
                     <div class="col" style=" text-align:right;">
                         <a href="{base_url()}/Annonce/edit/{$datas['A_idannonce']}"><i class="fas fa-edit" style="font-size: 40px; color:#ff941b; padding-right:30px;"></i></a>
                         <a href="#####"><i class="fas fa-trash-alt" style="font-size: 40px; color:#ff941b; padding-right:10px;"></i></a>

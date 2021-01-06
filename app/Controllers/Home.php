@@ -63,9 +63,10 @@ class Home extends BaseController
 	
 	public function search($recherche) {
         $page = 'annonces';
-        $session = session();
+		$session = session();
+		$numero = 0;
 
-		if ( ! is_file(APPPATH.'/Views/pages/home/'.$page.'.tpl'))
+		if (!is_file(APPPATH.'/Views/pages/home/'.$page.'.tpl'))
 		{
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
@@ -74,15 +75,17 @@ class Home extends BaseController
 		$this->smarty->assign("title", ucfirst($page));
 		
 		$annonceModel = new \App\Models\AnnonceModel();
+
 		$datas = array();
 		$datas = $annonceModel->where("A_titre LIKE '%$recherche%'")->findAll();
+
 		if(empty($datas)){
 			$session->setFlashdata("error", array('Aucunes annonce trouvé'));
 		}
-		
 
-		$this->smarty->assign("datas", $datas);
 		$this->smarty->assign("total", count($datas));
+		$this->smarty->assign("datas", $datas);
+		$this->smarty->assign("numero", $numero);
 
 		return $this->smarty->view('pages/home/'.$page.'.tpl'); 
 	}
