@@ -61,6 +61,13 @@ ALTER TABLE T_annonce ADD CONSTRAINT FK_T_ANNONCE_AUTEUR FOREIGN KEY (A_auteur) 
 
 ALTER TABLE T_photo ADD CONSTRAINT FK_T_PHOTO_ANNONCE FOREIGN KEY (P_annoce) REFERENCES T_annonce(A_idannonce); 
 
+-- CREATION DES TRIGGERS
+DELIMITER //
+CREATE TRIGGER before_delete_user BEFORE DELETE ON T_utilisateur FOR EACH ROW 
+BEGIN
+	DELETE FROM T_annonce WHERE A_auteur=OLD.U_mail;
+END; //
+DELIMITER;
 
 -- DONNEES DE BASE
 INSERT INTO T_typeMaison (T_type, T_description) VALUES ('T1', 'Une maison a une piece (un studio quoi)');
