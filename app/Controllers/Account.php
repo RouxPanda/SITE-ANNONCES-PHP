@@ -295,6 +295,7 @@ class Account extends BaseController
 			$ann_title = $ann_model->find($msg['M_idannonce'])['A_titre'];
 			
 			$c = array( 'id' => $msg['M_idannonce'], 'titre' => $ann_title);
+
 			
 
 			array_push($convs, $c);
