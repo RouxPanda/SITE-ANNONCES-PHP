@@ -59,7 +59,7 @@ ALTER TABLE T_annonce ADD CONSTRAINT FK_T_ANNONCE_ENERGIE FOREIGN KEY (A_energie
 ALTER TABLE T_annonce ADD CONSTRAINT FK_T_ANNONCE_TYPE FOREIGN KEY (A_type) REFERENCES T_typeMaison(T_type); 
 ALTER TABLE T_annonce ADD CONSTRAINT FK_T_ANNONCE_AUTEUR FOREIGN KEY (A_auteur) REFERENCES T_utilisateur(U_mail); 
 
-ALTER TABLE T_photo ADD CONSTRAINT FK_T_PHOTO_ANNONCE FOREIGN KEY (P_annoce) REFERENCES T_annonce(A_idannonce); 
+ALTER TABLE T_photo ADD CONSTRAINT FK_T_PHOTO_ANNONCE FOREIGN KEY (P_annonce) REFERENCES T_annonce(A_idannonce); 
 
 -- CREATION DES TRIGGERS
 DELIMITER //
@@ -77,12 +77,12 @@ END; //
 
 
 -- DONNEES DE BASE
-INSERT INTO T_typeMaison (T_type, T_description) VALUES ('T1', 'Une maison a une piece (un studio quoi)');
-INSERT INTO T_typeMaison (T_type, T_description) VALUES ('T2', 'Contient 2 pieces');
-INSERT INTO T_typeMaison (T_type, T_description) VALUES ('T3', 'Contient 3 pieces');
-INSERT INTO T_typeMaison (T_type, T_description) VALUES ('T4', 'Contient 4 pieces');
-INSERT INTO T_typeMaison (T_type, T_description) VALUES ('T5', 'Contient 5 pieces');
-INSERT INTO T_typeMaison (T_type, T_description) VALUES ('T6', 'Contient 6 pieces');
+INSERT INTO T_typeMaison VALUES ('T1', 'Une maison a une piece (un studio quoi)');
+INSERT INTO T_typeMaison VALUES ('T2', 'Contient 2 pieces');
+INSERT INTO T_typeMaison VALUES ('T3', 'Contient 3 pieces');
+INSERT INTO T_typeMaison VALUES ('T4', 'Contient 4 pieces');
+INSERT INTO T_typeMaison VALUES ('T5', 'Contient 5 pieces');
+INSERT INTO T_typeMaison VALUES ('T6', 'Contient 6 pieces');
 
 
 INSERT INTO T_utilisateur VALUES ('admin@admin.admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin', 'ad', 'min', TRUE);
