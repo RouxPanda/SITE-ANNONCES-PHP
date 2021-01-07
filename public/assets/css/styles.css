@@ -357,3 +357,15 @@ a.vnav-link:HOVER {
 .search-box .btn-light {
   border: 1px solid #ced4da;
 }
+
+.search_margin{
+  margin:auto;
+}
+
+.bar_recherche{
+  width:100%;
+}
+
+.col label{
+  margin-right:3px ;
+}
