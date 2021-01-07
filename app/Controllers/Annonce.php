@@ -143,6 +143,7 @@ class Annonce extends BaseController
 		$datas = array();
 
         $datas = $annonceModel->find($id);
+
         if(!$datas){
             $session->setFlashdata("error", array("L'annonce n'existe pas"));
         }

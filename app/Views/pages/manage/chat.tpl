@@ -13,11 +13,12 @@
               <div class="list-group">
                 {if isset($convs) && is_array($convs)}
                 {foreach from=$convs item=$ann}
-                <a href="#" class="list-group-item list-group-item-action {if isset($current) && $current == $ann['idannonce']}active{/if}" aria-current="true">
+                <a href="{base_url()}/Account/chat/{$ann['id']}{if isset($ann['dest'])}{$ann['dest']}{/if}" class="list-group-item list-group-item-action {if isset($current) && $current == $ann['id']}active{/if}" aria-current="true">
                   <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{$ann['A_titre']}</h5>
+                    <h5 class="mb-1">{$ann['titre']}</h5>
+                    
                   </div>
-                  <p class="lead"></p>
+                  <p class="mb-1">s</p>
                 </a>
                 {/foreach}
                 {/if}
@@ -26,48 +27,36 @@
             <div class="col">
               <div class="messaging">
                   <div class="inbox_msg">
-                    <div class="mesgs">
-                        <div class="incoming_msg">
-                            <div class="received_msg">
-                            <div class="received_withd_msg">
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="outgoing_msg">
-                            <div class="sent_msg">
-                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                            </div>
-                        </div>
-                        <div class="incoming_msg">
-                            <div class="received_msg">
-                            <div class="received_withd_msg">
-                                <p>Test, which is a new approach to have</p>
+                    <div class="mesgs w-100">
+                        {if isset($msgs) && isset($smarty.session.mail)}
+                          {foreach from=$msgs item=$msg}
+                            {if $msg['M_mail'] == $smarty.session.mail}
+                            <div class="outgoing_msg">
+                                <div class="sent_msg">
+                                    <p>{$msg['M_texte_message']}</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="outgoing_msg">
-                            <div class="sent_msg">
-                            <p>Apollo University, Delhi, India Test</p>
-                            </div>
-                        </div>
-                        <div class="incoming_msg">
-                            <div class="received_msg">
-                            <div class="received_withd_msg">
-                                <p>We work directly with our designers and suppliers,
-                                and sell direct to you, which means quality, exclusive
-                                products, at a price anyone can afford.</p>
+                            {else}
+                            <div class="incoming_msg">
+                                <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>{$msg['M_texte_message']}</p>
+                                </div>
                                 </div>
                             </div>
-                        </div>
+                            {/if}
+                          {/foreach}
+                        {/if}
                     </div>
                   </div>
               </div>
 
-              <form method="post" style="margin-top:5px;">
+              <form method="post" action="{base_url()}/Account/post_msg" style="margin-top:5px;">
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Votre message ..."  aria-describedby="send-btn">
-                  <button class="btn btn-outline-secondary" type="button" id="send-btn"><i class="fas fa-paper-plane"></i></button>
+                  <input type="hidden" name="dest" value="{if isset($dest)}{$dest}{/if}" />
+                  <input type="hidden" name="id" value="{if isset($id)}{$id}{/if}" />
+                  <input type="text" name="msg" class="form-control" placeholder="Votre message ..."  aria-describedby="send-btn" />
+                  <button class="btn btn-outline-secondary" type="submit" id="send-btn"><i class="fas fa-paper-plane"></i></button>
                 </div>
               </form>
 

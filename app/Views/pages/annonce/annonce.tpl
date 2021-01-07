@@ -3,8 +3,7 @@
 <section>
     <div>
         <div class="row">
-            <div class="col"></div>
-            <div class="col-xl-7" style="width: 533px;margin-top: 33px;">
+            <div class="container">
                 <div class="row">
                     <div class="col"><h3>{$datas['A_titre']}</h3></div>
                     {if isset($smarty.session.mail) && $datas['A_auteur'] == $smarty.session.mail}
@@ -14,7 +13,7 @@
                     </div>
                     {/if}
                 </div>
-                <div id="carousel-1" class="carousel slide" data-ride="carousel" style="margin: 0px;margin-top: 33px;margin-bottom: 33px;">
+                <div id="carousel-1" class="carousel slide" data-ride="carousel" style="margin: 0px;margin-top: 10px; margin-bottom: 33px;">
                     <div id="image-carrousel" class="carousel-inner">
                         {if isset($images) && is_array($images) && !empty($images)}
                         {foreach from=$images item=$img}
@@ -56,12 +55,14 @@
                         <div style="margin: 5px;"></div>
                     </div>
                 </div>
+                 {if isset($smarty.session.mail) && $datas['A_auteur'] != $smarty.session.mail}
                 <div class="row" style="margin-bottom: 50px;">
                     <div class="col" style="margin-top: 33px;"><strong><span style="font-size: 22px;font-family: Allerta, sans-serif;">Vous êtes intéresser ?&nbsp;</span></strong>
-                    <button class="btn btn-primary" type="button" style="background: linear-gradient(-9deg, rgba(255,255,255,0.27), rgb(255,107,0)), var(--orange);margin-left: 40px;margin-top: -7px;">Envoyer un message&nbsp;&nbsp;<i class="fa fa-envelope"></i></button></div>
+                    <a href="{base_url()}/Account/chat/{$datas['A_idannonce']}" class="btn btn-primary" type="button" style="background: linear-gradient(-9deg, rgba(255,255,255,0.27), rgb(255,107,0)), var(--orange);margin-left: 40px;margin-top: -7px;">Envoyer un message&nbsp;&nbsp;<i class="fa fa-envelope"></i></a></div>
                 </div>
+                {/if}
+                <br>
             </div>
-            <div class="col"></div>
         </div>
     </div>
 </section>

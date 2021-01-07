@@ -270,7 +270,7 @@ class Account extends BaseController
 		return redirect()->to('/Account/manage/profil'); 
 	}
 
-	public function chat($id = null) {
+	public function chat($id = null, $dest = null) {
 		$page = "chat";
 
 		$session = session();
@@ -281,36 +281,58 @@ class Account extends BaseController
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
 
+		$erreur = [];
+
 		$this->smarty = service('SmartyEngine');
 
 		$model = new \App\Models\MessageModel();
 		$ann_model = new \App\Models\AnnonceModel();
 
-		// Recuperation des conversations
-		$convs = $model->where('M_mail', $session->mail)->findColumn('M_idannonce');
-
-		if($convs){
-			$convs = array_unique($convs);
-
-			$annonces = array();
-
-			foreach($convs as $c) {
-				$ann = $ann_model->find($c);
-				array_push($annonces, $ann);
-			}
-
-			if (isset($id) && $id != null) $this->smarty->assign("current", $id);
-			$this->smarty->assign("convs", $annonces);
-		}
-
-		// Recuperation des messages liees a l'annonce
-		if($id) {
-			$msg = $model->where('M_idannonce', $id)->where('M_mail', $session->mail)->findAll();
+		// Affichage des conversations
+		$convs_msgs = $model->where('M_idannonce', $id)->where("M_mail = '$session->mail' || M_mail_dest =  '$session->mail' ")->findAll();
+		$convs = [];
+		foreach($convs_msgs as $msg) {
+			$ann_title = $ann_model->find($msg['M_idannonce'])['A_titre'];
 			
+			$c = array( 'id' => $msg['M_idannonce'], 'titre' => $ann_title);
+			
+
+			array_push($convs, $c);
+		}
+		$this->smarty->assign("convs", $convs);
+
+		// Messages de la conversation
+		if($id) {
+			$annonce = $ann_model->find($id);
+			if(!$annonce){
+				array_push($erreur, "L'annonce n'existe pas.");
+			}else{
+
+				$msgs = [];
+				
+				if($annonce['A_auteur'] == $session->mail) {
+					
+					if(!isset($dest) || $dest == null) {
+						return redirect()->to('/Account/chat'); 
+					}else{
+						$msgs = $model->where('M_idannonce', $id)->where("(M_mail = '$session->mail' && M_mail_dest = '$dest') || (M_mail = '$dest' && M_mail_dest = '$session->mail') ")->findAll();
+					}
+
+				}else{
+					$msgs = $model->where('M_idannonce', $id)->where("M_mail = '$session->mail' || M_mail_dest =  '$session->mail' ")->findAll();
+				}
+
+				if(!$dest) $dest = $annonce['A_auteur'];
+
+				$this->smarty->assign("id", $id);
+				$this->smarty->assign("dest", $dest);
+				$this->smarty->assign("msgs", $msgs);
+			}
 		}
 
 
 
+		$session->setFlashdata("error", $erreur);
 		$this->smarty->assign("title", ucfirst($page));
 		return $this->smarty->view('pages/manage/'.$page.'.tpl'); 
 	}
@@ -319,6 +341,8 @@ class Account extends BaseController
 		$session = session();
         // Si l'utilisateur n'est pas connecter, on le redirige
 		if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+
+		$erreur = [];
 
 		if ($this->request->getMethod() == 'post') {
 			$rules = [
@@ -346,12 +370,10 @@ class Account extends BaseController
 				$ann_model = new \App\Models\AnnonceModel();
 				$annonce = $ann_model->find($id);
 
-				$erreur = [];
-
 				if(!$annonce) {
 					array_push($erreur, "L'annonce n'existe pas.");
 				}else{
-					if($session->mail == $annonce['A_auteur'] || $session->mail == $dest) {
+					if($session->mail == $dest) {
 						array_push($erreur, "Vous ne pouvez pas envoyer un message a vous même.");
 					}else{
 						$user_model = new \App\Models\UserModel();
@@ -370,17 +392,19 @@ class Account extends BaseController
 								'M_texte_message' => strip_tags($this->request->getVar('msg'))
 							];
 
-							$msg_model->inset($msg_data);
+							$msg_model->insert($msg_data);
 							$session->setFlashdata("success", "Votre message a bien été envoyé.");
 						}
 
 					}
 				}
+			}else{
+				$erreur = array_values($this->validator->getErrors());
 			}
 		}
 
 		$session->setFlashdata("error", $erreur);
-		return redirect()->to('/Account/manage/profil'); 
+		return redirect()->to('/Account/chat'); 
 	}
 
 }
