@@ -289,16 +289,32 @@ class Account extends BaseController
 		$ann_model = new \App\Models\AnnonceModel();
 
 		// Affichage des conversations
-		$convs_msgs = $model->where('M_idannonce', $id)->where("M_mail = '$session->mail' || M_mail_dest =  '$session->mail' ")->findAll();
+		$convs_msgs = $model->where("(M_mail = '$session->mail' || M_mail_dest =  '$session->mail')")->findAll();
 		$convs = [];
 		foreach($convs_msgs as $msg) {
-			$ann_title = $ann_model->find($msg['M_idannonce'])['A_titre'];
-			
-			$c = array( 'id' => $msg['M_idannonce'], 'titre' => $ann_title);
+			$notexist = true;
+			foreach($convs as $c) {
+				if(($msg['M_idannonce'] == $c['id'] && !isset($c['dest'])) || ($msg['M_idannonce'] == $c['id'] && ( isset($c['dest']) && ($msg['M_mail'] == $c['dest'] || $msg['M_mail_dest'] == $c['dest'])))) {
+					$notexist = false;
+					break;
+				} 
+			}
 
-			
-
-			array_push($convs, $c);
+			if($notexist) {
+				$ann = $ann_model->find($msg['M_idannonce']);
+				$c = array( 'id' => $msg['M_idannonce'], 'titre' => $ann['A_titre']);
+		
+				$dest_m = null;
+				if($session->mail == $ann['A_auteur']) {
+					if($msg['M_mail'] == $session->mail) {
+						$dest_m = $msg['M_mail_dest'];
+					}else{
+						$dest_m = $msg['M_mail'];
+					}
+				}
+				$c['dest'] = $dest_m;
+				array_push($convs, $c);
+			}
 		}
 		$this->smarty->assign("convs", $convs);
 
@@ -316,11 +332,11 @@ class Account extends BaseController
 					if(!isset($dest) || $dest == null) {
 						return redirect()->to('/Account/chat'); 
 					}else{
-						$msgs = $model->where('M_idannonce', $id)->where("(M_mail = '$session->mail' && M_mail_dest = '$dest') || (M_mail = '$dest' && M_mail_dest = '$session->mail') ")->findAll();
+						$msgs = $model->where('M_idannonce', $id)->where("(M_mail = '$session->mail' && M_mail_dest = '$dest') || (M_mail = '$dest' && M_mail_dest = '$session->mail')")->orderBy('M_id', 'asc')->findAll();
 					}
 
 				}else{
-					$msgs = $model->where('M_idannonce', $id)->where("M_mail = '$session->mail' || M_mail_dest =  '$session->mail' ")->findAll();
+					$msgs = $model->where('M_idannonce', $id)->where("(M_mail = '$session->mail' || M_mail_dest =  '$session->mail')")->orderBy('M_id', 'asc')->findAll();
 				}
 
 				if(!$dest) $dest = $annonce['A_auteur'];
