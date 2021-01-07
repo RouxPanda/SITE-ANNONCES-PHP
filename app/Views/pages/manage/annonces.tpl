@@ -14,15 +14,13 @@
                     <div class="input-group" style="display:table; width:100%;">   
                         <i class="fas fa-home mr-3"></i>
                         {$annonce['A_titre']}
-                        {if $annonce['A_etat'] == 3}
                         <span style="padding-left: 5px;display: table-cell; width: 40px;">
                             <a href="{base_url()}/Annonce/view/{$annonce['A_idannonce']}" class="btn btn-info" type="button"><i class="fas fa-eye"></i></a>
                         </span>
-                        {else}
                         <span style="padding-left: 5px;display: table-cell; width: 40px;">
                             <a href="{base_url()}/Annonce/edit/{$annonce['A_idannonce']}" class="btn btn-primary" type="button"><i class="fas fa-pen"></i></a>
                         </span>
-                        {/if}
+                        
                         <span style="padding-left: 5px; display: table-cell; width: 40px;">
                             <a href="{base_url()}/Annonce/delete/{$annonce['A_idannonce']}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
                         </span>
@@ -30,10 +28,13 @@
                         <span style="padding-left: 5px;display: table-cell; width: 40px;">
                             <a href="{base_url()}/Annonce/archive/{$annonce['A_idannonce']}" class="btn btn-warning" type="button"><i class="fas fa-archive"></i></a>
                         </span>
-                        {/if}
-                        {if $annonce['A_etat'] == 1}
+                        {else if $annonce['A_etat'] == 1}
                         <span style="padding-left: 5px; display: table-cell; width: 40px;">
                             <a href="{base_url()}/Annonce/publish/{$annonce['A_idannonce']}" class="btn btn-success" type="button"><i class="fas fa-upload"></i></a>
+                        </span>
+                        {else if $annonce['A_etat'] == 3}
+                        <span style="padding-left: 5px;display: table-cell; width: 40px;">
+                            <a href="{base_url()}/Annonce/publish/{$annonce['A_idannonce']}" class="btn btn-dark" type="button"><i class="fas fa-box-open"></i></a>
                         </span>
                         {/if}
                     </div>

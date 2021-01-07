@@ -83,7 +83,7 @@ class Annonce extends BaseController
                     'A_description' => strip_tags($this->request->getVar('desc')),
                     'A_adresse' => strip_tags($this->request->getVar('adresse')),
                     'A_ville' => strip_tags($this->request->getVar('ville')),
-                    'A_cp' => strip_tags($this->request->getVar('cp')),
+                    'A_CP' => strip_tags($this->request->getVar('cp')),
                     'A_energie' => null,
                     'A_type' => strip_tags($this->request->getVar('type')),
                     'A_etat' => strip_tags($this->request->getVar('action')),
@@ -153,6 +153,10 @@ class Annonce extends BaseController
 
         if(!$datas){
             $session->setFlashdata("error", array("L'annonce n'existe pas"));
+        }
+
+        if($datas['A_etat'] != 2 && ((isset($session->mail) && $session->mail != $datas['A_auteur']) || !isset($session->mail) )) {
+            return redirect()->to('/Home');
         }
 
 		$this->smarty->assign("datas", $datas);
@@ -254,10 +258,9 @@ class Annonce extends BaseController
                             'A_description' => strip_tags($this->request->getVar('desc')),
                             'A_adresse' => strip_tags($this->request->getVar('adresse')),
                             'A_ville' => strip_tags($this->request->getVar('ville')),
-                            'A_cp' => strip_tags($this->request->getVar('cp')),
+                            'A_CP' => strip_tags($this->request->getVar('cp')),
                             'A_energie' => null,
-                            'A_type' => strip_tags($this->request->getVar('type')),
-                            'A_etat' => false
+                            'A_type' => strip_tags($this->request->getVar('type'))
                         );
         
                         $model->update($id, $annonce_data);
@@ -328,27 +331,65 @@ class Annonce extends BaseController
     }
 
     public function publish($id){
-        $model = new \App\Models\AnnonceModel();
-        $model->set('A_etat',2);
-        $model->where('A_idannonce',$id);
-        $model->update();
-
         $session = session();
-        $session->setFlashdata('success', 'Votre annonce a bien été publié');
+        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+
+        $model = new \App\Models\AnnonceModel();
+        $annonce = $model->find($id);
+
+        $erreur = [];
+
+        if(!$annonce) {
+            array_push($erreur, "L annonce n existe pas.");
+        }else{
+            
+            if($annonce['A_auteur'] != $session->mail) {
+                array_push($erreur, "Vous ne pouvez pas modifier cette annonce.");
+            }else{
+                $model = new \App\Models\AnnonceModel();
+                $model->set('A_etat',2);
+                $model->where('A_idannonce',$id);
+                $model->update();
+
+                $session->setFlashdata('success', 'Votre annonce a bien été publié');
+            }
+
+        }
+
+        $session->setFlashdata("error", $erreur);
 
         return redirect()->to('/Account/manage/annonces');
     }
 
     public function archive($id){
-        $model = new \App\Models\AnnonceModel();
-
-        $model->set('A_etat',3);
-        $model->where('A_idannonce',$id);
-        $model->update();
-
         $session = session();
-        $session->setFlashdata('success', 'Votre annonce a bien été publié');
+        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
 
+        $model = new \App\Models\AnnonceModel();
+        $annonce = $model->find($id);
+
+        $erreur = [];
+
+        if(!$annonce) {
+            array_push($erreur, "L annonce n existe pas.");
+        }else{
+            
+            if($annonce['A_auteur'] != $session->mail) {
+                array_push($erreur, "Vous ne pouvez pas modifier cette annonce.");
+            }else{
+                $model = new \App\Models\AnnonceModel();
+
+                $model->set('A_etat',3);
+                $model->where('A_idannonce',$id);
+                $model->update();
+        
+                $session->setFlashdata('success', 'Votre annonce a bien été archivé');
+            }
+
+        }
+
+        $session->setFlashdata("error", $erreur);
+        
         return redirect()->to('/Account/manage/annonces');
     }
 

@@ -17,6 +17,9 @@
                         <i class="fas fa-home mr-3"></i>
                         {$annonce['A_titre']}
                         <span style="display: table-cell; width: 40px;">
+                            <a href="{base_url()}/Annonce/view/{$annonce['A_idannonce']}" class="btn btn-info" type="button"><i class="fas fa-eye"></i></a>
+                        </span>
+                        <span style="padding-left: 5px; display: table-cell; width: 40px;">
                             <a href="{base_url()}/Annonce/edit/{$annonce['A_idannonce']}" class="btn btn-primary" type="button"><i class="fas fa-pen"></i></a>
                         </span>
                         <span style="padding-left: 5px; display: table-cell; width: 40px;">
