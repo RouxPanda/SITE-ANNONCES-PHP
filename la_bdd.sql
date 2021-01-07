@@ -36,8 +36,10 @@ CREATE TABLE T_utilisateur (
 )ENGINE=InnoDB;
 
 CREATE TABLE T_message (
+    M_id                SERIAL PRIMARY KEY ,
     M_idannonce         BIGINT UNSIGNED,
     M_mail              VARCHAR(255),
+    M_mail_dest         VARCHAR(255),
     M_dateheure_message DATE,
     M_texte_message     VARCHAR(255)
 )ENGINE=InnoDB;
@@ -51,9 +53,9 @@ CREATE TABLE T_photo (
 
 
 -- ALTERATION DES TABLES
-ALTER TABLE T_message ADD PRIMARY KEY (M_idannonce, M_mail); 
 ALTER TABLE T_message ADD CONSTRAINT FK_T_MESSAGE_ANNONCE FOREIGN KEY (M_idannonce) REFERENCES T_annonce(A_idannonce); 
 ALTER TABLE T_message ADD CONSTRAINT FK_T_MESSAGE_MAIL FOREIGN KEY (M_mail) REFERENCES T_utilisateur(U_mail); 
+ALTER TABLE T_message ADD CONSTRAINT FK_T_MESSAGE_MAIL_DEST FOREIGN KEY (M_mail_dest) REFERENCES T_utilisateur(U_mail); 
 
 ALTER TABLE T_annonce ADD CONSTRAINT FK_T_ANNONCE_ENERGIE FOREIGN KEY (A_energie) REFERENCES T_energie(E_id_engie); 
 ALTER TABLE T_annonce ADD CONSTRAINT FK_T_ANNONCE_TYPE FOREIGN KEY (A_type) REFERENCES T_typeMaison(T_type); 

@@ -17,6 +17,7 @@
                   <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{$ann['A_titre']}</h5>
                   </div>
+                  <p class="lead"></p>
                 </a>
                 {/foreach}
                 {/if}

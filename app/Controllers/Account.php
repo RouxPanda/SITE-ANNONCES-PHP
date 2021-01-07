@@ -306,8 +306,7 @@ class Account extends BaseController
 		// Recuperation des messages liees a l'annonce
 		if($id) {
 			$msg = $model->where('M_idannonce', $id)->where('M_mail', $session->mail)->findAll();
-
-
+			
 		}
 
 
@@ -316,8 +315,72 @@ class Account extends BaseController
 		return $this->smarty->view('pages/manage/'.$page.'.tpl'); 
 	}
 
-	public function post_msg($id, $msg) {
+	public function post_msg() {
+		$session = session();
+        // Si l'utilisateur n'est pas connecter, on le redirige
+		if(!isset($session->pseudo)) return redirect()->to('/Account/login');
 
+		if ($this->request->getMethod() == 'post') {
+			$rules = [
+				'id' => 'required',
+				'dest' => 'required',
+				'msg' => 'required'
+			];
+
+			$errors = [
+				'id' => [
+					'required' => 'Veuillez saisir une annonce.'
+				],
+				'dest' => [
+					'required' => 'Veuillez saisir un destinataire.',
+				],
+				'msg' => [
+					'required' => 'Veuillez saisir un message.'
+				]
+			];
+
+			if ($this->validate($rules, $errors)) {
+				$id = $this->request->getVar('id');
+				$dest = $this->request->getVar('dest');
+
+				$ann_model = new \App\Models\AnnonceModel();
+				$annonce = $ann_model->find($id);
+
+				$erreur = [];
+
+				if(!$annonce) {
+					array_push($erreur, "L'annonce n'existe pas.");
+				}else{
+					if($session->mail == $annonce['A_auteur'] || $session->mail == $dest) {
+						array_push($erreur, "Vous ne pouvez pas envoyer un message a vous même.");
+					}else{
+						$user_model = new \App\Models\UserModel();
+						$user = $user_model->find($dest);
+
+						if(!$user) {
+							array_push($erreur, "L'utilisateur n'existe pas.");
+						}else{
+							$msg_model = new \App\Models\MessageModel(); 
+
+							$msg_data = [
+								'M_idannonce' => $id,
+								'M_mail' => $session->mail,
+								'M_mail_dest' => $dest,
+								'M_dateheure_message' => date("Y-m-d H:i:s"),
+								'M_texte_message' => strip_tags($this->request->getVar('msg'))
+							];
+
+							$msg_model->inset($msg_data);
+							$session->setFlashdata("success", "Votre message a bien été envoyé.");
+						}
+
+					}
+				}
+			}
+		}
+
+		$session->setFlashdata("error", $erreur);
+		return redirect()->to('/Account/manage/profil'); 
 	}
 
 }
