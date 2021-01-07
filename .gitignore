@@ -2,6 +2,9 @@
 # Operating Specific Junk Files
 #-------------------------
 
+#Project File
+public/uploads/annonces/
+
 # OS X
 .DS_Store
 .AppleDouble

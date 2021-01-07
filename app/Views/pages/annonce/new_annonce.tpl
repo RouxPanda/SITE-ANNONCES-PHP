@@ -14,7 +14,7 @@
     </div>
     <div class="container">
         <div style="box-shadow: 0px 2px 5px 2px rgba(0,0,0,0.4);">
-        <form action="{base_url()}/Annonce/{if isset($data)}modify/{$data['A_idannonce']}{else}new{/if}" method="post">
+        <form action="{base_url()}/Annonce/{if isset($data)}edit/{$data['A_idannonce']}{else}new{/if}" method="post"  enctype="multipart/form-data">
 
             <br>
 
@@ -32,7 +32,18 @@
             <div class="form-row">
                 <div class="col" style="margin-left: 30px;margin-right: 30px;">
                     <div class="form-group"><label class="col-form-label">Photos</label></div>
-                    <div class="form-group"><input type="file" style="margin: 10px;"><input type="file" style="margin: 10px;"><input type="file" style="margin: 10px;"></div>
+                    <div class="form-group">
+                        <input type="file" name="images[]" id="images" accept="image/*" multiple onchange="checkFiles(this.files)"/>
+                    </div>
+                    <div class="row">
+                        <div id="images-preview" class="images-preview text-center col">
+                            {if isset($images) && is_array($images) && !empty($images)}
+                            {foreach from=$images item=$img}
+                                <img height="100px" style="margin: 5px;" src="{base_url()}/uploads/annonces/{$img['P_nom']}" />
+                            {/foreach}
+                            {/if}
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -42,12 +53,11 @@
                 <div class="col" style="margin-left: 30px;margin-right: 30px;">
                     <div class="form-group"><label>Type</label><select name="type" id="type" class="form-control">
                         <optgroup>
-                            <option value="T1" {if !isset($data)}selected{/if} {if isset($data) && $data['A_type'] == 'T1'}selected{/if}>T1</option>
-                            <option value="T2" {if isset($data) && $data['A_type'] == 'T2'}selected{/if}>T2</option>
-                            <option value="T3" {if isset($data) && $data['A_type'] == 'T3'}selected{/if}>T3</option>
-                            <option value="T4" {if isset($data) && $data['A_type'] == 'T4'}selected{/if}>T4</option>
-                            <option value="T5" {if isset($data) && $data['A_type'] == 'T5'}selected{/if}>T5</option>
-                            <option value="T6" {if isset($data) && $data['A_type'] == 'T6'}selected{/if}>T6</option>
+                            {if isset($types)}
+                            {foreach from=$types item=$type}
+                                <option value="{$type['T_type']}" {if isset($data) && $data['A_type'] == $type['T_type']}selected{/if} >{$type['T_type']}</option>
+                            {/foreach}}
+                            {/if}
                         </optgroup>
                     </select>
                     </div>
@@ -88,5 +98,28 @@
     </div>
     <br>
 </section>
+
+<script>
+function checkFiles(files) {
+    document.getElementById("images-preview").innerHTML = '';
+
+    let max = 5;  
+    if(files.length>max) {
+        alert("Vous ne pouvez choisir que " + max + " images !");
+        let list = new DataTransfer;
+        document.getElementById('images').files = list.files
+    }else{
+        let filesAmount = files.length;
+        for (i = 0; i < filesAmount; i++) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                $($.parseHTML('<img>')).attr('src', event.target.result).attr('height', '100px').attr('style', 'margin: 5px;').appendTo('div.images-preview');
+            }
+
+            reader.readAsDataURL(files[i]);
+        }
+    }       
+}
+</script>
 
 {include file='templates/footer.tpl'}

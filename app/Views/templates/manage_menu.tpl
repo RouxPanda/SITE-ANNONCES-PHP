@@ -9,7 +9,7 @@
         <a class="nav-link" href="/Account/manage/annonces" style="color:black;">Mes annonces</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/Account/manage/chat" style="color:black;">Message</a>
+        <a class="nav-link" href="/Account/chat" style="color:black;">Message</a>
     </li>
 </ul>
 

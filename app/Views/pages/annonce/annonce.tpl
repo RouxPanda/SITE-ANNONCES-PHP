@@ -7,26 +7,32 @@
             <div class="col-xl-7" style="width: 533px;margin-top: 33px;">
                 <div class="row">
                     <div class="col"><h3>{$datas['A_titre']}</h3></div>
-                    {if $datas.A_auteur == $smarty.session.mail}
+                    {if isset($smarty.session.mail) && $datas.A_auteur == $smarty.session.mail}
                     <div class="col" style=" text-align:right;">
                         <a href="{base_url()}/Annonce/edit/{$datas['A_idannonce']}"><i class="fas fa-edit" style="font-size: 40px; color:#ff941b; padding-right:30px;"></i></a>
                         <a href="{base_url()}/Annonce/delete/{$annonce['A_idannonce']}"><i class="fas fa-trash-alt" style="font-size: 40px; color:#ff941b; padding-right:10px;"></i></a>
                     </div>
                     {/if}
                 </div>
-                <div class="carousel slide" data-ride="carousel" id="carousel-1" style="margin: 0px;margin-top: 33px;margin-bottom: 33px;">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image"></div>
-                        <div class="carousel-item"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image"></div>
-                        <div class="carousel-item"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image"></div>
+                <div id="carousel-1" class="carousel slide" data-ride="carousel" style="margin: 0px;margin-top: 33px;margin-bottom: 33px;">
+                    <div id="image-carrousel" class="carousel-inner">
+                        {if isset($images) && is_array($images) && !empty($images)}
+                        {foreach from=$images item=$img}
+                        <div class="carousel-item"><img class="w-100 d-block" src="{base_url()}/uploads/annonces/{$img['P_nom']}" alt="Image"></div>
+                        {/foreach}
+                        {else}
+                        <div class="carousel-item"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Image"></div>
+                        {/if}
                     </div>
-                    <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next"><span class="carousel-control-next-icon" style="color: var(--blue);background: var(--light);"></span><span class="sr-only">Next</span></a></div>
-                    <ol class="carousel-indicators">
-                        <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-1" data-slide-to="1"></li>
-                        <li data-target="#carousel-1" data-slide-to="2"></li>
-                    </ol>
-                </div>
+                    <a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                 </div>
                 <h3 style="color: var(--orange);">{$datas['A_cout_loyer']} € ({$datas['A_cout_charges']} €)</h3>
                 <p style="width: 466px;text-align: left;">{$datas['A_description']}</p>
                 <hr style="color: var(--gray);">
@@ -59,5 +65,15 @@
         </div>
     </div>
 </section>
+
+<script>
+let nodes = document.getElementById('image-carrousel').childNodes;
+for (var i = 0; i < nodes.length; i++) {
+    if (nodes[i].nodeType !== 3) {
+      nodes[i].classList.add('active');
+      break;
+    }        
+}
+</script>
 
 {include file='templates/footer.tpl'}
