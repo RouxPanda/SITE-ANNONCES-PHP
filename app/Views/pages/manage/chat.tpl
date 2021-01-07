@@ -13,7 +13,7 @@
               <div class="list-group">
                 {if isset($convs) && is_array($convs)}
                 {foreach from=$convs item=$ann}
-                <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                <a href="#" class="list-group-item list-group-item-action {if isset($current) && $current == $ann['idannonce']}active{/if}" aria-current="true">
                   <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{$ann['A_titre']}</h5>
                   </div>

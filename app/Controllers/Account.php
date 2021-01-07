@@ -299,6 +299,7 @@ class Account extends BaseController
 				array_push($annonces, $ann);
 			}
 
+			if (isset($id) && $id != null) $this->smarty->assign("current", $id);
 			$this->smarty->assign("convs", $annonces);
 		}
 
