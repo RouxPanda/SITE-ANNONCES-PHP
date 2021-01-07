@@ -147,7 +147,6 @@ class Account extends BaseController
 	}
 
 	public function manage($page = 'index') {
-		
 		$session = session();
         // Si l'utilisateur n'est pas connecter, on le redirige
         if(!isset($session->pseudo)) return redirect()->to('/Account/login');
@@ -269,6 +268,55 @@ class Account extends BaseController
 		}
 
 		return redirect()->to('/Account/manage/profil'); 
+	}
+
+	public function chat($id = null) {
+		$page = "chat";
+
+		$session = session();
+        // Si l'utilisateur n'est pas connecter, on le redirige
+		if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+
+		if (!is_file(APPPATH.'/Views/pages/manage/'.$page.'.tpl')) {
+			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+		}
+
+		$this->smarty = service('SmartyEngine');
+
+		$model = new \App\Models\MessageModel();
+		$ann_model = new \App\Models\AnnonceModel();
+
+		// Recuperation des conversations
+		$convs = $model->where('M_mail', $session->mail)->findColumn('M_idannonce');
+
+		if($convs){
+			$convs = array_unique($convs);
+
+			$annonces = array();
+
+			foreach($convs as $c) {
+				$ann = $ann_model->find($c);
+				array_push($annonces, $ann);
+			}
+
+			$this->smarty->assign("convs", $annonces);
+		}
+
+		// Recuperation des messages liees a l'annonce
+		if($id) {
+			$msg = $model->where('M_idannonce', $id)->where('M_mail', $session->mail)->findAll();
+
+
+		}
+
+
+
+		$this->smarty->assign("title", ucfirst($page));
+		return $this->smarty->view('pages/manage/'.$page.'.tpl'); 
+	}
+
+	public function post_msg($id, $msg) {
+
 	}
 
 }
