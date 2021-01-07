@@ -84,13 +84,15 @@
             <hr style="width: 50%;">
 
             <div class="form-row">
-                <div class="col-xl-12" style="margin-bottom: 30px;margin-left: 30px;"><button class="btn btn-primary" type="submit" style="background: #ff763b;font-size: 18px;">
+                <div class="col-xl-12" style="margin-bottom: 30px;margin-left: 30px;"><button class="btn btn-primary" type="submit" name="action" value="2" style="background: #ff763b;font-size: 18px;">
                 {if isset($data)}
-                    Mettre a jour
+                    Mettre a jour </button>
                 {else}
-                    Publier
+                    Publier </button>
+                    <button class="btn btn-primary" type="submit" name="action" value="1" style="background: #ff763b;font-size: 18px; margin-left:30px;">Laisser en brouillon</button>
                 {/if}
-                </button></div>
+                
+                </div>
             </div>
 
         </form>

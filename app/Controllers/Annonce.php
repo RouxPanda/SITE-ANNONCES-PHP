@@ -19,6 +19,7 @@ class Annonce extends BaseController
         if(!isset($session->pseudo)) return redirect()->to('/Account/login');
 
         if ($this->request->getMethod() == 'post' && isset($session->pseudo)) {
+
             $erreur = [];
 
             $rules = [
@@ -85,7 +86,7 @@ class Annonce extends BaseController
                     'A_cp' => strip_tags($this->request->getVar('cp')),
                     'A_energie' => null,
                     'A_type' => strip_tags($this->request->getVar('type')),
-                    'A_etat' => false,
+                    'A_etat' => strip_tags($this->request->getVar('action')),
                     'A_auteur' => $session->mail
                 );
                 $model->insert($annonce_data);
@@ -112,7 +113,13 @@ class Annonce extends BaseController
                     }
                 }
 
-                $session->setFlashdata('success', 'Votre annonce a bien été publiée.');
+                if($annonce_data['A_type'] == 1){
+                    $session->setFlashdata('success', 'Votre annonce est bien sauvegardé en brouillon');
+                }
+                else if($annonce_data['A_type'] == 2){
+                    $session->setFlashdata('success', 'Votre annonce a bien été publiée.');
+                }
+                
                 return redirect()->to('/Account/manage');
 			}
 
@@ -318,6 +325,31 @@ class Annonce extends BaseController
         $img_model = new \App\Models\ImageModel();
         $images = $img_model->where('P_annonce', $id)->findAll();
         return $images;
+    }
+
+    public function publish($id){
+        $model = new \App\Models\AnnonceModel();
+        $model->set('A_etat',2);
+        $model->where('A_idannonce',$id);
+        $model->update();
+
+        $session = session();
+        $session->setFlashdata('success', 'Votre annonce a bien été publié');
+
+        return redirect()->to('/Account/manage/annonces');
+    }
+
+    public function archive($id){
+        $model = new \App\Models\AnnonceModel();
+
+        $model->set('A_etat',3);
+        $model->where('A_idannonce',$id);
+        $model->update();
+
+        $session = session();
+        $session->setFlashdata('success', 'Votre annonce a bien été publié');
+
+        return redirect()->to('/Account/manage/annonces');
     }
 
 }
