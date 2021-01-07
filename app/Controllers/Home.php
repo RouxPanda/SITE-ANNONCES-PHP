@@ -47,16 +47,11 @@ class Home extends BaseController
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
 
-		if ($this->request->getMethod() == 'post') {
-			$recup = $this->request->getVar('rchr');
-			return redirect()->to(base_url()."/Home/search/$recup");
-		}
-
 		$this->smarty = service('SmartyEngine');
 		$this->smarty->assign("title", ucfirst($page));
-		
 		$annonceModel = new \App\Models\AnnonceModel();
 		$datas = array();
+
 		$datas = $annonceModel->orderBy('A_idannonce', 'desc')->findAll(16, $numero*16);
 
 		$img_model = new \App\Models\ImageModel();
@@ -73,8 +68,8 @@ class Home extends BaseController
 
 		return $this->smarty->view('pages/home/'.$page.'.tpl'); 
 	}
-	
-	public function search($recherche) {
+
+	public function search() {
         $page = 'annonces';
 		$session = session();
 		$numero = 0;
@@ -90,10 +85,65 @@ class Home extends BaseController
 		$annonceModel = new \App\Models\AnnonceModel();
 
 		$datas = array();
-		$datas = $annonceModel->where("A_titre LIKE '%$recherche%'")->orderBy('A_idannonce', 'desc')->findAll();
+
+		if ($this->request->getMethod() == 'get') {
+			$recup = array(
+				'rchr' => $this->request->getVar('rchr'),
+				'loyer_min' => $this->request->getVar('loyer_min'),
+				'loyer_max' => $this->request->getVar('loyer_max'),
+				'ville' => $this->request->getVar('ville'),
+				'type' => $this->request->getVar('type'),
+				'chauffage' => $this->request->getVar('chauffage'),
+				'super_min' => $this->request->getVar('super_min'),
+				'super_max' => $this->request->getVar('super_max'),
+			);
+
+			if(empty($recup['loyer_min'])){
+				$recup['loyer_min'] = 0;
+			}
+			if(empty($recup['loyer_max'])){
+				$recup['loyer_max'] = 999999999;
+			}
+			if(isset($recup['loyer_min']) && isset($recup['loyer_max'])){
+				$annonceModel->where("A_cout_loyer BETWEEN'".$recup['loyer_min']."'AND'".$recup['loyer_max']."'");
+			}
+			
+			if(empty($recup['super_min'])){
+				$recup['super_min'] = 0;
+			}
+			if(empty($recup['super_max'])){
+				$recup['super_max'] = 999999999;
+			}
+			if(isset($recup['super_min']) && isset($recup['super_max'])){
+				$annonceModel->where("A_superfice BETWEEN'".$recup['super_min']."'AND'".$recup['super_max']."'");
+			}
+
+			if(isset($recup['rchr'])){
+				$annonceModel->where("A_titre LIKE '%".$recup['rchr']."%'");
+			}
+			if(isset($recup['ville'])){
+				$annonceModel->where("A_ville LIKE '%".$recup['ville']."%'");
+			}
+			if(isset($recup['type'])){
+				$annonceModel->where("A_type LIKE '%".$recup['type']."%'");
+			}
+			if(isset($recup['chauffage'])){
+				$annonceModel->where("A_type_chauffage LIKE '%".$recup['chauffage']."%'");
+			}
+			
+			$datas = $annonceModel->orderBy('A_idannonce', 'desc')->findAll();
+		}
 
 		if(empty($datas)){
 			$session->setFlashdata("error", array('Aucunes annonce trouvé'));
+		}
+
+		$img_model = new \App\Models\ImageModel();
+		foreach($datas as $key => $ann) {
+			$img = $img_model->where('P_annonce', $ann['A_idannonce'])->findAll();
+			if($img) {
+				$datas[$key]['image'] = $img[0]['P_nom'];
+			}
 		}
 
 		$this->smarty->assign("total", count($datas));
@@ -102,5 +152,4 @@ class Home extends BaseController
 
 		return $this->smarty->view('pages/home/'.$page.'.tpl'); 
 	}
-
 }

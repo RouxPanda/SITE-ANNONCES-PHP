@@ -17,17 +17,23 @@
         </div>
     </div>
 </div>
-<section>
-    <div class="row" style="text-align: left">
-        {foreach from=$datas item=$annonce}
-            {include file='templates/annonce.tpl'}
-        {/foreach}
+<section class="centre_bas_page">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-9">
+            <div class="row" style="text-align: left;">
+                {foreach from=$datas item=$annonce}
+                    {include file='templates/annonce.tpl'}
+                {/foreach}
+            </div>
+        </div>
+        <div class="col"></div>
     </div>
     <div class="row centre_bas_page">
         <a style="margin-top: 30px;margin-bottom: 60px;" href="{base_url()}/Home/annonces">
             <button class="btn btn-primary" style="font-size: 20px; border:none; background: linear-gradient(-9deg, rgba(255,255,255,0.27), rgb(255,107,0)), var(--orange);" type="button">Voir plus <i class="fas fa-chevron-down"></i></button>
         </a>
-    </div>/
+    </div>
 </section>
     
 {include file='templates/footer.tpl'}
