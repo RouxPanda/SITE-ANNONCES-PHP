@@ -146,6 +146,132 @@ class Account extends BaseController
 		return redirect()->to('/Home/view/home'); 
 	}
 
+	public function lost() {
+		$page = "lost";
+		$this->smarty = service('SmartyEngine');
+
+		if ( ! is_file(APPPATH.'/Views/pages/'.$page.'.tpl')) {
+			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+		}
+
+		if ($this->request->getMethod() == 'post') {
+			$erreur = [];
+
+			$rules = [
+				'mail' => 'required|valid_email'
+			];
+
+			$errors = [
+				'mail' => [
+					'required' => 'Veuillez saisir un mail.',
+					'valid_email' => 'Veuillez saisir un mail valide.'
+				]
+			];
+
+
+			if (!$this->validate($rules, $errors)) {
+				$erreur = array_values($this->validator->getErrors());
+			}else{
+				$recov_model = new \App\Models\RecoveryModel();
+				$user_model = new \App\Models\UserModel(); 
+
+				$mail = $this->request->getVar('mail');
+				$user = $user_model->find($mail);
+
+				if(!$user) {
+					array_push($erreur, "L'utilisateur n'existe pas.");
+				}else{
+					helper('Email');
+
+					$token = bin2hex(random_bytes(64));
+					
+					$recov_data = [
+						'R_mail' => $mail,
+						'R_token' => $token
+					];
+
+					$exist = $recov_model->find($mail);
+					if($exist){
+						$recov_model->update($mail, $recov_data);
+					}else{
+						$recov_model->insert($recov_data);
+					}
+
+					session()->setFlashdata("success", "Verifier vos mails.");
+					return redirect()->to('/Account/login');
+				}
+			}
+
+			session()->setFlashdata("error", $erreur);
+		}
+
+		$this->smarty->assign("title", ucfirst($page));
+		return $this->smarty->view('pages/'.$page.'.tpl'); 
+	}
+
+	public function recover($token = null) {
+		$page = "recover";
+
+		if (!is_file(APPPATH.'/Views/pages/'.$page.'.tpl')) {
+			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+		}
+
+		$this->smarty = service('SmartyEngine');
+
+		if(isset($token) && $token != null) {
+			$recov_model = new \App\Models\RecoveryModel();
+			$recov = $recov_model->where('R_token', $token)->findAll();
+
+			if(count($recov) > 0) {
+
+				if ($this->request->getMethod() == 'post') {
+					$erreur = [];
+
+					$rules = [
+						'mdp_new' => 'required',
+						'mdp_confirm' => 'required|matches[mdp_new]'
+					];
+
+					$errors = [
+						'mdp_new' => [
+							'required' => 'Veuillez saisir un mot de passe.'
+						],
+						'mdp_confirm' => [
+							'required' => 'Veuillez saisir confirmer le mot de passe.',
+							'matches' => 'Les mots de passe ne correspondent pas.'
+						]
+					];
+
+
+					if (!$this->validate($rules, $errors)) {
+						$erreur = array_values($this->validator->getErrors());
+						session()->setFlashdata('error', $erreur);
+					}else{
+						$user_model = new \App\Models\UserModel();
+						$user = $user_model->find($recov[0]['R_mail']);
+
+						$user_data = [ 'U_mdp' => sha1($this->request->getVar('mdp_new')) ];
+						$user_model->update($user['U_mail'], $user_data);
+
+						$recov_model->delete($user['U_mail']);
+						session()->setFlashdata("success", "Votre mot de passe a été modifié.");
+					}
+				}
+
+			}else{
+				session()->setFlashdata("error", array("Token invalid."));
+				return redirect()->to('/Home');
+			}
+		}else{
+			session()->setFlashdata("error", array("Token invalid."));
+			return redirect()->to('/Home');
+		}
+
+		$this->smarty->assign("token", ucfirst($token));
+		$this->smarty->assign("title", ucfirst($page));
+		return $this->smarty->view('pages/'.$page.'.tpl'); 
+	}
+
 	public function manage($page = 'index') {
 		$session = session();
         // Si l'utilisateur n'est pas connecter, on le redirige
@@ -247,12 +373,10 @@ class Account extends BaseController
 					$user = $model->find($session->mail);
 
 					if(sha1($this->request->getVar('mdp')) === $user['U_mdp']) {
-
 						$user_data = [
 							'U_mdp' => sha1($this->request->getVar('mdp_new'))
 						];
 						$session->setFlashdata('success', 'Votre mot de passe ont été modifié.');
-
 					}else{
 						$session->setFlashdata("error", array('Le mot de passe est incorrect.'));
 					}
