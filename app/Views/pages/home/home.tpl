@@ -1,6 +1,6 @@
 {include file='templates/header.tpl'}
 
-<div style="background: #ffffff">
+<div>
     <div class="row">
         <div class="col">
             <p style="text-align: center; font-size: 13px; color: rgb(65, 76, 88)">

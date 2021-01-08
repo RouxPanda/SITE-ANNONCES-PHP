@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{base_url()}/assets/css/styles.css" />
 </head>
 
-<body>
+<body style="background:rgb(250, 250, 250)">
     <div id="navigation-block">
         <nav class="navbar navbar-light navbar-expand-md">
             <div class="container-fluid">
@@ -25,7 +25,6 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="/Home/annonces">Annonces</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                         <li class="nav-item"></li>
                         <li class="nav-item"></li>
                     </ul>

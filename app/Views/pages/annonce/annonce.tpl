@@ -5,7 +5,7 @@
         <div class="row">
             <div class="container">
                 <div class="row">
-                    <div class="col"><h3>{$datas['A_titre']}</h3></div>
+                    <div class="col" style="margin-bottom:20px;"><h3>{$datas['A_titre']}</h3></div>
                     {if isset($smarty.session.mail) && $datas['A_auteur'] == $smarty.session.mail}
                     <div class="col" style=" text-align:right;">
                         <a href="{base_url()}/Annonce/edit/{$datas['A_idannonce']}"><i class="fas fa-edit" style="font-size: 40px; color:#ff941b; padding-right:30px;"></i></a>
@@ -13,7 +13,7 @@
                     </div>
                     {/if}
                 </div>
-                <div id="carousel-1" class="carousel slide" data-ride="carousel" style="margin: 0px;margin-top: 10px; margin-bottom: 33px;">
+                <div id="carousel-1" class="carousel slide" data-ride="carousel" style="margin: 0px;margin-top: 10px; margin-bottom: 33px; width: 65%;margin: 0 auto;">
                     <div id="image-carrousel" class="carousel-inner">
                         {if isset($images) && is_array($images) && !empty($images)}
                         {foreach from=$images item=$img}
@@ -24,15 +24,15 @@
                         {/if}
                     </div>
                     <a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="carousel-control-prev-icon black" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </a>
                     <a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="carousel-control-next-icon black" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
                  </div>
-                <h3 style="color: var(--orange);">{$datas['A_cout_loyer']} € ({$datas['A_cout_charges']} €)</h3>
+                <h3 style="color: var(--orange); margin-top:20px;">{$datas['A_cout_loyer']} € (Charges {$datas['A_cout_charges']} €)</h3>
                 <p style="width: 466px;text-align: left;">{$datas['A_description']}</p>
                 <hr style="color: var(--gray);">
                 <div class="row">
