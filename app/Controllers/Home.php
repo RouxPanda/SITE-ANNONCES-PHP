@@ -5,9 +5,7 @@ class Home extends BaseController
 	
 	private $smarty;
 	
-
-	public function view($page = 'home')
-	{
+	public function view($page = 'home') {
 		$session = session();
 
 		if ( ! is_file(APPPATH.'/Views/pages/home/'.$page.'.tpl'))
