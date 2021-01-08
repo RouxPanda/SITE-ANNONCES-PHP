@@ -30,11 +30,13 @@
                     </ul>
                     {if isset($smarty.session.mail)}
                     <ul class="nav navbar-nav ml-auto">
+                    
                         {if isset($smarty.session.admin) && $smarty.session.admin}
                         <li class="nav-item">
                             <a class="nav-link active" href="/Admin/admin">Admin</a>
                         </li>
                         {/if}
+
                         <li class="nav-item">
                             <a class="nav-link active" href="/Account/manage">Compte</a>
                         </li>
