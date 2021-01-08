@@ -25,6 +25,15 @@
                         <span style="padding-left: 5px; display: table-cell; width: 40px;">
                             <a href="{base_url()}/Annonce/delete/{$annonce['A_idannonce']}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
                         </span>
+                        {if $annonce['A_blocked'] == true}
+                        <span style="padding-left: 5px; display: table-cell; width: 40px;">
+                            <a href="{base_url()}/Admin/unblockAnnonce/{$annonce['A_idannonce']}" class="btn btn-success" type="button"><i class="fas fa-unlock"></i></a>
+                        </span>
+                        {else}
+                        <span style="padding-left: 5px; display: table-cell; width: 40px;">
+                            <a href="{base_url()}/Admin/blockAnnonce/{$annonce['A_idannonce']}" class="btn btn-dark" type="button"><i class="fas fa-lock"></i></i></a>
+                        </span>
+                        {/if}
                     </div>
                 </li>
             {/foreach}

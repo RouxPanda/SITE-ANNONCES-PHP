@@ -1,66 +1,60 @@
 -- CREATION DE TABLES
 CREATE TABLE T_annonce (
     A_idannonce      SERIAL PRIMARY KEY,
-    A_titre          VARCHAR(255),
-    A_cout_loyer     DECIMAL,
-    A_cout_charges   DECIMAL,
-    A_type_chauffage ENUM('collectif', 'individuel'),
-    A_superfice      DECIMAL,
+    A_titre          VARCHAR(255) NOT NULL,
+    A_cout_loyer     DECIMAL NOT NULL,
+    A_cout_charges   DECIMAL NOT NULL,
+    A_type_chauffage ENUM('collectif', 'individuel') NOT NULL,
+    A_superfice      DECIMAL NOT NULL,
     A_description    VARCHAR(255),
     A_adresse        VARCHAR(255),
     A_ville          VARCHAR(255),
     A_CP             VARCHAR(255),
     A_energie        BIGINT UNSIGNED,
-    A_type           VARCHAR(255),
-    A_etat           INTEGER,
-    A_auteur         VARCHAR(255)          
+    A_type           VARCHAR(255) NOT NULL,
+    A_etat           INTEGER NOT NULL,
+    A_auteur         VARCHAR(255) NOT NULL,
+    A_blocked        BOOLEAN NOT NULL DEFAULT false     
 )ENGINE=InnoDB;
 
 CREATE TABLE T_typeMaison (
     T_type        VARCHAR(255) PRIMARY KEY,
-    T_description VARCHAR(255)
+    T_description VARCHAR(255) NOT NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE T_energie (
     E_id_engie    SERIAL PRIMARY KEY ,
-    E_description VARCHAR(255)
+    E_description VARCHAR(255) NOT NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE T_utilisateur (
     U_mail   VARCHAR(255) PRIMARY KEY,
-    U_mdp    VARCHAR(255),
-    U_pseudo VARCHAR(255),
-    U_nom    VARCHAR(255),
-    U_prenom VARCHAR(255),
-    U_admin  BOOLEAN
+    U_mdp    VARCHAR(255) NOT NULL,
+    U_pseudo VARCHAR(255) NOT NULL,
+    U_nom    VARCHAR(255) NOT NULL,
+    U_prenom VARCHAR(255) NOT NULL,
+    U_admin  BOOLEAN NOT NULL DEFAULT false
 )ENGINE=InnoDB;
 
 CREATE TABLE T_message (
     M_id                SERIAL PRIMARY KEY ,
-    M_idannonce         BIGINT UNSIGNED,
-    M_mail              VARCHAR(255),
-    M_mail_dest         VARCHAR(255),
+    M_idannonce         BIGINT UNSIGNED NOT NULL,
+    M_mail              VARCHAR(255) NOT NULL,
+    M_mail_dest         VARCHAR(255) NOT NULL,
     M_dateheure_message DATE,
-    M_texte_message     VARCHAR(255)
+    M_texte_message     VARCHAR(255) NOT NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE T_photo (
     P_idphoto SERIAL PRIMARY KEY,
-    P_annonce  BIGINT UNSIGNED,
-    P_titre   VARCHAR(255),
-    P_nom     VARCHAR(255)
-)ENGINE=InnoDB;
-
-CREATE TABLE T_photo (
-    P_idphoto SERIAL PRIMARY KEY,
-    P_annonce BIGINT UNSIGNED,
-    P_titre   VARCHAR(255),
-    P_nom     VARCHAR(255)
+    P_annonce  BIGINT UNSIGNED NOT NULL,
+    P_titre   VARCHAR(255) NOT NULL,
+    P_nom     VARCHAR(255) NOT NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE T_recovery (
     R_mail    VARCHAR(255) PRIMARY KEY,
-    R_token   VARCHAR(255)
+    R_token   VARCHAR(255) NOT NULL
 )ENGINE=InnoDB;
 
 -- ALTERATION DES TABLES

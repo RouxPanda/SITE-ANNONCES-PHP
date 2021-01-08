@@ -249,4 +249,54 @@ class Admin extends BaseController
 		return redirect()->to('/Admin/users');
 	}
 
+	public function blockAnnonce($id = null) {
+		$session = session();
+		if(!$this->verif_admin()) return redirect()->to('/Home');
+
+		$erreur = [];
+
+		if(!$id || $id == null) {
+			array_push($erreur, "Veuillez selectionner une annonce.");
+		}else{
+			$model = new \App\Models\AnnonceModel();
+			$ann = $model->find($id);
+
+			if(!$ann) {
+				array_push($erreur, "L'annonce n'existe pas.");
+			}else{
+				$ann_data = [ 'A_blocked' => true ];
+				$model->update($id, $ann_data);
+				$session->setFlashdata("success", "L'annonce a été bloquée.");
+			}
+		}
+
+		$session->setFlashdata("error", $erreur);
+		return redirect()->to('/Admin/annonces');
+	}
+
+	public function unblockAnnonce($id = null) {
+		$session = session();
+		if(!$this->verif_admin()) return redirect()->to('/Home');
+
+		$erreur = [];
+
+		if(!$id || $id == null) {
+			array_push($erreur, "Veuillez selectionner une annonce.");
+		}else{
+			$model = new \App\Models\AnnonceModel();
+			$ann = $model->find($id);
+
+			if(!$ann) {
+				array_push($erreur, "L'annonce n'existe pas.");
+			}else{
+				$ann_data = [ 'A_blocked' => false ];
+				$model->update($id, $ann_data);
+				$session->setFlashdata("success", "L'annonce a été débloquée.");
+			}
+		}
+
+		$session->setFlashdata("error", $erreur);
+		return redirect()->to('/Admin/annonces');
+	}
+
 }

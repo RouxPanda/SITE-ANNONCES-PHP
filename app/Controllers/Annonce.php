@@ -157,6 +157,8 @@ class Annonce extends BaseController
 
         if($datas['A_etat'] != 2 && ((isset($session->mail) && $session->mail != $datas['A_auteur']) || !isset($session->mail) )) {
             return redirect()->to('/Home');
+        }else if ($datas['A_blocked'] == true) {
+            return redirect()->to('/Home');
         }
 
 		$this->smarty->assign("datas", $datas);

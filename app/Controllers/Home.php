@@ -20,7 +20,7 @@ class Home extends BaseController
 		$datas = array();
 
 		if($page = 'home') {
-			$datas = $annonceModel->orderBy('A_idannonce', 'desc')->where('A_etat',2)->findAll(6, 0);
+			$datas = $annonceModel->orderBy('A_idannonce', 'desc')->where('A_etat',2)->where('A_blocked', false)->findAll(6, 0);
 			$img_model = new \App\Models\ImageModel();
 			foreach($datas as $key => $ann) {
 				$img = $img_model->where('P_annonce', $ann['A_idannonce'])->findAll();
@@ -50,7 +50,7 @@ class Home extends BaseController
 		$annonceModel = new \App\Models\AnnonceModel();
 		$datas = array();
 
-		$datas = $annonceModel->orderBy('A_idannonce', 'desc')->where('A_etat',2)->findAll(16, $numero*16);
+		$datas = $annonceModel->orderBy('A_idannonce', 'desc')->where('A_etat',2)->where('A_blocked', false)->findAll(16, $numero*16);
 
 		$img_model = new \App\Models\ImageModel();
 		foreach($datas as $key => $ann) {
@@ -129,7 +129,7 @@ class Home extends BaseController
 				$annonceModel->where("A_type_chauffage LIKE '%".$recup['chauffage']."%'");
 			}
 			
-			$datas = $annonceModel->where('A_etat',2)->orderBy('A_idannonce', 'desc')->findAll();
+			$datas = $annonceModel->where('A_etat',2)->where('A_blocked', false)->orderBy('A_idannonce', 'desc')->findAll();
 		}
 
 		if(empty($datas)){
