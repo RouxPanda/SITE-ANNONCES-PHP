@@ -424,4 +424,26 @@ class Account extends BaseController
 		return redirect()->to('/Account/chat'); 
 	}
 
+	public function delete(){ 
+		$session = session();
+
+		$mail = $session->mail;
+
+		$erreur = [];
+
+		$model = new \App\Models\UserModel();
+		$datas = $model->find($mail);
+
+		if($datas['U_mail'] == $mail){
+			$model->delete($mail);
+			$session->setFlashdata('success', "L'utilisateur $mail a été supprimé.");
+		}else {
+			array_push($erreur, "Vous ne pouvez pas vous supprimer.");
+		}
+
+		$session->setFlashdata('error', $erreur);
+
+		return redirect()->to('/Account/logout');
+	}
+
 }
