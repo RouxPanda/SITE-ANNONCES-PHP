@@ -204,4 +204,49 @@ class Admin extends BaseController
 		return $this->smarty->view('pages/admin/'.$page.'.tpl');  
 	}
 
+	public function sendMail() {
+		$session = session();
+		if(!$this->verif_admin()) return redirect()->to('/Home');
+
+		$erreur = [];
+
+		if($this->request->getMethod() == 'post') {
+			$rules = [
+				'dest' => 'required|valid_email',
+				'msg' => 'required'
+			];
+
+			$errors = [
+				'dest' => [
+					'required' => 'Veuillez saisir un mail.',
+					'valid_email' => 'Veuillez saisir un mail valide.'
+				],
+				'msg' => [
+					'required' => 'Veuillez saisir un message.'
+				]
+			];
+
+			if (!$this->validate($rules, $errors)) {
+				$erreur = array_values($this->validator->getErrors());
+			}else{
+				$mail = strip_tags($this->request->getVar('dest'));
+
+				$model = new \App\Models\UserModel();
+				$user = $model->find($mail);
+
+				if(!$user) {
+					array_push($erreur, "Il n'y a pas d'utilisateur associé a ce mail.");
+				}else{
+					helper('Email');
+					sendMail($mail, 'Administration', strip_tags($this->request->getVar('msg')));
+					$session->setFlashdata("success", "Le mail a bien été envoyé.");
+				}
+
+			}
+		}
+
+		$session->setFlashdata("error", $erreur);
+		return redirect()->to('/Admin/users');
+	}
+
 }
