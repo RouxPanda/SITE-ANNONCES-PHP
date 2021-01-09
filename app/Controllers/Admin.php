@@ -146,6 +146,9 @@ class Admin extends BaseController
 				if(!empty($user_data)){
 					$model->update($mail, $user_data);
 					$user = $model->find($mail);
+
+					helper('Email');
+					sendMail($mail, "Administration", "Votre " . $field . " a été modifié par l'administrateur.");
 				}
 			}
 

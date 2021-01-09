@@ -557,6 +557,9 @@ class Account extends BaseController
 									'M_dateheure_message' => date("Y-m-d H:i:s"),
 									'M_texte_message' => strip_tags($this->request->getVar('msg'))
 								];
+
+								helper('Email');
+								sendMail($dest, "Messagerie", "Vous avez recu un message de " . $session->pseudo . " pour l'annonce " . $annonce['A_titre']);
 	
 								$msg_model->insert($msg_data);
 								$session->setFlashdata("success", "Votre message a bien été envoyé.");
@@ -589,13 +592,13 @@ class Account extends BaseController
 		if($datas['U_admin'] == false){
 			$model->delete($mail);
 			$session->setFlashdata('success', "Votre compte a été supprimé.");
+			return redirect()->to(base_url() . '/Account/logout');
 		}else {
 			array_push($erreur, "Vous ne pouvez pas vous supprimer.");
 		}
 
 		$session->setFlashdata('error', $erreur);
-
-		return redirect()->to(base_url() . '/Account/logout');
+		return redirect()->to(base_url() . '/Account/manage');
 	}
 
 }
