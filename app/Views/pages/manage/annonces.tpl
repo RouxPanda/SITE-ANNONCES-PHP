@@ -21,7 +21,7 @@
                             <a href="{base_url()}/Annonce/edit/{$annonce['A_idannonce']}" class="btn btn-primary" type="button"><i class="fas fa-pen"></i></a>
                         </span>
                         <span style="padding-left: 5px; display: table-cell; width: 40px;" data-bs-toggle="tooltip" title="Supprimer">
-                            <a href="{base_url()}/Annonce/delete/{$annonce['A_idannonce']}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
+                            <a class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmModal" data-link="{base_url()}/Annonce/delete/{$annonce['A_idannonce']}" data-whatever="Etes vous sur de vouloir supprimer cette annonce ?"><i class="fas fa-trash"></i></a>
                         </span>
                         {if $annonce['A_etat'] == 2}
                         <span style="padding-left: 5px;display: table-cell; width: 40px;" data-bs-toggle="tooltip" title="Archiver">

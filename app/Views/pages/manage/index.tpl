@@ -13,7 +13,7 @@
                 <hr style="height: 5px; color: #ff763b; background-color: #878787 ; width: 10%; border: none;">
                 <div class="row centre_bas_page" style="margin-top: 10%">
                     <a href="{base_url()}/Annonce/new"><button class="btn btn-primary" type="button" style="margin: 0 auto;text-align: center;margin-top: 22px;color: var(--light);background: var(--orange);border-color: var(--orange);">Publier une nouvelle annonce</button></a>
-                    <a href="{base_url()}/Account/delete"><button class="btn btn-danger" type="button" style="margin: 0 auto; margin-left:20px; text-align: center;margin-top: 22px;color: var(--light);">Supprimer compte</button></a>
+                    <a data-toggle="modal" data-target="#confirmModal" data-link="{base_url()}/Account/delete" data-whatever="Etes vous sur de vouloir supprimer votre compte ?"><button class="btn btn-danger" type="button" style="margin: 0 auto; margin-left:20px; text-align: center;margin-top: 22px;color: var(--light);">Supprimer compte</button></a>
                 <div>
             </div>
         </div>

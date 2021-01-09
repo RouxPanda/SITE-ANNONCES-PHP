@@ -29,7 +29,7 @@
                             <a href="{base_url()}/Admin/blockAllAnnonces/{$user['U_mail']}" class="btn btn-dark" type="button" data-bs-toggle="tooltip" title="Bloquer les annonces"><i class="fas fa-lock"></i></i></a>
                         </span>
                         <span style="padding-left: 5px; display: table-cell; width: 40px;">
-                            <a href="{base_url()}/Admin/udelete/{$user['U_mail']}" class="btn btn-danger" type="button" data-bs-toggle="tooltip" title="Supprimer"><i class="fas fa-trash"></i></a>
+                            <a class="btn btn-danger" type="button" data-bs-toggle="tooltip" title="Supprimer" data-toggle="modal" data-target="#confirmModal" data-link="{base_url()}/Admin/udelete/{$user['U_mail']}" data-whatever="Etes vous sur de vouloir supprimer cet utilisateur ?"><i class="fas fa-trash"></i></a>
                         </span>
                     </div>
                 </li>

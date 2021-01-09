@@ -26,7 +26,7 @@
                             <a href="{base_url()}/Admin/removeAllMessages/{$annonce['A_idannonce']}" class="btn btn-warning" type="button"><i class="fas fa-unlink"></i></a>
                         </span>
                         <span style="padding-left: 5px; display: table-cell; width: 40px;" data-bs-toggle="tooltip" title="Supprimer">
-                            <a href="{base_url()}/Annonce/delete/{$annonce['A_idannonce']}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
+                            <a class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmModal" data-link="{base_url()}/Annonce/delete/{$annonce['A_idannonce']}" data-whatever="Etes vous sur de vouloir supprimer cette annonce ?"><i class="fas fa-trash"></i></a>
                         </span>
                         {if $annonce['A_blocked'] == true}
                         <span style="padding-left: 5px; display: table-cell; width: 40px;" data-bs-toggle="tooltip" title="Débloquer">
