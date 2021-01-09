@@ -10,7 +10,7 @@
                     </div>
                     <input class="form-control my-0 py-1" type="text" name="rchr" placeholder="Recherche" aria-label="Recherche">
                 </div>
-                <div class="row">
+                <div class="row" style="margin-left:30px;">
                     <form class="display" style="margin:5px; width:40%;">
                         <div class="row">
                             <div class="col-5 no-gutters">
