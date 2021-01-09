@@ -351,4 +351,29 @@ class Admin extends BaseController
 		return redirect()->to('/Admin/users');
 	}
 
+	public function removeAllMessages($id = null) {
+		$session = session();
+		if(!$this->verif_admin()) return redirect()->to('/Home');
+
+		$erreur = [];
+
+		if(!$id || $id == null) {
+			array_push($erreur, "Veuillez selectionner une annonce.");
+		}else{
+			$model = new \App\Models\AnnonceModel();
+			$ann = $model->find($id);
+
+			if(!$ann) {
+				array_push($erreur, "L'annonce n'existe pas.");
+			}else{
+				$msg_model = new \App\Models\MessageModel();
+				$msg_model->where('M_idannonce', $id)->delete();
+				$session->setFlashdata("success", "Les messages ont bien été supprimés.");
+			}
+		}
+
+		$session->setFlashdata("error", $erreur);
+		return redirect()->to('/Admin/annonces');
+	}
+
 }

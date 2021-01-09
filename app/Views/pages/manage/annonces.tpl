@@ -20,7 +20,6 @@
                         <span style="padding-left: 5px;display: table-cell; width: 40px;" data-bs-toggle="tooltip" title="Editer">
                             <a href="{base_url()}/Annonce/edit/{$annonce['A_idannonce']}" class="btn btn-primary" type="button"><i class="fas fa-pen"></i></a>
                         </span>
-                        
                         <span style="padding-left: 5px; display: table-cell; width: 40px;" data-bs-toggle="tooltip" title="Supprimer">
                             <a href="{base_url()}/Annonce/delete/{$annonce['A_idannonce']}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
                         </span>
