@@ -6,6 +6,13 @@ class Account extends BaseController
 {
 	
 	private $smarty;
+
+	private function check_login() {
+		if(isset(session()->pseudo)) {
+			return true;
+		}
+		return false;
+	}
 	
 	public function login()	{
 		$page = "login";
@@ -39,7 +46,7 @@ class Account extends BaseController
 				$erreur = array_values($this->validator->getErrors());
 			}else{
 				$this->user_to_session($this->request->getVar('mail'));
-				return redirect()->to('/Home/view/home');
+				return redirect()->to(base_url() . '/Home/view/home');
 			}
 
 			session()->setFlashdata("error", $erreur);
@@ -129,7 +136,7 @@ class Account extends BaseController
 
 				session()->setFlashdata('success', 'Votre compte a été créér avec succes.');
 
-				return redirect()->to('/Home/view/home');
+				return redirect()->to(base_url() . '/Home/view/home');
 			}
 
 			session()->setFlashdata("error", $erreur);
@@ -143,7 +150,7 @@ class Account extends BaseController
 		$session = session();
 		$session->destroy();
 
-		return redirect()->to('/Home/view/home'); 
+		return redirect()->to(base_url() . '/Home/view/home'); 
 	}
 
 	public function lost() {
@@ -184,6 +191,8 @@ class Account extends BaseController
 					helper('Email');
 
 					$token = bin2hex(random_bytes(64));
+
+					sendMail($mail, "Récupération de mot de passe.", "Cliquez sur ce lien pour récupérer votre mot de passe : " . base_url() . "/Account/recovery/" . $token);
 					
 					$recov_data = [
 						'R_mail' => $mail,
@@ -198,7 +207,7 @@ class Account extends BaseController
 					}
 
 					session()->setFlashdata("success", "Verifier vos mails.");
-					return redirect()->to('/Account/login');
+					return redirect()->to(base_url() . '/Account/login');
 				}
 			}
 
@@ -209,7 +218,7 @@ class Account extends BaseController
 		return $this->smarty->view('pages/'.$page.'.tpl'); 
 	}
 
-	public function recover($token = null) {
+	public function recovery($token = null) {
 		$page = "recover";
 
 		if (!is_file(APPPATH.'/Views/pages/'.$page.'.tpl')) {
@@ -260,11 +269,11 @@ class Account extends BaseController
 
 			}else{
 				session()->setFlashdata("error", array("Token invalid."));
-				return redirect()->to('/Home');
+				return redirect()->to(base_url() . '/Home');
 			}
 		}else{
 			session()->setFlashdata("error", array("Token invalid."));
-			return redirect()->to('/Home');
+			return redirect()->to(base_url() . '/Home');
 		}
 
 		$this->smarty->assign("token", ucfirst($token));
@@ -274,9 +283,8 @@ class Account extends BaseController
 
 	public function manage($page = 'index') {
 		$session = session();
-        // Si l'utilisateur n'est pas connecter, on le redirige
-        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
-
+		if(!$this->check_login()) return redirect()->to(base_url() . '/Account/login');
+		
 		if (!is_file(APPPATH.'/Views/pages/manage/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
@@ -295,8 +303,7 @@ class Account extends BaseController
 
 	public function change($field) {
 		$session = session();
-		if(!isset($session->pseudo)) return redirect()->to('/Account/login');
-
+		if(!$this->check_login()) return redirect()->to(base_url() . '/Account/login');
 
 		if ($this->request->getMethod() == 'post') {
 			$rules = [];
@@ -391,15 +398,14 @@ class Account extends BaseController
 
 		}
 
-		return redirect()->to('/Account/manage/profil'); 
+		return redirect()->to(base_url() . '/Account/manage/profil'); 
 	}
 
 	public function chat($id = null, $dest = null) {
 		$page = "chat";
 
 		$session = session();
-        // Si l'utilisateur n'est pas connecter, on le redirige
-		if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+		if(!$this->check_login()) return redirect()->to(base_url() . '/Account/login');
 
 		if (!is_file(APPPATH.'/Views/pages/manage/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
@@ -458,12 +464,12 @@ class Account extends BaseController
 				if($annonce['A_auteur'] == $session->mail) {
 					
 					if(!isset($dest) || $dest == null) {
-						return redirect()->to('/Account/chat'); 
+						return redirect()->to(base_url() . '/Account/chat'); 
 					}else{
 						$user = $user_model->where('U_pseudo', $dest)->findAll();
 						if(count($user) == 0){
 							$session->setFlashdata("error", array("L'utilisateur n'existe pas."));
-							return redirect()->to('/Account/chat');
+							return redirect()->to(base_url() . '/Account/chat');
 						} 
 						$dest = $user[0]['U_mail'];
 						$msgs = $model->where('M_idannonce', $id)->where("(M_mail = '$session->mail' && M_mail_dest = '$dest') || (M_mail = '$dest' && M_mail_dest = '$session->mail')")->orderBy('M_id', 'asc')->findAll();
@@ -492,8 +498,7 @@ class Account extends BaseController
 
 	public function post_msg() {
 		$session = session();
-        // Si l'utilisateur n'est pas connecter, on le redirige
-		if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+		if(!$this->check_login()) return redirect()->to(base_url() . '/Account/login');
 
 		$erreur = [];
 
@@ -567,11 +572,12 @@ class Account extends BaseController
 		}
 
 		$session->setFlashdata("error", $erreur);
-		return redirect()->to('/Account/chat'); 
+		return redirect()->to(base_url() . '/Account/chat'); 
 	}
 
 	public function delete(){ 
 		$session = session();
+		if(!$this->check_login()) return redirect()->to(base_url() . '/Account/login');
 
 		$mail = $session->mail;
 
@@ -580,16 +586,16 @@ class Account extends BaseController
 		$model = new \App\Models\UserModel();
 		$datas = $model->find($mail);
 
-		if($datas['U_mail'] == $mail){
+		if($datas['U_admin'] == false){
 			$model->delete($mail);
-			$session->setFlashdata('success', "L'utilisateur $mail a été supprimé.");
+			$session->setFlashdata('success', "Votre compte a été supprimé.");
 		}else {
 			array_push($erreur, "Vous ne pouvez pas vous supprimer.");
 		}
 
 		$session->setFlashdata('error', $erreur);
 
-		return redirect()->to('/Account/logout');
+		return redirect()->to(base_url() . '/Account/logout');
 	}
 
 }

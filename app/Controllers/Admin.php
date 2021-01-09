@@ -17,7 +17,7 @@ class Admin extends BaseController
 		$session = session();
 		$page = "admin";
 		
-		if(!$this->verif_admin()) return redirect()->to('/Home');
+		if(!$this->verif_admin()) return redirect()->to(base_url() . '/Home');
 
 		if (!is_file(APPPATH.'/Views/pages/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
@@ -33,7 +33,7 @@ class Admin extends BaseController
 		$session = session();
 		$page = "users";
 
-		if(!$this->verif_admin()) return redirect()->to('/Home');
+		if(!$this->verif_admin()) return redirect()->to(base_url() . '/Home');
 
 		if (!is_file(APPPATH.'/Views/pages/admin/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
@@ -53,7 +53,7 @@ class Admin extends BaseController
 		$session = session();
 		$page = "uedit";
 
-		if(!$this->verif_admin()) return redirect()->to('/Home');
+		if(!$this->verif_admin()) return redirect()->to(base_url() . '/Home');
 
 		if (!is_file(APPPATH.'/Views/pages/admin/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
@@ -67,7 +67,7 @@ class Admin extends BaseController
 
 		if(!$user) {
 			session()->setFlashdata("error", array("L'utilisateur $mail n'existe pas !"));
-			return redirect()->to('/Admin/users');
+			return redirect()->to(base_url() . '/Admin/users');
 		}
 
 		if($this->request->getMethod() == 'post') {
@@ -159,7 +159,7 @@ class Admin extends BaseController
 	public function udelete($mail = null) {
 		$session = session();
 
-		if(!$this->verif_admin()) return redirect()->to('/Home');
+		if(!$this->verif_admin()) return redirect()->to(base_url() . '/Home');
 
 		$erreur = [];
 
@@ -181,14 +181,14 @@ class Admin extends BaseController
 
 		$session->setFlashdata('error', $erreur);
 
-		return redirect()->to('/Admin/users');
+		return redirect()->to(base_url() . '/Admin/users');
 	}
 
 	public function annonces() {
 		$session = session();
 		$page = "annonces";
 
-		if(!$this->verif_admin()) return redirect()->to('/Home');
+		if(!$this->verif_admin()) return redirect()->to(base_url() . '/Home');
 		
 		if (!is_file(APPPATH.'/Views/pages/admin/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
@@ -206,7 +206,7 @@ class Admin extends BaseController
 
 	public function sendMail() {
 		$session = session();
-		if(!$this->verif_admin()) return redirect()->to('/Home');
+		if(!$this->verif_admin()) return redirect()->to(base_url() . '/Home');
 
 		$erreur = [];
 
@@ -246,12 +246,12 @@ class Admin extends BaseController
 		}
 
 		$session->setFlashdata("error", $erreur);
-		return redirect()->to('/Admin/users');
+		return redirect()->to(base_url() . '/Admin/users');
 	}
 
 	public function blockAnnonce($id = null) {
 		$session = session();
-		if(!$this->verif_admin()) return redirect()->to('/Home');
+		if(!$this->verif_admin()) return redirect()->to(base_url() . '/Home');
 
 		$erreur = [];
 
@@ -271,12 +271,12 @@ class Admin extends BaseController
 		}
 
 		$session->setFlashdata("error", $erreur);
-		return redirect()->to('/Admin/annonces');
+		return redirect()->to(base_url() . '/Admin/annonces');
 	}
 
 	public function unblockAnnonce($id = null) {
 		$session = session();
-		if(!$this->verif_admin()) return redirect()->to('/Home');
+		if(!$this->verif_admin()) return redirect()->to(base_url() . '/Home');
 
 		$erreur = [];
 
@@ -296,12 +296,12 @@ class Admin extends BaseController
 		}
 
 		$session->setFlashdata("error", $erreur);
-		return redirect()->to('/Admin/annonces');
+		return redirect()->to(base_url() . '/Admin/annonces');
 	}
 
 	public function blockAllAnnonces($mail = null) {
 		$session = session();
-		if(!$this->verif_admin()) return redirect()->to('/Home');
+		if(!$this->verif_admin()) return redirect()->to(base_url() . '/Home');
 
 		$erreur = [];
 
@@ -322,12 +322,12 @@ class Admin extends BaseController
 		}
 
 		$session->setFlashdata("error", $erreur);
-		return redirect()->to('/Admin/users');
+		return redirect()->to(base_url() . '/Admin/users');
 	}
 
 	public function unblockAllAnnonces($mail = null) {
 		$session = session();
-		if(!$this->verif_admin()) return redirect()->to('/Home');
+		if(!$this->verif_admin()) return redirect()->to(base_url() . '/Home');
 
 		$erreur = [];
 
@@ -348,12 +348,12 @@ class Admin extends BaseController
 		}
 
 		$session->setFlashdata("error", $erreur);
-		return redirect()->to('/Admin/users');
+		return redirect()->to(base_url() . '/Admin/users');
 	}
 
 	public function removeAllMessages($id = null) {
 		$session = session();
-		if(!$this->verif_admin()) return redirect()->to('/Home');
+		if(!$this->verif_admin()) return redirect()->to(base_url() . '/Home');
 
 		$erreur = [];
 
@@ -373,7 +373,7 @@ class Admin extends BaseController
 		}
 
 		$session->setFlashdata("error", $erreur);
-		return redirect()->to('/Admin/annonces');
+		return redirect()->to(base_url() . '/Admin/annonces');
 	}
 
 }

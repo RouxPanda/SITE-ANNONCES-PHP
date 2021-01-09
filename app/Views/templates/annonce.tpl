@@ -5,7 +5,7 @@
             <p class="card-text text-black">
                 {$annonce.A_description}
             </p>
-            <P class="text-center"><img class="card-image" src="{base_url()}/uploads/{if isset($annonce.image)}annonces/{$annonce.image}{else}default.jpg{/if}" style="height: 250px; width:450px;object-fit: cover;" /></P>
+            <P class="text-center"><img class="card-image" src="{base_url()}/public/uploads/{if isset($annonce.image)}annonces/{$annonce.image}{else}default.jpg{/if}" style="height: 250px; width:450px;object-fit: cover;" /></P>
             <h3 class="card-text">{$annonce.A_cout_loyer} €</h3>
         </div>
     </a>

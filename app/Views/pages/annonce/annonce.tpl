@@ -17,7 +17,7 @@
                     <div id="image-carrousel" class="carousel-inner">
                         {if isset($images) && is_array($images) && !empty($images)}
                         {foreach from=$images item=$img}
-                        <div class="carousel-item"><img class="w-100 d-block" src="{base_url()}/uploads/annonces/{$img['P_nom']}" alt="Image"></div>
+                        <div class="carousel-item"><img class="w-100 d-block" src="{base_url()}/public/uploads/annonces/{$img['P_nom']}" alt="Image"></div>
                         {/foreach}
                         {else}
                         <div class="carousel-item"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Image"></div>

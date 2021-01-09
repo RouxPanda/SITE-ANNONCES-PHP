@@ -15,8 +15,8 @@
                     </div>
                     <input class="btn btn-light submit-button" type="submit" value="Valider">
                     <div class="form-group form-row ">
-                        <a class="pas-inscrit-decal" href="/Account/register"><button class="btn btn-light float-right pas-inscrit" type="button">Pas inscrit ?</button></a>
-                        <a class="pas-inscrit-decal" href="/Account/lost"><button class="btn btn-light" type="button">Mot de passe oublié</button></a>
+                        <a class="pas-inscrit-decal" href="{base_url()}/Account/register"><button class="btn btn-light float-right pas-inscrit" type="button">Pas inscrit ?</button></a>
+                        <a class="pas-inscrit-decal" href="{base_url()}/Account/lost"><button class="btn btn-light" type="button">Mot de passe oublié</button></a>
                     </div>
                 </form>
             </div>

@@ -16,7 +16,7 @@ class Annonce extends BaseController
         $this->smarty = service('SmartyEngine');
 
         // Si l'utilisateur n'est pas connecter, on le redirige
-        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+        if(!isset($session->pseudo)) return redirect()->to(base_url() . '/Account/login');
 
         if ($this->request->getMethod() == 'post' && isset($session->pseudo)) {
 
@@ -129,7 +129,7 @@ class Annonce extends BaseController
                     $session->setFlashdata('success', 'Votre annonce a bien été publiée.');
                 }
                 
-                return redirect()->to('/Account/manage');
+                return redirect()->to(base_url() . '/Account/manage');
 			}
 
 			$session->setFlashdata("error", $erreur);
@@ -169,9 +169,9 @@ class Annonce extends BaseController
         }
 
         if($datas['A_etat'] != 2 && ((isset($session->mail) && $session->mail != $datas['A_auteur']) || !isset($session->mail) )) {
-            return redirect()->to('/Home');
+            return redirect()->to(base_url() . '/Home');
         }else if ($datas['A_blocked'] == true) {
-            return redirect()->to('/Home');
+            return redirect()->to(base_url() . '/Home');
         }
 
 		$this->smarty->assign("datas", $datas);
@@ -189,7 +189,7 @@ class Annonce extends BaseController
         $erreur = [];
 
         $session = session();
-        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+        if(!isset($session->pseudo)) return redirect()->to(base_url() . '/Account/login');
 
 		if (!is_file(APPPATH.'/Views/pages/annonce/'.$page.'.tpl')) {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
@@ -309,7 +309,7 @@ class Annonce extends BaseController
         $erreur = [];
 
         $session = session();
-        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+        if(!isset($session->pseudo)) return redirect()->to(base_url() . '/Account/login');
 
         $model = new \App\Models\AnnonceModel();
         $annonce = $model->find($id);
@@ -330,7 +330,7 @@ class Annonce extends BaseController
         }
 
         $session->setFlashdata("error", $erreur);
-        return redirect()->to('/Home');
+        return redirect()->to(base_url() . '/Home');
     }
 
     private function remove_images($id) {
@@ -338,7 +338,7 @@ class Annonce extends BaseController
         $images = $img_model->where('P_annonce', $id)->findAll();
 
         foreach($images as $img) {
-            if(file_exists("./uploads/annonces/".$img['P_nom'])) unlink("./uploads/annonces/".$img['P_nom']);
+            if(file_exists("./public/uploads/annonces/".$img['P_nom'])) unlink("./public/uploads/annonces/".$img['P_nom']);
             $img_model->delete($img['P_idphoto']);
         }
     }
@@ -351,7 +351,7 @@ class Annonce extends BaseController
 
     public function publish($id){
         $session = session();
-        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+        if(!isset($session->pseudo)) return redirect()->to(base_url() . '/Account/login');
 
         $model = new \App\Models\AnnonceModel();
         $annonce = $model->find($id);
@@ -377,12 +377,12 @@ class Annonce extends BaseController
 
         $session->setFlashdata("error", $erreur);
 
-        return redirect()->to('/Account/manage/annonces');
+        return redirect()->to(base_url() . '/Account/manage/annonces');
     }
 
     public function archive($id){
         $session = session();
-        if(!isset($session->pseudo)) return redirect()->to('/Account/login');
+        if(!isset($session->pseudo)) return redirect()->to(base_url() . '/Account/login');
 
         $model = new \App\Models\AnnonceModel();
         $annonce = $model->find($id);
@@ -409,7 +409,7 @@ class Annonce extends BaseController
 
         $session->setFlashdata("error", $erreur);
         
-        return redirect()->to('/Account/manage/annonces');
+        return redirect()->to(base_url() . '/Account/manage/annonces');
     }
 
 }

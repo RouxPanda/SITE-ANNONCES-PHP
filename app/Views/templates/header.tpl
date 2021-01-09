@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <title>{$title}</title>
-    <link rel="stylesheet" href="{base_url()}/assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{base_url()}/public/assets/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bungee" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" />
     <link rel="stylesheet" href="{base_url()}/assets/css/Footer-with-social-media-icons.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="{base_url()}/assets/css/styles.css" />
+    <link rel="stylesheet" href="{base_url()}/public/assets/css/styles.css" />
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 </head>
@@ -21,11 +21,11 @@
             <div class="container-fluid">
                 <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1" style="width: 0px">
                     <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <a href="/Home/view/home"><img src="{base_url()}/assets/img/lemauvais.png" style="width: 270px" /></a>
+                <a href="{base_url()}/Home/view/home"><img src="{base_url()}/public/assets/img/lemauvais.png" style="width: 270px" /></a>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Home/annonces">Annonces</a>
+                            <a class="nav-link active" href="{base_url()}/Home/annonces">Annonces</a>
                         </li>
                         <li class="nav-item"></li>
                         <li class="nav-item"></li>
@@ -35,24 +35,24 @@
                     
                         {if isset($smarty.session.admin) && $smarty.session.admin}
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Admin/admin">Admin</a>
+                            <a class="nav-link active" href="{base_url()}/Admin/admin">Admin</a>
                         </li>
                         {/if}
 
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Account/manage">Compte</a>
+                            <a class="nav-link active" href="{base_url()}/Account/manage">Compte</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Account/logout">Déconnexion</a>
+                            <a class="nav-link active" href="{base_url()}/Account/logout">Déconnexion</a>
                         </li>
                     </ul>    
                     {else}
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Account/register">Inscription</a>
+                            <a class="nav-link active" href="{base_url()}/Account/register">Inscription</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Account/login">Connexion</a>
+                            <a class="nav-link active" href="{base_url()}/Account/login">Connexion</a>
                         </li>
                     </ul>
                     {/if}

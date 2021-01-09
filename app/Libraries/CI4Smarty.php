@@ -15,7 +15,7 @@ class CI4Smarty extends Smarty {
     {
         parent::__construct();
        
-        parent::setTemplateDir(APPPATH . 'views/');
+        parent::setTemplateDir(APPPATH . 'Views/');
         parent::setCompileDir(WRITEPATH . 'smarty/templates_c/')->setCacheDir(WRITEPATH . 'smarty/cache/');
        
     }
