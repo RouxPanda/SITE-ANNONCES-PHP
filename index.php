@@ -8,21 +8,21 @@ if (phpversion() < $minPHPVersion)
 }
 unset($minPHPVersion);
 
-if(!file_exists('../config.json')) {
+if(!file_exists('./config/config.json')) {
 	// Lancer l'installateur
 	$need_install = true;
 	require('install.php');
 }else{
 	define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
-	$pathsPath = realpath(FCPATH . '../app/Config/Paths.php');
+	$pathsPath = realpath(FCPATH . 'app/Config/Paths.php');
 	chdir(__DIR__);
 
 	require $pathsPath;
 	$paths = new Config\Paths();
 
 	// Chargement du fichier de configuration de la base de donnée
-	$jsonConfigFile = file_get_contents("../config.json");
+	$jsonConfigFile = file_get_contents("./config/config.json");
 	$config = json_decode($jsonConfigFile, true);
 
 	$_ENV['db_hostname'] = $config['hostname'];

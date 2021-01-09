@@ -111,7 +111,7 @@ class Annonce extends BaseController
                     foreach($files['images'] as $file) {
                         if($file->isValid() && !$file->hasMoved()) {
                             $fname = $file->getRandomName();
-                            $file->move('./uploads/annonces', $fname);
+                            $file->move('./public/uploads/annonces', $fname);
                             $img_data = [
                                 'P_annonce' => $model->getInsertID(),
                                 'P_titre' => "Photo",

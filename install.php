@@ -1,5 +1,5 @@
 <?php
-    if(isset($_POST['hostname']) && isset($_POST['db_user']) && isset($_POST['db_pass']) && isset($_POST['db_name']) && isset($_POST['admin_email']) && isset($_POST['admin_pass']) && !file_exists('../config.json')) {
+    if(isset($_POST['hostname']) && isset($_POST['db_user']) && isset($_POST['db_pass']) && isset($_POST['db_name']) && isset($_POST['admin_email']) && isset($_POST['admin_pass']) && !file_exists('./config/config.json')) {
         
         $datas = [
             'hostname' => $_POST['hostname'],
@@ -10,25 +10,16 @@
 
         // Creation de tables + triggers + données de bases (Type de maison et energie)
         $db = new PDO("mysql:host=" . $datas['hostname'] . ";dbname=" . $datas['db_name'], $datas['db_user'], $datas['db_pass']);
-        $query = file_get_contents("../database/tables.sql");
+        $query = file_get_contents("./database/tables.sql");
         $stmt = $db->prepare($query);
 
         if ($stmt->execute()){
-            $query = file_get_contents("../database/triggers.sql");
-            $stmt = $db->prepare($query);
-
-            if($stmt->execute()) {
-                $query = file_get_contents("../database/datas.sql");
+                $query = file_get_contents("./database/datas.sql");
                 $stmt = $db->prepare($query);
     
                 if(!$stmt->execute()) {
                     die("Failed to insert datas");
                 }
-
-            }else{
-                die("Failed to create triggers");
-            }
-
         }else {
             die("Failed to connect bdd or to create tables");
         }
@@ -39,14 +30,14 @@
 
         // Insertion du jeu de test
         if(isset($_POST['testDatas'])) {
-            $query = file_get_contents("../database/tests.sql");
+            $query = file_get_contents("./database/tests.sql");
             $stmt = $db->prepare($query);
             if (!$stmt->execute()){
                 die("Failed to insert tests datas.");
             }
         }
 
-        $fp = fopen('../config.json', 'w');
+        $fp = fopen('./config/config.json', 'w');
         fwrite($fp, json_encode($datas));
         fclose($fp);
 
@@ -62,7 +53,7 @@
 <head>
     <title>Installer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./public/assets/bootstrap/css/bootstrap.min.css" />
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 </head>
 

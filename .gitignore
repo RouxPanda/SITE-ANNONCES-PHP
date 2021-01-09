@@ -7,6 +7,7 @@ public/uploads/annonces/
 #app/Views/pages/index.html
 #app/Config/Database.php
 config.json
+config/config.json
 
 # OS X
 .DS_Store
