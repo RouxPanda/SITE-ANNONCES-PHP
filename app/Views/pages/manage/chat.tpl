@@ -13,11 +13,11 @@
               <div class="list-group">
                 {if isset($convs) && is_array($convs)}
                 {foreach from=$convs item=$ann}
-                <a href="{base_url()}/Account/chat/{$ann['id']}{if isset($ann['dest'] && !empty($ann['dest']))}/{$ann['dest']}{/if}" class="list-group-item list-group-item-action {if (isset($id) && $id == $ann['id'] && isset($dest) && $dest == $ann['dest']) || (isset($id) && $id == $ann['id'] && empty($ann['dest']))}active{/if}" aria-current="true">
+                <a href="{base_url()}/Account/chat/{$ann['id']}{if isset($ann['dest_p'] && !empty($ann['dest_p']))}/{$ann['dest_p']}{/if}" class="list-group-item list-group-item-action {if (isset($id) && $id == $ann['id'] && isset($dest) && $dest == $ann['dest']) || (isset($id) && $id == $ann['id'] && empty($ann['dest']))}active{/if}" aria-current="true">
                   <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{$ann['titre']}</h5>
                   </div>
-                  {if isset($ann['dest'] && !empty($ann['dest']))}<p class="mb-1">{$ann['dest']}</p>{/if}
+                  {if isset($ann['dest_p'] && !empty($ann['dest_p']))}<p class="mb-1">{$ann['dest_p']}</p>{/if}
                 </a>
                 {/foreach}
                 {/if}

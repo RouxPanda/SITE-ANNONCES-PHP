@@ -411,6 +411,7 @@ class Account extends BaseController
 
 		$model = new \App\Models\MessageModel();
 		$ann_model = new \App\Models\AnnonceModel();
+		$user_model = new \App\Models\UserModel();
 
 		// Affichage des conversations
 		$convs_msgs = $model->where("(M_mail = '$session->mail' || M_mail_dest =  '$session->mail')")->findAll();
@@ -429,12 +430,15 @@ class Account extends BaseController
 				$c = array( 'id' => $msg['M_idannonce'], 'titre' => $ann['A_titre']);
 		
 				$dest_m = null;
+				$c['dest_p'] = null;
 				if($session->mail == $ann['A_auteur']) {
 					if($msg['M_mail'] == $session->mail) {
 						$dest_m = $msg['M_mail_dest'];
 					}else{
 						$dest_m = $msg['M_mail'];
 					}
+					$user = $user_model->find($dest_m);
+					$c['dest_p'] = $user['U_pseudo'];
 				}
 				$c['dest'] = $dest_m;
 				array_push($convs, $c);
@@ -456,6 +460,12 @@ class Account extends BaseController
 					if(!isset($dest) || $dest == null) {
 						return redirect()->to('/Account/chat'); 
 					}else{
+						$user = $user_model->where('U_pseudo', $dest)->findAll();
+						if(count($user) == 0){
+							$session->setFlashdata("error", array("L'utilisateur n'existe pas."));
+							return redirect()->to('/Account/chat');
+						} 
+						$dest = $user[0]['U_mail'];
 						$msgs = $model->where('M_idannonce', $id)->where("(M_mail = '$session->mail' && M_mail_dest = '$dest') || (M_mail = '$dest' && M_mail_dest = '$session->mail')")->orderBy('M_id', 'asc')->findAll();
 					}
 
@@ -464,6 +474,8 @@ class Account extends BaseController
 				}
 
 				if(!$dest) $dest = $annonce['A_auteur'];
+				$user = $user_model->find($dest);
+				$dest = $user['U_pseudo'];
 
 				$this->smarty->assign("id", $id);
 				$this->smarty->assign("dest", $dest);
@@ -511,34 +523,44 @@ class Account extends BaseController
 				$ann_model = new \App\Models\AnnonceModel();
 				$annonce = $ann_model->find($id);
 
-				if(!$annonce) {
-					array_push($erreur, "L'annonce n'existe pas.");
+				$user_model = new \App\Models\UserModel();
+				$user = $user_model->where('U_pseudo', $dest)->findAll();
+
+				if(count($user) == 0) {
+					array_push($erreur, "L'utilisateur n'existe pas.");
 				}else{
-					if($session->mail == $dest) {
-						array_push($erreur, "Vous ne pouvez pas envoyer un message a vous même.");
+					$dest = $user[0]['U_mail'];
+
+					if(!$annonce) {
+						array_push($erreur, "L'annonce n'existe pas.");
 					}else{
-						$user_model = new \App\Models\UserModel();
-						$user = $user_model->find($dest);
-
-						if(!$user) {
-							array_push($erreur, "L'utilisateur n'existe pas.");
+						if($session->mail == $dest) {
+							array_push($erreur, "Vous ne pouvez pas envoyer un message a vous même.");
 						}else{
-							$msg_model = new \App\Models\MessageModel(); 
-
-							$msg_data = [
-								'M_idannonce' => $id,
-								'M_mail' => $session->mail,
-								'M_mail_dest' => $dest,
-								'M_dateheure_message' => date("Y-m-d H:i:s"),
-								'M_texte_message' => strip_tags($this->request->getVar('msg'))
-							];
-
-							$msg_model->insert($msg_data);
-							$session->setFlashdata("success", "Votre message a bien été envoyé.");
+							$user_model = new \App\Models\UserModel();
+							$user = $user_model->find($dest);
+	
+							if(!$user) {
+								array_push($erreur, "L'utilisateur n'existe pas.");
+							}else{
+								$msg_model = new \App\Models\MessageModel(); 
+	
+								$msg_data = [
+									'M_idannonce' => $id,
+									'M_mail' => $session->mail,
+									'M_mail_dest' => $dest,
+									'M_dateheure_message' => date("Y-m-d H:i:s"),
+									'M_texte_message' => strip_tags($this->request->getVar('msg'))
+								];
+	
+								$msg_model->insert($msg_data);
+								$session->setFlashdata("success", "Votre message a bien été envoyé.");
+							}
+	
 						}
-
 					}
 				}
+
 			}else{
 				$erreur = array_values($this->validator->getErrors());
 			}
