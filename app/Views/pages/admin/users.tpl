@@ -17,13 +17,19 @@
                         <i class="fas fa-user mr-3"></i>
                         {$user['U_pseudo']}
                         <span style="display: table-cell; width: 40px;">
-                            <a class="btn btn-info" type="button" data-toggle="modal" data-target="#mailModal" data-whatever="{$user['U_mail']}"><i class="fas fa-envelope"></i></i></a>
+                            <a class="btn btn-info" type="button" data-toggle="modal" data-target="#mailModal" data-whatever="{$user['U_mail']}" data-bs-toggle="tooltip" title="Envoyer un mail"><i class="fas fa-envelope"></i></i></a>
                         </span>
                         <span style="padding-left: 5px; display: table-cell; width: 40px;">
-                            <a href="{base_url()}/Admin/uedit/{$user['U_mail']}" class="btn btn-primary" type="button"><i class="fas fa-pen"></i></a>
+                            <a href="{base_url()}/Admin/uedit/{$user['U_mail']}" class="btn btn-primary" type="button" data-bs-toggle="tooltip" title="Editer"><i class="fas fa-pen"></i></a>
                         </span>
                         <span style="padding-left: 5px; display: table-cell; width: 40px;">
-                            <a href="{base_url()}/Admin/udelete/{$user['U_mail']}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
+                            <a href="{base_url()}/Admin/unblockAllAnnonces/{$user['U_mail']}" class="btn btn-success" type="button" data-bs-toggle="tooltip" title="Débloquer les annonces"><i class="fas fa-unlock"></i></a>
+                        </span>
+                        <span style="padding-left: 5px; display: table-cell; width: 40px;">
+                            <a href="{base_url()}/Admin/blockAllAnnonces/{$user['U_mail']}" class="btn btn-dark" type="button" data-bs-toggle="tooltip" title="Bloquer les annonces"><i class="fas fa-lock"></i></i></a>
+                        </span>
+                        <span style="padding-left: 5px; display: table-cell; width: 40px;">
+                            <a href="{base_url()}/Admin/udelete/{$user['U_mail']}" class="btn btn-danger" type="button" data-bs-toggle="tooltip" title="Supprimer"><i class="fas fa-trash"></i></a>
                         </span>
                     </div>
                 </li>

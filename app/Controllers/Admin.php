@@ -299,4 +299,56 @@ class Admin extends BaseController
 		return redirect()->to('/Admin/annonces');
 	}
 
+	public function blockAllAnnonces($mail = null) {
+		$session = session();
+		if(!$this->verif_admin()) return redirect()->to('/Home');
+
+		$erreur = [];
+
+		if(!$mail || $mail == null) {
+			array_push($erreur, "Veuillez selectionner un utilisateur.");
+		}else{
+			$model = new \App\Models\UserModel();
+			$user = $model->find($mail);
+
+			if(!$user) {
+				array_push($erreur, "L'utilisateur n'existe pas.");
+			}else{
+				$ann_model = new \App\Models\AnnonceModel();
+				$ann_model->where('A_auteur', $mail)->set(['A_blocked' => true])->update();
+
+				$session->setFlashdata("success", "Les annonces de l'utilisateur ont été bloqués.");
+			}
+		}
+
+		$session->setFlashdata("error", $erreur);
+		return redirect()->to('/Admin/users');
+	}
+
+	public function unblockAllAnnonces($mail = null) {
+		$session = session();
+		if(!$this->verif_admin()) return redirect()->to('/Home');
+
+		$erreur = [];
+
+		if(!$mail || $mail == null) {
+			array_push($erreur, "Veuillez selectionner un utilisateur.");
+		}else{
+			$model = new \App\Models\UserModel();
+			$user = $model->find($mail);
+
+			if(!$user) {
+				array_push($erreur, "L'utilisateur n'existe pas.");
+			}else{
+				$ann_model = new \App\Models\AnnonceModel();
+				$ann_model->where('A_auteur', $mail)->set(['A_blocked' => false])->update();
+
+				$session->setFlashdata("success", "Les annonces de l'utilisateur ont été débloqués.");
+			}
+		}
+
+		$session->setFlashdata("error", $erreur);
+		return redirect()->to('/Admin/users');
+	}
+
 }
