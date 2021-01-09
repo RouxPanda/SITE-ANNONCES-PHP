@@ -33,6 +33,7 @@ class Annonce extends BaseController
                 'ville' => 'required',
                 'cp' => 'required',
                 'type' => 'required|validateType[type]',
+                'energie' => 'validateEnergie[energie]'
 			];
 
 			$errors = [
@@ -66,6 +67,9 @@ class Annonce extends BaseController
                 'type' => [
                     'required' => 'Veuillez renseigner le type de logement.',
                     'validateType' => 'Le type de logement est invalide'
+                ],
+                'energie' => [
+                    'validateEnergie' => 'Energie invalide.'
                 ]
 			];
 
@@ -89,6 +93,11 @@ class Annonce extends BaseController
                     'A_etat' => strip_tags($this->request->getVar('action')),
                     'A_auteur' => $session->mail
                 );
+
+                if(strip_tags($this->request->getVar('chauffage')) == 'individuel') {
+                    $annonce_data['A_energie'] = strip_tags($this->request->getVar('energie'));
+                }
+
                 $model->insert($annonce_data);
 
 
@@ -129,6 +138,10 @@ class Annonce extends BaseController
         $model = new \App\Models\TypeModel();
         $types = $model->findAll();
         $this->smarty->assign("types", $types);
+
+        $model = new \App\Models\EnergyModel();
+        $energies = $model->findAll();
+        $this->smarty->assign("energies", $energies);
 
         $this->smarty->assign("title", ucfirst($page));
 		return $this->smarty->view('pages/annonce/'.$page.'.tpl');  
@@ -282,6 +295,10 @@ class Annonce extends BaseController
         $model = new \App\Models\TypeModel();
         $types = $model->findAll();
         $this->smarty->assign("types", $types);
+
+        $model = new \App\Models\EnergyModel();
+        $energies = $model->findAll();
+        $this->smarty->assign("energies", $energies);
 
         $this->smarty->assign("title", ucfirst($page));
         $session->setFlashdata("error", $erreur);

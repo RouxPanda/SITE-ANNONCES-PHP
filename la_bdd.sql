@@ -10,7 +10,7 @@ CREATE TABLE T_annonce (
     A_adresse        VARCHAR(255),
     A_ville          VARCHAR(255),
     A_CP             VARCHAR(255),
-    A_energie        BIGINT UNSIGNED,
+    A_energie        BIGINT UNSIGNED DEFAULT null,
     A_type           VARCHAR(255) NOT NULL,
     A_etat           INTEGER NOT NULL,
     A_auteur         VARCHAR(255) NOT NULL,
@@ -103,3 +103,8 @@ INSERT INTO T_annonce VALUES (default, 'Chambre PotDeBeurre', 500, 120, 'individ
 INSERT INTO T_annonce VALUES (default, 'Le Manoir', 1200, 120, 'individuel', 500, 'Une grande maison pour tous les désirs.', 'Sur la coline', 'Montpellier ', '34000', null, 'T6', 2, 'admin@admin.admin');
 INSERT INTO T_annonce VALUES (default, 'Studio 2', 500, 120, 'individuel', 90, 'La légende raconte que des sardines danses en faisant tourner des serviettes toute les nuits.', 'Rue Mareshall Geoffre', 'Salon de Pce', '13200', null, 'T3', 2, 'admin@admin.admin');
 INSERT INTO T_annonce VALUES (default, 'Petite Maison Dans La Prairie', 450, 80, 'individuel', 50, 'Endroit ideal pour se reconnecter avec la nature. N est pas fibré.', 'La prairie', 'Guéret ', '23000', null, 'T2', 2, 'admin@admin.admin');
+
+INSERT INTO T_energie VALUES (default, 'Autre');
+INSERT INTO T_energie VALUES (default, 'Fioul');
+INSERT INTO T_energie VALUES (default, 'Gaz');
+INSERT INTO T_energie VALUES (default, 'Electrique');

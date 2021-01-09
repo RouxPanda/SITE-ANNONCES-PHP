@@ -62,10 +62,19 @@
                     </select>
                     </div>
                     <div class="form-group"><label>Superficie</label><input name="superficie" id="superficie" class="form-control" type="number" placeholder="m²" value="{if isset($data)}{$data['A_superfice']}{/if}"></div>
-                    <div class="form-group"><label>Chauffage</label><select name="chauffage" id="chauffage" class="form-control">
+                    <div class="form-group"><label>Chauffage</label><select name="chauffage" id="chauffage" class="form-control" onchange="showEDiv('energie_div', this)">
                         <optgroup>
                             <option value="individuel" {if !isset($data)}selected{/if} {if isset($data) && $data['A_type_chauffage'] == 'individuel'}selected{/if}>Individuel</option>
                             <option value="collectif" {if isset($data) && $data['A_type_chauffage'] == 'collectif'}selected{/if}>Collectif</option>
+                        </optgroup>
+                    </select></div> 
+                    <div id="energie_div" class="form-group" {if isset($data) && $data['A_type_chauffage'] == 'collectif'}style="display: none;"{/if}><label>Energie</label><select name="energie" id="energie" class="form-control">
+                        <optgroup>
+                            {if isset($energies)}
+                            {foreach from=$energies item=$energy}
+                                <option value="{$energy['E_id_engie']}" {if isset($data) && $data['A_energie'] == $energy['E_id_engie']}selected{/if} >{$energy['E_description']}</option>
+                            {/foreach}}
+                            {/if}
                         </optgroup>
                     </select>
                     </div>
@@ -102,6 +111,11 @@
 </section>
 
 <script>
+function showEDiv(divId, element) {
+    document.getElementById(divId).style.display = element.value == 'collectif' ? 'none' : 'block';
+}
+
+
 function checkFiles(files) {
     document.getElementById("images-preview").innerHTML = '';
 

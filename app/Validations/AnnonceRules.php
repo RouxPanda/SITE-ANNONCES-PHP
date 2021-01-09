@@ -1,6 +1,7 @@
 <?php
 namespace App\Validations;
 use App\Models\TypeModel;
+use App\Models\EnergyModel;
 
 class AnnonceRules {
 
@@ -13,5 +14,16 @@ class AnnonceRules {
 
     return true;
   }
+
+  public function validateEnergie(string $eng){
+    $model = new EnergyModel();
+    $eng_db = $model->where('E_id_engie', $eng)->first();
+
+    if(!$eng_db)
+      return false;
+
+    return true;
+  }
+  
 
 }
