@@ -31,10 +31,10 @@ class Database extends \CodeIgniter\Database\Config
 	 */
 	public $default = [
 		'DSN'      => '',
-		'hostname' => 'localhost',
-		'username' => 'root',
-		'password' => 'root',
-		'database' => 'A2020M3104G24',
+		'hostname' => '',
+		'username' => '',
+		'password' => '',
+		'database' => '',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,
@@ -84,6 +84,11 @@ class Database extends \CodeIgniter\Database\Config
 	public function __construct()
 	{
 		parent::__construct();
+
+		$this->default['hostname'] = $_ENV['db_hostname'];
+		$this->default['username'] = $_ENV['db_username'];
+		$this->default['password'] = $_ENV['db_password'];
+		$this->default['database'] = $_ENV['db_name'];
 
 		// Ensure that we always set the database group to 'tests' if
 		// we are currently running an automated test suite, so that

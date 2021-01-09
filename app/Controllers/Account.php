@@ -118,7 +118,7 @@ class Account extends BaseController
 
 				$register_data = [
 					'U_mail' => strip_tags($this->request->getVar('mail')),
-					'U_mdp' => sha1($this->request->getVar('mdp')),
+					'U_mdp' => password_hash($this->request->getVar('mdp'), PASSWORD_BCRYPT),
 					'U_pseudo' => strip_tags($this->request->getVar('pseudo')),
 					'U_nom' => strip_tags($this->request->getVar('nom')),
 					'U_prenom' => strip_tags($this->request->getVar('prenom')),
@@ -250,7 +250,7 @@ class Account extends BaseController
 						$user_model = new \App\Models\UserModel();
 						$user = $user_model->find($recov[0]['R_mail']);
 
-						$user_data = [ 'U_mdp' => sha1($this->request->getVar('mdp_new')) ];
+						$user_data = [ 'U_mdp' => password_hash($this->request->getVar('mdp_new'), PASSWORD_BCRYPT)];
 						$user_model->update($user['U_mail'], $user_data);
 
 						$recov_model->delete($user['U_mail']);
@@ -372,9 +372,9 @@ class Account extends BaseController
 
 					$user = $model->find($session->mail);
 
-					if(sha1($this->request->getVar('mdp')) === $user['U_mdp']) {
+					if(password_verify($this->request->getVar('mdp'), $user['U_mdp'])) {
 						$user_data = [
-							'U_mdp' => sha1($this->request->getVar('mdp_new'))
+							'U_mdp' => password_hash($this->request->getVar('mdp_new'), PASSWORD_BCRYPT)
 						];
 						$session->setFlashdata('success', 'Votre mot de passe ont été modifié.');
 					}else{

@@ -4,6 +4,8 @@
 
 #Project File
 public/uploads/annonces/
+#app/Views/pages/index.html
+#app/Config/Database.php
 
 # OS X
 .DS_Store
@@ -115,6 +117,3 @@ nb-configuration.xml
 /results/
 /phpunit*.xml
 /.phpunit.*.cache
-
-app/Views/pages/index.html
-app/Config/Database.php

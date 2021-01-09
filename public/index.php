@@ -8,38 +8,30 @@ if (phpversion() < $minPHPVersion)
 }
 unset($minPHPVersion);
 
-// Path to the front controller (this file)
-define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
+if(!file_exists('../config.json')) {
+	// Lancer l'installateur
+	$need_install = true;
+	require('install.php');
+}else{
+	define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
-// Location of the Paths config file.
-// This is the line that might need to be changed, depending on your folder structure.
-$pathsPath = realpath(FCPATH . '../app/Config/Paths.php');
-// ^^^ Change this if you move your application folder
+	$pathsPath = realpath(FCPATH . '../app/Config/Paths.php');
+	chdir(__DIR__);
 
-/*
- *---------------------------------------------------------------
- * BOOTSTRAP THE APPLICATION
- *---------------------------------------------------------------
- * This process sets up the path constants, loads and registers
- * our autoloader, along with Composer's, loads our constants
- * and fires up an environment-specific bootstrapping.
- */
+	require $pathsPath;
+	$paths = new Config\Paths();
 
-// Ensure the current directory is pointing to the front controller's directory
-chdir(__DIR__);
+	// Chargement du fichier de configuration de la base de donnée
+	$jsonConfigFile = file_get_contents("../config.json");
+	$config = json_decode($jsonConfigFile, true);
 
-// Load our paths config file
-require $pathsPath;
-$paths = new Config\Paths();
+	$_ENV['db_hostname'] = $config['hostname'];
+	$_ENV['db_username'] = $config['db_user'];
+	$_ENV['db_password'] = $config['db_pass'];
+	$_ENV['db_name'] = $config['db_name'];
 
-// Location of the framework bootstrap file.
-$app = require rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php';
+	// Lancement de l'application
+	$app = require rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php';
+	$app->run();
+}
 
-/*
- *---------------------------------------------------------------
- * LAUNCH THE APPLICATION
- *---------------------------------------------------------------
- * Now that everything is setup, it's time to actually fire
- * up the engines and make this app do its thang.
- */
-$app->run();

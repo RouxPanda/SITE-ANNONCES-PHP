@@ -138,7 +138,7 @@ class Admin extends BaseController
 					$session->setFlashdata('success', 'Les informations ont été modifié.');
 				}else if($field == 'password') {
 					$user_data = [
-						'U_mdp' => sha1($this->request->getVar('mdp_new'))
+						'U_mdp' => password_hash($this->request->getVar('mdp_new'), PASSWORD_BCRYPT)
 					];
 					$session->setFlashdata('success', 'Le mot de passe a été modifié.');
 				}

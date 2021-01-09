@@ -11,7 +11,7 @@ class UserRules {
     if(!$user)
       return false;
 
-    return sha1($data['mdp']) === $user['U_mdp'];
+    return password_verify($data['mdp'], $user['U_mdp']);
   }
 
 }
