@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-<section class="centre_bas_page">
+<section>
     <div class="row">
         <div class="col"></div>
         <div class="col-9">
