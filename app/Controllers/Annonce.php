@@ -174,6 +174,12 @@ class Annonce extends BaseController
             return redirect()->to(base_url() . '/Home');
         }
 
+        if(isset($datas['A_energie'])) {
+            $eng_model = new \App\Models\EnergyModel();
+            $eng = $eng_model->find($datas['A_energie']);
+            if($eng) $datas['A_energie'] = $eng['E_description'];
+        }
+
 		$this->smarty->assign("datas", $datas);
 
         $img_model = new \App\Models\ImageModel();
@@ -323,6 +329,9 @@ class Annonce extends BaseController
                 // Suppression des images
                 $this->remove_images($id);
 
+                // Suppression des messages associé (normalement c'est fait avec des triggers mais on peut en creer sur le serveur)
+                $this->remove_messages($id);
+
                 // Suppression de l'annonce
                 $model->delete($id);
                 $session->setFlashdata("success", "L'annonce a bien été supprimée.");
@@ -331,6 +340,15 @@ class Annonce extends BaseController
 
         $session->setFlashdata("error", $erreur);
         return redirect()->to(base_url() . '/Home');
+    }
+
+    private function remove_messages($id) {
+        $model = new \App\Models\MessageModel();
+        $msgs = $model->where('M_idannonce', $id)->findAll();
+
+        foreach($msgs as $m) {
+            $model->delete($m['M_id']);
+        }
     }
 
     private function remove_images($id) {
