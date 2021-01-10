@@ -18,9 +18,10 @@
     </div>
 </div>
 <section>
+    <br>
     <div class="row">
         <div class="col"></div>
-        <div class="col-9">
+        <div class="col-8">
             <div class="row" style="text-align: left;">
                 {foreach from=$datas item=$annonce}
                     {include file='templates/annonce.tpl'}

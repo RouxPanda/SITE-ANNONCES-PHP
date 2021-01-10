@@ -1,12 +1,13 @@
-<div class="col" id="cartes">
-    <a style="text-decoration: none;"class="card" href="{base_url()}/Annonce/view/{$annonce.A_idannonce}">
-        <div class="card-body {if isset($smarty.session.mail) && $annonce.A_auteur == $smarty.session.mail}annonce_proprietaire{else}ombre{/if}">
-            <h4 class="card-title" style="color:black;">{$annonce.A_titre}</h4>
-            <p class="card-text text-black">
-                {$annonce.A_description}
-            </p>
-            <P class="text-center"><img class="card-image" src="{base_url()}/public/uploads/{if isset($annonce.image)}annonces/{$annonce.image}{else}default.jpg{/if}" style="height: 250px; width:450px;object-fit: cover;" /></P>
-            <h3 class="card-text">{$annonce.A_cout_loyer} €</h3>
+<div class="col-md-4" style="padding-bottom: 10px;">
+    <div class="annonce-card {if isset($smarty.session.mail) && $annonce.A_auteur == $smarty.session.mail}annonce_proprietaire{else}ombre{/if}" onclick="window.location='{base_url()}/Annonce/view/{$annonce.A_idannonce}'">
+        <div class="banner" style="background-image: url('{base_url()}/public/uploads/{if isset($annonce.image)}annonces/{$annonce.image}{else}default.jpg{/if}');"></div>
+        <h2 class="name">{$annonce.A_titre}</h2>
+        <div class="actions">
+            <div class="annonce-info">
+                <h2><a><span>{$annonce.A_cout_loyer}</span><small>Loyer (€)</small></a></h2>
+                <h2><a><span>{$annonce.A_type}</span><small>Type</small></a></h2>
+            </div>
+            <div class="desc"><span>{$annonce.A_description}</span></div>
         </div>
-    </a>
+    </div>
 </div>

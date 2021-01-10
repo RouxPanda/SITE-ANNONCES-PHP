@@ -50,7 +50,7 @@ class Home extends BaseController
 		$annonceModel = new \App\Models\AnnonceModel();
 		$datas = array();
 
-		$datas = $annonceModel->orderBy('A_idannonce', 'desc')->where('A_etat',2)->where('A_blocked', false)->findAll(16, $numero*16);
+		$datas = $annonceModel->orderBy('A_idannonce', 'desc')->where('A_etat',2)->where('A_blocked', false)->findAll(15, $numero*15);
 
 		$img_model = new \App\Models\ImageModel();
 		foreach($datas as $key => $ann) {

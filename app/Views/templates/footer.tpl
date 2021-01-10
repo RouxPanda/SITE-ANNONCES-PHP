@@ -20,7 +20,7 @@
         </div>
     </div>
     
-    <footer id="footerpad" class="footer" style="background: rgb(129, 46, 0); position: relative;margin: 0;">
+    <footer class="footer" style="background: rgb(129, 46, 0); position: relative;margin: 0;">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-8 mx-auto">
