@@ -39,7 +39,7 @@
                         <div id="images-preview" class="images-preview text-center col">
                             {if isset($images) && is_array($images) && !empty($images)}
                             {foreach from=$images item=$img}
-                                <img height="100px" style="margin: 5px;" src="{base_url()}/uploads/annonces/{$img['P_nom']}" />
+                                <img height="100px" style="margin: 5px;" src="{base_url()}/public/uploads/annonces/{$img['P_nom']}" />
                             {/foreach}
                             {/if}
                         </div>

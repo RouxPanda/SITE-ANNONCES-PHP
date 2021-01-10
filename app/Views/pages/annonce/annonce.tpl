@@ -74,7 +74,7 @@
 
 <script>
 var adresse = "{$datas['A_adresse']} , {$datas['A_ville']} {$datas['A_CP']}";
-document.getElementById("gmap").innerHTML = '<iframe style="width: 100%; height: 25vw;" src="https://maps.google.com/maps?width=700&amp;height=440&amp;hl=en&amp;q=%27'+adresse+'%27+(titre)&amp;ie=UTF8&amp;t=&amp;z=16&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>';
+document.getElementById("gmap").innerHTML = '<iframe style="width: 100%; height: 500px;" src="https://maps.google.com/maps?amp;hl=en&amp;q=%27'+adresse+'%27+(titre)&amp;ie=UTF8&amp;t=&amp;z=16&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>';
 
 let nodes = document.getElementById('image-carrousel').childNodes;
 for (var i = 0; i < nodes.length; i++) {

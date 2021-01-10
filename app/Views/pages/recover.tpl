@@ -3,7 +3,7 @@
  <section style="min-height: 80vh;">
     <div class="row register-form">
         <div class="col-md-8 offset-md-2">
-            <form class="custom-form" action="{base_url()}/Account/recover/{if isset($token)}{$token}{/if}" method="post">
+            <form class="custom-form" action="{base_url()}/Account/recovery/{if isset($token)}{$token}{/if}" method="post">
                 <h1>Nouveau mot de passe</h1>
                  <div class="form-row">
                     <div class="col" style="margin-left: 30px;margin-right: 30px;">
