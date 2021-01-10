@@ -201,6 +201,9 @@ a.vnav-link:HOVER {
   border: 1px solid #ffca28;
 }
 
+.carousel-image {
+  border-radius: 10px;
+}
 
 
 /* ------------------------------ CHAT -------------------------------------- */
