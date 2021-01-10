@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{base_url()}/public/assets/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bungee" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" />
-    <link rel="stylesheet" href="{base_url()}/assets/css/Footer-with-social-media-icons.css" />
+    <link rel="stylesheet" href="{base_url()}/public/assets/css/Footer-with-social-media-icons.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="{base_url()}/public/assets/css/styles.css" />
 

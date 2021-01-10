@@ -29,7 +29,6 @@ if(!file_exists('../config/config.json')) {
 	$_ENV['db_username'] = $config['db_user'];
 	$_ENV['db_password'] = $config['db_pass'];
 	$_ENV['db_name'] = $config['db_name'];
-	$_ENV['db_name'] = $config['db_name'];
 
 	$_ENV['app_base_url'] = $config['base_url'];
 
