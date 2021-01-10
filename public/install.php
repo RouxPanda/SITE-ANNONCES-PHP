@@ -1,11 +1,12 @@
 <?php
-    if(isset($_POST['hostname']) && isset($_POST['db_user']) && isset($_POST['db_pass']) && isset($_POST['db_name']) && isset($_POST['admin_email']) && isset($_POST['admin_pass']) && !file_exists('../config/config.json')) {
+    if(isset($_POST['url']) && isset($_POST['hostname']) && isset($_POST['db_user']) && isset($_POST['db_pass']) && isset($_POST['db_name']) && isset($_POST['admin_email']) && isset($_POST['admin_pass']) && !file_exists('../config/config.json')) {
         
         $datas = [
             'hostname' => $_POST['hostname'],
             'db_user' => $_POST['db_user'],
             'db_pass' => $_POST['db_pass'],
-            'db_name' => $_POST['db_name']
+            'db_name' => $_POST['db_name'],
+            'base_url' => $_POST['url']
         ];
 
         // Creation de tables + triggers + données de bases (Type de maison et energie)
@@ -17,13 +18,22 @@
                 $query = file_get_contents("../database/datas.sql");
                 $stmt = $db->prepare($query);
     
-                if(!$stmt->execute()) {
+                if($stmt->execute()) {
+                    // Creation des trigger mysql
+                    // Comme cela ne fonctionne avec PDO, on creer temporairement une instance de mysqli
+                    $query = file_get_contents("../database/trigger_1.sql");
+                    $query2 = file_get_contents("../database/trigger_2.sql");
+                    $db = new mysqli($datas['hostname'], $datas['db_user'], $datas['db_pass'], $datas['db_name']);
+                    $db->query($query);
+                    $db->query($query2);
+                }else{
                     die("Failed to insert datas");
                 }
         }else {
             die("Failed to connect bdd or to create tables");
         }
 
+        $db = new PDO("mysql:host=" . $datas['hostname'] . ";dbname=" . $datas['db_name'], $datas['db_user'], $datas['db_pass']);
         // Creation du compte adminisateur
         $stmt = $db->prepare("INSERT INTO T_utilisateur VALUES(?, ?, 'Admin', 'Ad', 'min', true);");
         $stmt->execute(array($_POST['admin_email'], password_hash($_POST['admin_pass'], PASSWORD_BCRYPT)));
@@ -66,6 +76,19 @@
         <div style="box-shadow: 0px 2px 5px 2px rgba(0,0,0,0.2);">
             <form action="install.php" method="post">
                 <br>
+                <div class="form-row">
+                    <div class="col" style="margin-left: 30px;">
+                        <h3>Configurer le chemin par defaut</h3>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col" style="margin-left: 30px;margin-right: 30px;">
+                        <div class="form-group">
+                            <label>Url de base</label>
+                            <input name="url" id="url" class="form-control" type="text" />
+                        </div>
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="col" style="margin-left: 30px;">
                         <h3>Configurer la base de données</h3>

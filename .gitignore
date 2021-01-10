@@ -4,6 +4,7 @@
 
 #Project File
 public/uploads/annonces/
+public/public/*
 #app/Views/pages/index.html
 #app/Config/Database.php
 config.json
