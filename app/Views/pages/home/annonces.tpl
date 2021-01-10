@@ -76,7 +76,7 @@
                 </a>
             {/if}
             <button class="btn btn-primary" style="font-size: 20px; border:none; background:orange;margin-left:15px; margin-right:15px;" type="button">{$numero}</button>
-            {if $numero*16 <= $total && $total >= 16}
+            {if $numero*15 <= $total && $total >= 15}
                 <a href="{base_url()}/Home/annonces/{$numero+1}">
                     <button class="btn btn-primary" style="font-size: 20px; border:none; background:orange;" type="button"><i class="fas fa-chevron-right"></i></button>
                 </a>
