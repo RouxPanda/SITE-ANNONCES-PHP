@@ -1,6 +1,6 @@
 {include file='templates/header.tpl'}
 
- <section>
+ <section style="min-height: 80vh;">
         <div class="row register-form">
             <div class="col-md-8 offset-md-2">
                 <form class="custom-form" action="{base_url()}/Account/login" method="post">

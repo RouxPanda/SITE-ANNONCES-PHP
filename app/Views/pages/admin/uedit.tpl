@@ -1,7 +1,7 @@
 {include file='templates/header.tpl'}
 
-<section>
-    <div class="container" >
+<section style="min-height: 80vh;">
+    <div class="container">
 
         <div class="container">
             {if isset($user)}

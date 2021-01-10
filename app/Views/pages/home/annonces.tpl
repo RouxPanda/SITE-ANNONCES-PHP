@@ -1,6 +1,6 @@
 {include file='templates/header.tpl'}
 
-    <section>
+    <section style="min-height: 80vh;">
         <div class="row centre_bas_page"  style="margin-top:20px; margin-bottom:20px;">
             <form class="custom-form" action="{base_url()}/Home/search" method="get" style="width:40%;">
                 <div class="input-group mb-3">

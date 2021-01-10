@@ -1,6 +1,6 @@
 {include file='templates/header.tpl'}
 
-<section>
+<section style="min-height: 80vh;">
     <div>
         <div class="row">
             <div class="container">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                  {if isset($smarty.session.mail) && $datas['A_auteur'] != $smarty.session.mail}
-                <div class="row" style="margin-bottom: 50px;">
+                <div class="row">
                     <div class="col" style="margin-top: 33px;"><strong><span style="font-size: 22px;font-family: Allerta, sans-serif;">Vous êtes intéresser ?&nbsp;</span></strong>
                     <a href="{base_url()}/Account/chat/{$datas['A_idannonce']}" class="btn btn-primary" type="button" style="background: linear-gradient(-9deg, rgba(255,255,255,0.27), rgb(255,107,0)), var(--orange);margin-left: 40px;margin-top: -7px;">Envoyer un message&nbsp;&nbsp;<i class="fa fa-envelope"></i></a></div>
                 </div>
@@ -72,11 +72,8 @@
 </section>
 
 <script>
-
-var adresseQuery = "{$datas['A_adresse']} , {$datas['A_ville']} {$datas['A_CP']}";
-adresseQuery = adresseQuery.replace(/ /g, "%20");
-document.getElementById("gmap").innerHTML = '<iframe style="width: 100%; height: 25vw;" src="https://maps.google.com/maps?width=700&amp;height=440&amp;hl=en&amp;q=%27'+adresseQuery+'%27+(titre)&amp;ie=UTF8&amp;t=&amp;z=16&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>';
-
+var adresse = "{$datas['A_adresse']} , {$datas['A_ville']} {$datas['A_CP']}";
+document.getElementById("gmap").innerHTML = '<iframe style="width: 100%; height: 25vw;" src="https://maps.google.com/maps?width=700&amp;height=440&amp;hl=en&amp;q=%27'+adresse+'%27+(titre)&amp;ie=UTF8&amp;t=&amp;z=16&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>';
 
 let nodes = document.getElementById('image-carrousel').childNodes;
 for (var i = 0; i < nodes.length; i++) {

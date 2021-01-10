@@ -1,5 +1,6 @@
 {include file='templates/header.tpl'}
 
+<section style="min-height: 80vh;">
 <div>
     <div class="row">
         <div class="col">
@@ -17,6 +18,7 @@
         </div>
     </div>
 </div>
+
 <section>
     <br>
     <div class="row">
@@ -35,6 +37,8 @@
             <button class="btn btn-primary" style="font-size: 20px; border:none; background: linear-gradient(-9deg, rgba(255,255,255,0.27), rgb(255,107,0)), var(--orange);" type="button">Voir plus <i class="fas fa-chevron-down"></i></button>
         </a>
     </div>
+</section>
+
 </section>
     
 {include file='templates/footer.tpl'}

@@ -1,6 +1,6 @@
 {include file='templates/header.tpl'}
 
-<section>
+<section style="min-height: 80vh;">
     <div class="container" >
 
         {include file='templates/manage_menu.tpl'}

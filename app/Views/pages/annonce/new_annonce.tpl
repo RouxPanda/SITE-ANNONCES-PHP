@@ -1,6 +1,6 @@
 {include file='templates/header.tpl'}
 
-<section>
+<section style="min-height: 80vh;">
     <div class="row">
         <div class="col">
             <h1 style="text-align: center;margin-top: 60px;margin-bottom: 42px;">
