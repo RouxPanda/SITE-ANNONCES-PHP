@@ -5,7 +5,6 @@
         <div class="row">
             <div class="container">
                 <div class="row">
-                    <div class="col" style="margin-bottom:20px;"><h3>{$datas['A_titre']}</h3></div>
                     {if isset($smarty.session.mail) && $datas['A_auteur'] == $smarty.session.mail}
                     <div class="col" style=" text-align:right;">
                         <a href="{base_url()}/Annonce/edit/{$datas['A_idannonce']}"><i class="fas fa-edit" style="font-size: 40px; color:#ff941b; padding-right:30px;"></i></a>
@@ -16,7 +15,7 @@
                     <div id="image-carrousel" class="carousel-inner">
                         {if isset($images) && is_array($images) && !empty($images)}
                         {foreach from=$images item=$img}
-                        <div class="carousel-item"><img class="w-100 d-block" src="{base_url()}/public/uploads/annonces/{$img['P_nom']}" alt="Image"></div>
+                        <div class="carousel-item"><img class="w-100 d-block carousel-image" src="{base_url()}/public/uploads/annonces/{$img['P_nom']}" alt="Image"></div>
                         {/foreach}
                         {else}
                         <div class="carousel-item"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Image"></div>
@@ -30,27 +29,29 @@
                         <span class="carousel-control-next-icon black" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
-                 </div>
+                </div>
+                <br>
+                <h2>{$datas['A_titre']}</h2>
                 <h3 style="color: var(--orange); margin-top:20px;">{$datas['A_cout_loyer']} € (Charges {$datas['A_cout_charges']} €)</h3>
+                <hr style="color: var(--gray);">
+                <h5>Description :</h5>
                 <p style="width: 466px;text-align: left;">{$datas['A_description']}</p>
                 <hr style="color: var(--gray);">
                 <div class="row">
                     <div class="col" style="margin: 9px;">
-                        <div style="margin: 5px;"><span>Superficie : {$datas['A_superfice']}</span></div>
-                        <div style="margin: 5px;"><span>Type : {$datas['A_type']}</span></div>
+                        <div style="margin: 5px;"><span><i class="fas fa-ruler" style="color: #e86900;"></i> Superficie : <b>{$datas['A_superfice']}</b></span></div>
+                        <div style="margin: 5px;"><span><i class="fas fa-home" style="color: #e86900;"></i> Type : <b>{$datas['A_type']}</b></span></div>
                     </div>
                     <div class="col" style="margin: 9px;">
-                        <div style="margin: 5px;"><span> Chauffage : {$datas['A_type_chauffage']}</span></div>
-                        <div style="margin: 5px;"><span>{if isset($datas['A_energie'])}Energie : {$datas['A_energie']} {/if}</span></div>
+                        <div style="margin: 5px;"><span><i class="fas fa-fire-alt" style="color: #e86900;"></i> Chauffage : <b>{$datas['A_type_chauffage']}</b></span></div>
+                        <div style="margin: 5px;"><span>{if isset($datas['A_energie'])}<i class="fas fa-bolt" style="color: #e86900;"></i> Energie : <b>{$datas['A_energie']}</b> {/if}</span></div>
                         <div></div>
                     </div>
                 </div>
                 <hr style="color: var(--gray);">
                 <div class="row">
                     <div class="col" style="margin: 9px;">
-                        <div style="margin: 5px;"><span>Adresse : {$datas['A_adresse']}</span></div>
-                        <div style="margin: 5px;width: 618px;margin-left: 72px;"><span style="margin-right: 20px;">{$datas['A_ville']}</span>
-                        <span>{$datas['A_CP']}</span></div>
+                        <div style="margin: 5px;"><span><i class="fas fa-map-marked-alt" style="color: #e86900;"></i> Adresse : <b>{$datas['A_adresse']}, {$datas['A_ville']} - {$datas['A_CP']}</b></span></div>
                         <div style="margin: 5px;"></div>
                     </div>
                 </div>
